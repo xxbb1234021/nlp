@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com</groupId>
-  <artifactId>nlp</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>nlp Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com</groupId>
+	<artifactId>nlp</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>nlp Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -42,7 +42,7 @@
 					<artifactId>jms</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -176,23 +176,20 @@
 	</dependencies>
 
 	<build>
-		<!-- 源文件夹位置定义 -->
-		<sourceDirectory>${basedir}/src/java,${basedir}/src/config</sourceDirectory>
-		<!-- 输出文件夹位置定义 -->
-		<outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
 		<!-- 资源文件位置定义 -->
 		<resources>
-			<resource>
-				<targetPath>${project.build.outputDirectory}</targetPath>
-				<directory>${project.build.sourceDirectory}</directory>
+			<resource>				
+				<directory>${basedir}/src/main/java</directory>
+				<targetPath>${basedir}/WebRoot/WEB-INF/classes</targetPath>
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
 			<resource>
-				<directory>${project.build.sourceDirectory}</directory>
+				<directory>${basedir}/src/main/resources</directory>
+				<targetPath>${basedir}/WebRoot/WEB-INF</targetPath>
 				<includes>
-					<include>**/*.xml,**/*.properties</include>
+					<include>**/*.*</include>
 				</includes>
 			</resource>
 		</resources>
@@ -200,6 +197,25 @@
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<!-- 插件定义 -->
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- 编译插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 			<!-- 打包插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -211,19 +227,7 @@
 					<outputDirectory>${basedir}/target/output</outputDirectory>
 				</configuration>
 			</plugin>
-			<!-- 编译插件 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<webResources>
-                    <resource>
-                        <directory>WebRoot</directory>
-                    </resource>
-                </webResources>
-				</configuration>
-			</plugin>
+
 		</plugins>
 	</build>
 </project>
