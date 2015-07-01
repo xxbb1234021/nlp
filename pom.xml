@@ -192,6 +192,13 @@
 					<include>**/*.*</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<targetPath>${basedir}/target/classes/</targetPath>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
 		</resources>
 		<!-- war包的最终名字格式定义 -->
 		<finalName>${project.artifactId}-${project.version}</finalName>

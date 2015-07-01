@@ -1,5 +1,4 @@
 package com.xb.utils;
-
 //感知机学习算法  
 //感知机模型 f(x) = sign(w*x+b)  
 public class Perceptron
