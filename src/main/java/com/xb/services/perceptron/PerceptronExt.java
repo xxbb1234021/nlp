@@ -1,96 +1,172 @@
 package com.xb.services.perceptron;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.xb.utils.FileUtil;
 
 public class PerceptronExt
 {
-	private static int N = 3;
-	private static int n = 2;
-	private static double[][] X = null;
-	private static double[] Y = null;
-	private static double[][] G = null;
-	private static double[] A = null;
-	private static double[] W = null;
-	private static double B = 0;
-	private static double fi = 0.5;
+	int n = 1;
+	int b = 0;
+	int[] a = null;
+	int[] w = null;
+	int[][] x = null;
+	int[][] gram = null;
 
-	private static boolean check(int id)
+	public PerceptronExt()
 	{
-		double ans = B;
-		for (int i = 0; i < N; i++)
-			ans += A[i] * Y[i] * G[i][id];
-		if (ans * Y[id] > 0)
-			return true;
-		return false;
-	}
-
-	public static void solve()
-	{
-		Scanner in = new Scanner(System.in);
-		System.out.print("input N:");
-		N = in.nextInt();
-		System.out.print("input n:");
-		n = in.nextInt();
-
-		X = new double[N][n];
-		Y = new double[N];
-		G = new double[N][N];
-
-		System.out.println("input N * n datas X[i][j]:");
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < n; j++)
-				X[i][j] = in.nextDouble();
-		System.out.println("input N datas Y[i]");
-		for (int i = 0; i < N; i++)
-			Y[i] = in.nextDouble();
-
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++)
-			{
-				G[i][j] = 0;
-				for (int k = 0; k < n; k++)
-					G[i][j] += X[i][k] * X[j][k];
-			}
-
-		A = new double[N];
-		W = new double[n];
-		for (int i = 0; i < n; i++)
-			A[i] = 0;
-		B = 0;
-
-		boolean ok = true;
-		while (ok == true)
+		x = readFile();
+		a = new int[x.length];
+		for (int i = 0; i < x.length; i++)
 		{
-			ok = false;
-			//这里在原来算法的基础上不断地将fi缩小，以避免跳来跳去一直达不到要求的点的效果。
-			for (int i = 0; i < N; i++)
-			{
-				//System.out.println("here " + i);
-				while (check(i) == false)
-				{
-					ok = true;
-					A[i] += fi;
-					B += fi * Y[i];
-					//debug();
-				}
-			}
-			fi *= 0.5;
+			a[i] = 0;
 		}
 
-		for (int i = 0; i < n; i++)
-			W[i] = 0;
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < n; j++)
-				W[j] += A[i] * Y[i] * X[i][j];
+		w = new int[x.length - 1];
+		for (int i = 0; i < x.length - 1; i++)
+		{
+			w[i] = 0;
+		}
+
+		gram = createGram(x);
+	}
+
+	public void select(int[][] x, int[] a, int b, int[][] gram)
+	{
+		int i = 0;
+		while (i < x.length)
+		{
+			if (x[i][2] * ((a[0] * x[0][2] * gram[0][i] + a[1] * x[1][2] * gram[1][i] + a[2] * x[2][2] * gram[2][i]) + b) <= 0)
+			{
+				a[i] += 1;
+				b += x[i][2];
+				i = 0;
+			}
+			else
+			{
+				i++;
+			}
+		}
+		System.out.println("a的值:" + a[0] + " " + a[1] + " " + a[2] + ",b的值" + b);
+	}
+
+	public int[][] readFile()
+	{
+		String fileName = getClass().getResource("/").getPath() + "trainFile/PerceptronTrainFile.utf8";
+		return FileUtil.readPerceptronFile(fileName);
+	}
+
+	public int[][] createGram(int[][] x)
+	{
+		List<int[]> list = new ArrayList<int[]>();
+		int[] temp = new int[x.length];
+		int s = 0;
+		for (int i = 0; i < x.length; i++)
+		{
+			for (int j = 0; j < x.length; j++)
+			{
+				for (int k = 0; k < x[i].length - 1; k++)
+				{
+					//System.out.println(x[i][k]);
+					//System.out.println(x[j][k]);
+					s += x[i][k] * x[j][k];
+				}
+				//System.out.print(s + "  ");
+				temp[j] = s;
+				s = 0;
+
+				//System.out.println();
+			}
+			list.add(temp);
+			temp = new int[x.length];
+		}
+
+		return (int[][]) list.toArray(new int[0][0]);
+	}
+
+	public int cal(int index)
+	{
+		int res = 0;
+		for (int i = 0; i < x.length; i++)
+		{
+			res += a[i] * x[i][2] * gram[i][index];
+		}
+		res += b;
+		res *= x[index][2];
+		return res;
+	}
+
+	public void update(int index)
+	{
+		a[index] += n;
+		b = b + n * x[index][2];
+		System.out.print("[");
+		for (int i = 0; i < a.length; i++)
+		{
+			System.out.print(a[i] + " ");
+		}
+		System.out.print("]");
+		System.out.print("    " + b);
+		System.out.println();
+	}
+
+	public int[] numProduct(int num, int[] vec)
+	{
+		for (int j = 0; j < vec.length; j++)
+		{
+			vec[j] *= num;
+		}
+		return vec;
+	}
+
+	public int[] addVector(int[] vec1, int[] vec2)
+	{
+		for (int j = 0; j < vec2.length; j++)
+		{
+			vec1[j] = vec1[j] + vec2[j];
+		}
+
+		return vec1;
+	}
+
+	public void check()
+	{
+		boolean flag = false;
+		for (int i = 0; i < x.length; i++)
+		{
+			if (cal(i) <= 0)
+			{
+				flag = true;
+				update(i);
+			}
+		}
+
+		if (!flag)
+		{
+			for (int i = 0; i < x.length; i++)
+			{
+				w = addVector(w, numProduct(a[i] * x[i][2], new int[] { x[i][0], x[i][1] }));
+			}
+			System.out.println("RESULT: w: " + w[0] + " " + w[1] + " b: " + b);
+			System.exit(0);
+		}
+		
 	}
 
 	public static void main(String[] args)
 	{
-		solve();
-		System.out.print("W = [");
-		for (int i = 0; i < n - 1; i++)
-			System.out.print(W[i] + ", ");
-		System.out.println(W[n - 1] + "]");
-		System.out.println("B = " + B);
+		PerceptronExt t = new PerceptronExt();
+		//				int[][] x = { { 3, 3, 1 }, { 4, 3, 1 }, { 1, 1, -1 } };
+		//				int[] a = { 0, 0, 0 };
+		//				int b = 0;
+		//				int[][] gram = { { 18, 21, 6 }, { 21, 25, 7 }, { 6, 7, 2 } };
+		//				t.select(x, a, b, gram);
+
+		for (int a = 0; a < 1000; a++)
+		{
+			t.check();
+		}
+		//t.select(x, a, b, gram);
 	}
 }

@@ -2,10 +2,14 @@ package com.xb.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil
 {
@@ -75,5 +79,40 @@ public class FileUtil
 			}
 		}
 		return false;
+	}
+
+	public static int[][] readPerceptronFile(String fileName)
+	{
+		try
+		{
+			String line = "";
+			List<int[]> list = new ArrayList<int[]>();
+			
+			//System.out.println(fileName);
+			File file = new File(fileName);
+			InputStream is = new FileInputStream(file);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			while ((line = br.readLine()) != null)
+			{
+				String[] chunk = line.trim().split(" ");
+				int[] temp = new int[chunk.length];
+				for (int i = 0; i < chunk.length; i++)
+				{
+					temp[i] = Integer.parseInt(chunk[i]);
+				}
+				
+				list.add(temp);
+			}
+			br.close();
+			
+			int[][] result = (int[][])list.toArray(new int[0][0]);  
+			return result;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }
