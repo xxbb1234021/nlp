@@ -3,9 +3,9 @@ package com.xb.bean.kd;
 import com.xb.services.kd.KDTree;
 
 public class KDNode implements Comparable<KDNode>{
-	private int k = 3;  
-    private int depth = 0;  
-    private XYZPoint point = null;  
+	public int k = 3;  
+	public int depth = 0;  
+    public XYZPoint point = null;  
 	public KDNode parent = null;  
 	public KDNode left = null;  
 	public KDNode right = null;  
@@ -15,8 +15,8 @@ public class KDNode implements Comparable<KDNode>{
         this.point = point;  
     }  
 
-    public KDNode(int k, int depth, XYZPoint id) {  
-        this(id);  
+    public KDNode(int k, int depth, XYZPoint point) {  
+        this(point);  
         this.k = k;  
         this.depth = depth;  
     }  
@@ -25,6 +25,7 @@ public class KDNode implements Comparable<KDNode>{
 		int axis = depth % k;
 		if (axis == KDTree.X_AXIS)
 			return new XPointComparator().compare(o1, o2);
+		
 		return new YPointComparator().compare(o1, o2);
 	}  
  

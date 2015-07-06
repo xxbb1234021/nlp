@@ -20,33 +20,25 @@ public class XYZPoint implements Comparable<XYZPoint> {
 	}
 
 	/**
-	 * Computes the Euclidean distance from this point to the other.
-	 * 
+	 * 比较距离
 	 * @param o1
-	 *            other point.
-	 * @return euclidean distance.
+	 * @return
 	 */
 	public double euclideanDistance(XYZPoint o1) {
 		return euclideanDistance(o1, this);
 	}
 
 	/**
-	 * Computes the Euclidean distance from one point to the other.
-	 * 
+	 * 计算距离公式
 	 * @param o1
-	 *            first point.
 	 * @param o2
-	 *            second point.
-	 * @return euclidean distance.
+	 * @return
 	 */
 	private static final double euclideanDistance(XYZPoint o1, XYZPoint o2) {
 		return Math.sqrt(Math.pow((o1.x - o2.x), 2)
 				+ Math.pow((o1.y - o2.y), 2) + Math.pow((o1.z - o2.z), 2));
 	};
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)
@@ -62,9 +54,6 @@ public class XYZPoint implements Comparable<XYZPoint> {
 		return (yComp == 0);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int compareTo(XYZPoint o) {
 		int xComp = new XPointComparator().compare(this, o);
@@ -74,9 +63,6 @@ public class XYZPoint implements Comparable<XYZPoint> {
 		return yComp;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
