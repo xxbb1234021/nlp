@@ -2,7 +2,6 @@ package com.xb.services.segment.trie;
 
 import java.io.IOException;
 
-import com.xb.bean.trie.TrieDictionary;
 import com.xb.bean.trie.TrieNode;
 
 public class WordSegmenter
