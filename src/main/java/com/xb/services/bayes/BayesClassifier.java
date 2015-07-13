@@ -28,19 +28,19 @@ public class BayesClassifier
     /**
     * 计算给定的文本属性向量X在给定的分类Cj中的类条件概率
     * <code>ClassConditionalProbability</code>连乘值
-    * @param X 给定的文本属性向量
+    * @param x 给定的文本属性向量
     * @param Cj 给定的类别
     * @return 分类条件概率连乘值，即<br>
     */
-    float calcProd(String[] X, String Cj) 
+	float calcProd(String[] x, String Cj) 
     {
         float ret = 1.0F;
         // 类条件概率连乘
-        for (int i = 0; i <X.length; i++)
+        for (int i = 0; i <x.length; i++)
         {
-            String Xi = X[i];
+            String xi = x[i];
             //因为结果过小，因此在连乘之前放大10倍，这对最终结果并无影响，因为我们只是比较概率大小而已
-            ret *=ConditionalProbability.calculatePxc(Xi, Cj)*zoomFactor;
+            ret *=ConditionalProbability.calculatePxc(xi, Cj)*zoomFactor;
         }
         // 再乘以先验概率
         ret *= PriorProbability.calculatePc(Cj);
@@ -51,7 +51,7 @@ public class BayesClassifier
     * @param text 给定的文本
     * @return 去停用词后结果
     */
-    public String[] DropStopWords(String[] oldWords)
+    public String[] dropStopWords(String[] oldWords)
     {
         Vector<String> v1 = new Vector<String>();
         for(int i=0;i<oldWords.length;++i)
@@ -75,14 +75,14 @@ public class BayesClassifier
     {
         String[] terms = null;
         //terms= ChineseSpliter.split(text, " ").split(" ");//中文分词处理(分词后结果可能还包含有停用词）
-        terms = DropStopWords(terms);//去掉停用词，以免影响分类
+        terms = dropStopWords(terms);//去掉停用词，以免影响分类
         
-        String[] Classes = tdm.getTraningClassifications();//分类
+        String[] classes = tdm.getTraningClassifications();//分类
         float probility = 0.0F;
         List<ClassifyResult> crs = new ArrayList<ClassifyResult>();//分类结果
-        for (int i = 0; i <Classes.length; i++) 
+        for (int i = 0; i <classes.length; i++) 
         {
-            String ci = Classes[i];//第i个分类
+            String ci = classes[i];//第i个分类
             probility = calcProd(terms, ci);//计算给定的文本属性向量terms在给定的分类Ci中的分类条件概率
             //保存分类结果
             ClassifyResult cr = new ClassifyResult();

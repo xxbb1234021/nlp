@@ -11,7 +11,6 @@ import com.xb.services.bayes.TrainingDataManager;
 */
 public class PriorProbability 
 {
-    private static TrainingDataManager tdm =new TrainingDataManager();
     /**
     * 先验概率
     * @param c 给定的分类
@@ -20,9 +19,9 @@ public class PriorProbability
     public static float calculatePc(String c)
     {
         float ret = 0F;
-        float Nc = tdm.getTrainingFileCountOfClassification(c);
-        float N = tdm.getTrainingFileCount();
-        ret = Nc / N;
+        float nc = TrainingDataManager.instance.getTrainingFileCountOfClassification(c);
+		float n = TrainingDataManager.instance.getTrainingFileCount();
+        ret = nc / n;
         return ret;
     }
 }

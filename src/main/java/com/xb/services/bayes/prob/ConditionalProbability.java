@@ -21,7 +21,6 @@ import com.xb.services.bayes.TrainingDataManager;
 
 public class ConditionalProbability 
 {
-    private static TrainingDataManager tdm = new TrainingDataManager();
     private static final float M = 0F;
     
     /**
@@ -33,10 +32,10 @@ public class ConditionalProbability
     public static float calculatePxc(String x, String c) 
     {
         float ret = 0F;
-        float Nxc = tdm.getCountContainKeyOfClassification(c, x);
-        float Nc = tdm.getTrainingFileCountOfClassification(c);
-        float V = tdm.getTraningClassifications().length;
-        ret = (Nxc + 1) / (Nc + M + V); //为了避免出现0这样极端情况，进行加权处理
+        float nxc = TrainingDataManager.instance.getCountContainKeyOfClassification(c, x);
+        float nc = TrainingDataManager.instance.getTrainingFileCountOfClassification(c);
+        float v = TrainingDataManager.instance.getTraningClassifications().length;
+        ret = (nxc + 1) / (nc + M + v); //为了避免出现0这样极端情况，进行加权处理
         return ret;
     }
 }
