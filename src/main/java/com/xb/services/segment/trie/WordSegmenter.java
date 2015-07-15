@@ -3,6 +3,7 @@ package com.xb.services.segment.trie;
 import java.io.IOException;
 
 import com.xb.bean.trie.TrieNode;
+import com.xb.utils.Constant;
 
 public class WordSegmenter
 {
@@ -11,7 +12,7 @@ public class WordSegmenter
 	public WordSegmenter()
 	{
 		//加载词典  
-		String dictionaryName = "dict/ChiCoreDict.utf8";
+		String dictionaryName = Constant.TRIE_TREE;
 		dict = TrieDictionary.getInstance(dictionaryName);
 	}
 

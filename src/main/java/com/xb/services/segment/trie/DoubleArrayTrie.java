@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xb.bean.doubletrie.DoubleTrieNode;
+import com.xb.utils.Constant;
 
 public class DoubleArrayTrie
 {
@@ -46,7 +47,7 @@ public class DoubleArrayTrie
 		error_ = 0;
 
 		//加载词典  
-		String dictionaryName = "dict/DoubleArrayChiCoreDict.utf8";
+		String dictionaryName = Constant.DOUBLE_TRIE_TREE;
 		dict = DoubleArrayTrieDictionary.getInstance(dictionaryName);
 	}
 

@@ -14,20 +14,40 @@ import java.util.logging.Logger;
 */
 public class TrainingDataManager
 {
-	public static TrainingDataManager instance = new TrainingDataManager();
-	
-	private final String[] traningFileClassifications;//训练语料分类集合
-	private final File traningTextDir;//训练语料存放目录
-	private static String defaultPath = "D:\\TrainningSet";
+	private static TrainingDataManager tdm = null;
+	private static File traningTextDir;//训练语料存放目录
+	private static String defaultDir = "TrainningSet";
 
-	public TrainingDataManager()
+	private String[] traningFileClassifications;//训练语料分类集合
+
+	public TrainingDataManager(String fileName)
 	{
-		traningTextDir = new File(defaultPath);
+		importDict(fileName);
+	}
+
+	private void importDict(String fileName)
+	{
+		traningTextDir = new File(this.getClass().getResource("/").getPath() + fileName);
 		if (!traningTextDir.isDirectory())
 		{
-			throw new IllegalArgumentException("训练语料库搜索失败！ [" + defaultPath + "]");
+			throw new IllegalArgumentException("训练语料库搜索失败！ [" + defaultDir + "]");
 		}
 		this.traningFileClassifications = traningTextDir.list();
+	}
+
+	public static TrainingDataManager getInstance(String fileName)
+	{
+		if (tdm == null)
+		{
+			synchronized (TrainingDataManager.class)
+			{
+				if (tdm == null)
+				{
+					tdm = new TrainingDataManager(fileName);
+				}
+			}
+		}
+		return tdm;
 	}
 
 	/**
@@ -62,7 +82,7 @@ public class TrainingDataManager
 	* @throws java.io.FileNotFoundException
 	* @throws java.io.IOException
 	*/
-	public static String getText(String filePath) throws FileNotFoundException, IOException
+	public String getText(String filePath) throws FileNotFoundException, IOException
 	{
 		InputStreamReader isReader = new InputStreamReader(new FileInputStream(filePath), "GBK");
 		BufferedReader reader = new BufferedReader(isReader);
