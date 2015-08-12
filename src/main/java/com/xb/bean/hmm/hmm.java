@@ -1,6 +1,6 @@
 package com.xb.bean.hmm;
 
-public class hmm {
+public class Hmm {
 	int n; /* 隐藏状态数目;Q={1,2,…,N} */
 	int m; /* 观察符号数目; V={1,2,…,M} */
 	double[][] a; /* 状态转移矩阵A[1..N][1..N]. a[i][j] 是从t时刻状态i到t+1时刻状态j的转移概率 */
