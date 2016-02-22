@@ -1,6 +1,6 @@
 package com.xb.dao;
 
-public class BaseDao
+public class Test
 {
 
 }
