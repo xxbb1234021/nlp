@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-2.5.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+
+	<description>Spring公共配置</description>
+
+	<!-- 定义受环境影响易变的变量 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- 数据连接配置 -->
+				<value>WEB-INF/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.huoli" />
+
+	<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<!-- 连接池初始化时获取的链接数，介于minPoolSize和maxPoolSize之间 -->
+		<property name="initialPoolSize">
+			<value>${jdbc.initialPoolSize}</value>
+		</property>
+		<!-- 最小连接数 -->
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize}</value>
+		</property>
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize}</value>
+		</property>
+		<!-- 在当前连接数耗尽的时候，一次获取的新的连接数 -->
+		<property name="acquireIncrement">
+			<value>${jdbc.acquireIncrement}</value>
+		</property>
+		<!-- 最大空闲的时间，单位是秒，无用的链接再过时后会被回收 -->
+		<property name="maxIdleTime">
+			<value>${jdbc.maxIdleTime}</value>
+		</property>
+		<property name="maxStatements">
+			<value>${jdbc.maxStatements}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>180</value>
+		</property>
+	</bean>
+
+	<!-- 查询数据库 -->
+	<bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl">
+			<value>${jdbc.url_2}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username_2}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password_2}</value>
+		</property>
+		<!-- 连接池初始化时获取的链接数，介于minPoolSize和maxPoolSize之间 -->
+		<property name="initialPoolSize">
+			<value>${jdbc.initialPoolSize_2}</value>
+		</property>
+		<!-- 最小连接数 -->
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize_2}</value>
+		</property>
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize_2}</value>
+		</property>
+		<!-- 在当前连接数耗尽的时候，一次获取的新的连接数 -->
+		<property name="acquireIncrement">
+			<value>${jdbc.acquireIncrement_2}</value>
+		</property>
+		<!-- 最大空闲的时间，单位是秒，无用的链接再过时后会被回收 -->
+		<property name="maxIdleTime">
+			<value>${jdbc.maxIdleTime_2}</value>
+		</property>
+		<property name="maxStatements">
+			<value>${jdbc.maxStatements_2}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>180</value>
+		</property>
+	</bean>
+
+
+	<bean id="nativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.C3P0NativeJdbcExtractor" />
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="nativeJdbcExtractor" ref="nativeJdbcExtractor" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dynamicDataSource" />
+		</property>
+	</bean>
+
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="transactionManager" />
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+
+	<bean id="baseDao" class="com.huoli.loco.dao.BaseOperDao">
+		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="dynamicDataSource" class="com.huoli.loco.dao.DynamicDataSource">
+		<!-- 通过key-value的形式来关联数据源 -->
+		<property name="targetDataSources">
+			<map>
+				<entry value-ref="dataSource" key="dataSource"></entry>
+				<entry value-ref="dataSource2" key="dataSource2"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSource" />
+	</bean>
+
+    <!-- 待优化删除 -->
+	<bean id="trainService" class="com.huoli.loco.dao.imp.TrainOperImpl"
+		lazy-init="default" autowire="default">
+		<property name="baseDao">
+			<ref bean="baseDao" />
+		</property>
+	</bean>
+
+</beans>

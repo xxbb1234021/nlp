@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 public class ConsoleReader {
 	private BufferedReader reader;
 
-	public ConsoleReader(InputStream Input_Out) {
-		reader = new BufferedReader(new InputStreamReader(Input_Out));
+	public ConsoleReader(InputStream is) {
+		reader = new BufferedReader(new InputStreamReader(is));
 	}
 
 	public int readInt() throws IOException, NumberFormatException {
@@ -34,8 +34,7 @@ public class ConsoleReader {
 		return returnInt;
 	}
 
-	public double readDouble() throws IOException,NumberFormatException
-	{
+	public double readDouble() throws IOException, NumberFormatException {
 		double returnDouble = 0;
 		String s;
 		try {

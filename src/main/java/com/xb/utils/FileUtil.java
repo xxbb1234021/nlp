@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FileUtil
 {
-	public static ArrayList<String> read(String path)
+	public static List<String> read(String path)
 	{
 		if (path == null)
 			return null;
@@ -25,7 +25,7 @@ public class FileUtil
 			return null;
 		}
 
-		ArrayList contents = new ArrayList();
+		List<String> contents = new ArrayList<String>();
 		String line = "";
 		try
 		{
@@ -50,7 +50,7 @@ public class FileUtil
 		return contents;
 	}
 
-	public static boolean write(String path, ArrayList<String> contents)
+	public static boolean write(String path, List<String> contents)
 	{
 		File file = new File(path);
 		if (file.isDirectory())

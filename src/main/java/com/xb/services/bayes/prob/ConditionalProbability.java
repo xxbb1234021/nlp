@@ -1,7 +1,7 @@
 package com.xb.services.bayes.prob;
 
 import com.xb.services.bayes.TrainingDataManager;
-import com.xb.utils.Constant;
+import com.xb.constant.Constant;
 
 /**
 * 类条件概率计算
