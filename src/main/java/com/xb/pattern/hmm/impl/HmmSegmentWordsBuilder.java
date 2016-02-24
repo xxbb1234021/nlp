@@ -3,12 +3,16 @@ package com.xb.pattern.hmm.impl;
 import java.io.*;
 import java.util.*;
 
+import com.xb.constant.Constant;
 import com.xb.pattern.hmm.HmmModelBuilder;
+import org.apache.log4j.Logger;
 
 /**
  * Created by kevin on 2016/1/21.
  */
 public class HmmSegmentWordsBuilder extends HmmModelBuilder {
+    private static Logger LOGGER = Logger.getLogger(HmmSegmentWordsBuilder.class);
+
     private static final int CHAR_LABEL_NUM = 4;
 
     private double[] prioriProbability;// 初始概率
@@ -28,7 +32,7 @@ public class HmmSegmentWordsBuilder extends HmmModelBuilder {
 
     private HmmSegmentWordsBuilder(String chineseCodeFile, String corpusFile) {
         readChineseCode(chineseCodeFile);
-        readCorpus(corpusFile);
+        splitCorpus(corpusFile);
     }
 
     public static HmmSegmentWordsBuilder getInstance(String chineseCodeFile, String corpusFile) {
@@ -43,25 +47,10 @@ public class HmmSegmentWordsBuilder extends HmmModelBuilder {
     }
 
     private boolean readChineseCode(String chineseCodeFile) {
-        String line;
-        BufferedReader br = null;
-        try {
-            File file = new File(this.getClass().getResource("/").getPath() + chineseCodeFile);
-            InputStream is = new FileInputStream(file);
-
-            br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-            while ((line = br.readLine()) != null) {
-                String[] cc = line.trim().split("\\s{1,}");
-                chineseCodeMap.put(cc[0], Integer.parseInt(cc[1]));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        readCorpus(chineseCodeFile, Constant.CHARSET_UTF8);
+        for (String line : lineList){
+            String[] cc = line.trim().split("\\s{1,}");
+            chineseCodeMap.put(cc[0], Integer.parseInt(cc[1]));
         }
 
         emissionMatrix = new long[4][chineseCodeMap.size() + 1];
@@ -95,29 +84,12 @@ public class HmmSegmentWordsBuilder extends HmmModelBuilder {
         return true;
     }
 
-    private boolean readCorpus(String fileName) {
-        String line;
-        BufferedReader br = null;
+    private boolean splitCorpus(String fileName) {
+        readCorpus(fileName, Constant.CHARSET_UTF8);
+
         List<String> textList = new ArrayList<String>();
-        try {
-            File file = new File(this.getClass().getResource("/").getPath() + fileName);
-            InputStream is = new FileInputStream(file);
-
-            br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-            while ((line = br.readLine()) != null) {
-                textList.add(line.replaceAll("\\pP", " ").trim());
-                //				buildTransformMatrix(line.replaceAll("\\pP", " ").trim());
-                //				buildEmissionMatrix(line.replaceAll("\\pP", " ").trim());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for (String line : lineList) {
+            textList.add(line.replaceAll("\\pP", " ").trim());
         }
 
         //getChineseCode(textList);

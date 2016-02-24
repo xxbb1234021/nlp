@@ -25,4 +25,8 @@ public class Constant
 
 	//hmm已分好词的数据
 	public static final String HMM_SEGMENT_TRAINDATA2 = "hmmseg/segment.utf8";
+
+	public static final String CHARSET_UTF8= "UTF-8";
+
+	public static final String CHARSET_GBK= "GBK";
 }

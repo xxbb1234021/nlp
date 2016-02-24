@@ -1,12 +1,12 @@
 package com.xb.utils;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by kevin on 2016/1/19.

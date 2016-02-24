@@ -1,6 +1,6 @@
 package com.xb.bean.kd;
 
-import com.xb.services.kd.KDTree;
+import com.xb.algoritm.kd.KDTree;
 
 public class KDNode implements Comparable<KDNode>{
 	public int k = 3;  

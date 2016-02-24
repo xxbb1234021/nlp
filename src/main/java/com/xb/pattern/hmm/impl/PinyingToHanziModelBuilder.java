@@ -3,12 +3,19 @@ package com.xb.pattern.hmm.impl;
 import java.io.*;
 import java.util.*;
 
+import com.xb.constant.Constant;
 import com.xb.pattern.hmm.HmmModelBuilder;
+import com.xb.utils.res.AutoDetector;
+import com.xb.utils.res.ResTools;
+import com.xb.utils.res.ResourceLoader;
+import org.apache.log4j.Logger;
 
 /**
  * Created by kevin on 2016/1/19.
  */
 public class PinyingToHanziModelBuilder extends HmmModelBuilder {
+	private static Logger LOGGER = Logger.getLogger(PinyingToHanziModelBuilder.class);
+
 	private int wordNum = 0;
 
 	private int pinyingNum = 0;
@@ -42,7 +49,7 @@ public class PinyingToHanziModelBuilder extends HmmModelBuilder {
 	private static PinyingToHanziModelBuilder ghm = null;
 
 	private PinyingToHanziModelBuilder(String fn) {
-		readCorpus(fn);
+		splitCorpus(fn);
 		wordSum();
 		pinyingSum();
 	}
@@ -58,27 +65,8 @@ public class PinyingToHanziModelBuilder extends HmmModelBuilder {
 		return ghm;
 	}
 
-	private boolean readCorpus(String fileName) {
-		String line;
-		BufferedReader br = null;
-		StringBuffer content = new StringBuffer();
-		try {
-			File file = new File(this.getClass().getResource("/").getPath() + fileName);
-			InputStream is = new FileInputStream(file);
-
-			br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-			while ((line = br.readLine()) != null) {
-				content.append(line);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	private boolean splitCorpus(String fileName) {
+		readCorpus(fileName, Constant.CHARSET_UTF8);
 
 		// 获取预料语料库中的一个个不同的词组(以空格分开)，词组后附有相应的词
 		text = content.toString().split("\\s{1,}");

@@ -1,15 +1,22 @@
 package com.xb.pattern.hmm.impl;
 
-import java.io.*;
 import java.util.*;
 
+import com.xb.constant.Constant;
+import com.xb.utils.res.ResTools;
+import org.apache.log4j.Logger;
+
 import com.xb.pattern.hmm.HmmModelBuilder;
+import com.xb.utils.res.AutoDetector;
+import com.xb.utils.res.ResourceLoader;
 
 /**
  * Created by kevin on 2016/1/11.
  * 1.找出所有的词性个数，词性的频率
  */
 public class WordTaggingModelBuilder extends HmmModelBuilder {
+	private static Logger LOGGER = Logger.getLogger(WordTaggingModelBuilder.class);
+
 	private int wordTagNum = 0;
 
 	private int wordNum = 0;
@@ -43,7 +50,7 @@ public class WordTaggingModelBuilder extends HmmModelBuilder {
 	private static WordTaggingModelBuilder ghm = null;
 
 	private WordTaggingModelBuilder(String fn) {
-		readCorpus(fn);
+		splitCorpus(fn);
 		wordTagSum();
 		wordSum();
 	}
@@ -59,27 +66,8 @@ public class WordTaggingModelBuilder extends HmmModelBuilder {
 		return ghm;
 	}
 
-	private boolean readCorpus(String fileName) {
-		String line;
-		BufferedReader br = null;
-		StringBuffer content = new StringBuffer();
-		try {
-			File file = new File(this.getClass().getResource("/").getPath() + fileName);
-			InputStream is = new FileInputStream(file);
-
-			br = new BufferedReader(new InputStreamReader(is, "GBK"));
-			while ((line = br.readLine()) != null) {
-				content.append(line);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	private boolean splitCorpus(String fileName) {
+		readCorpus(fileName, Constant.CHARSET_GBK);
 
 		// 获取预料语料库中的一个个不同的词组(以空格分开)，词组后附有相应的词性
 		text = content.toString().split("\\s{1,}");

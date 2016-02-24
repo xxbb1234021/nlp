@@ -6,10 +6,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import com.xb.bean.trie.TrieNode;
+import com.xb.constant.Constant;
+import com.xb.utils.res.AutoDetector;
+import com.xb.utils.res.ResTools;
+import com.xb.utils.res.ResourceLoader;
+import org.apache.log4j.Logger;
 
 public class TrieDictionary {
+	private static Logger LOGGER = Logger.getLogger(TrieDictionary.class);
+
 	private static TrieDictionary dict = null;
 	private TrieNode root = new TrieNode();
 
@@ -29,22 +37,48 @@ public class TrieDictionary {
 	}
 
 	private boolean importDict(String fileName) {
-		try {
-			//System.out.println(this.getClass().getResource("/").getPath() + fileName);
-			File file = new File(this.getClass().getResource("/").getPath() + fileName);
-			//InputStream is = getClass().getResourceAsStream(fileName);
-			InputStream is = new FileInputStream(file);
+//	/	try {
+//			//System.out.println(this.getClass().getResource("/").getPath() + fileName);
+//			File file = new File(this.getClass().getResource("/").getPath() + fileName);
+//			//InputStream is = getClass().getResourceAsStream(fileName);
+//			InputStream is = new FileInputStream(file);
+//
+//			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//			String word = "";
+//
+//			while ((word = br.readLine()) != null) {
+//				addWord(word);
+//			}
+//			br.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-			String word = "";
-
-			while ((word = br.readLine()) != null) {
-				addWord(word);
+		AutoDetector.loadAndWatch(new ResourceLoader() {
+			@Override
+			public void clear() {
 			}
-			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+			@Override
+			public void load(List<String> lines) {
+				LOGGER.info("初始化");
+				for (String line : lines) {
+					addWord(line);
+				}
+				LOGGER.info("初始化完毕，数据条数：" + lines);
+			}
+
+			@Override
+			public void add(String line) {
+			}
+
+			@Override
+			public void remove(String line) {
+			}
+
+		}, ResTools.get(fileName, "classpath:" + fileName), Constant.CHARSET_UTF8);
+
+
 		return true;
 	}
 

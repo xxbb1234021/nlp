@@ -67,7 +67,7 @@ public class TestWordTag {
         String source = "签约仪式前，秦光荣、李纪恒、仇和等一同会见了参加签约的企业家。";
         WordSegmenter mmsegger = new WordSegmenter();
         String splitWrod = mmsegger.segment(source);
-        System.out.println(splitWrod);
+        //System.out.println(splitWrod);
         String[] words = splitWrod.split("\\|");
         List<String> wordList = new ArrayList<String>();
         for (int i = 0; i < words.length; i++) {
@@ -87,8 +87,8 @@ public class TestWordTag {
         Director director = new Director(builder);
         director.construct();
 
-        List<String> smallArrayList = builder.smallSeg(wordList);
-        //List<String> smallArrayList = wordList;
+        //List<String> smallArrayList = builder.smallSeg(wordList);
+        List<String> smallArrayList = wordList;
         String[] example = new String[smallArrayList.size()];
         for (int i = 0; i < example.length; i++) {
             example[i] = smallArrayList.get(i);
