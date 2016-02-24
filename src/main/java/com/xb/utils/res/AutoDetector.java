@@ -59,11 +59,11 @@ public class AutoDetector {
 	 */
 	private static List<String> loadClasspathResource(String resource, String charset) throws IOException {
 		List<String> result = new ArrayList<String>();
-		//LOGGER.info("类路径资源：" + resource);
+		LOGGER.info("类路径资源：" + resource);
 		Enumeration<URL> ps = AutoDetector.class.getClassLoader().getResources(resource);
 		while (ps.hasMoreElements()) {
 			URL url = ps.nextElement();
-			//LOGGER.info("类路径资源URL：" + url);
+			LOGGER.info("类路径资源URL：" + url);
 
 			File file = new File(url.getFile());
 			result.addAll(load(file.getAbsolutePath(), charset));
@@ -83,7 +83,7 @@ public class AutoDetector {
 		List<String> result = new ArrayList<String>();
 		try {
 			InputStream in = null;
-			//LOGGER.info("加载资源：" + path);
+			LOGGER.info("加载资源：" + path);
 			if (path.startsWith("classpath:")) {
 				in = AutoDetector.class.getClassLoader().getResourceAsStream(path.replace("classpath:", ""));
 			} else {
@@ -100,7 +100,7 @@ public class AutoDetector {
 			}
 
 		} catch (Exception e) {
-			//LOGGER.error("加载资源失败：" + path, e);
+			LOGGER.error("加载资源失败：" + path, e);
 		}
 		finally {
             try {

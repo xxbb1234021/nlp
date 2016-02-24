@@ -37,23 +37,6 @@ public class TrieDictionary {
 	}
 
 	private boolean importDict(String fileName) {
-		//	/	try {
-		//			//System.out.println(this.getClass().getResource("/").getPath() + fileName);
-		//			File file = new File(this.getClass().getResource("/").getPath() + fileName);
-		//			//InputStream is = getClass().getResourceAsStream(fileName);
-		//			InputStream is = new FileInputStream(file);
-		//
-		//			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-		//			String word = "";
-		//
-		//			while ((word = br.readLine()) != null) {
-		//				addWord(word);
-		//			}
-		//			br.close();
-		//		} catch (IOException e) {
-		//			e.printStackTrace();
-		//		}
-
 		AutoDetector.loadAndWatch(new ResourceLoader() {
 			@Override
 			public void clear() {
