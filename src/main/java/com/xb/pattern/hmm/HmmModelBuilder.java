@@ -33,7 +33,7 @@ public abstract class HmmModelBuilder {
 				for (String line : lines) {
 					content.append(line).append(" ");
 				}
-				LOGGER.info("初始化完毕，数据条数：" + lines);
+				LOGGER.info("初始化完毕，数据条数：" + lines.size());
 			}
 
 			@Override

@@ -65,7 +65,7 @@ public class TrieDictionary {
 				for (String line : lines) {
 					addWord(line);
 				}
-				LOGGER.info("初始化完毕，数据条数：" + lines);
+				LOGGER.info("初始化完毕，数据条数：" + lines.size());
 			}
 
 			@Override
