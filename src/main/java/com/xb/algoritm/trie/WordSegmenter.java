@@ -6,12 +6,10 @@ import com.xb.bean.trie.TrieNode;
 import com.xb.constant.Constant;
 import com.xb.utils.CharacterTypeUtil;
 
-public class WordSegmenter
-{
+public class WordSegmenter {
 	public static TrieDictionary dict = null;
 
-	public WordSegmenter()
-	{
+	public WordSegmenter() {
 		//加载词典  
 		String dictionaryName = Constant.TRIE_TREE;
 		dict = TrieDictionary.getInstance(dictionaryName);
@@ -41,8 +39,7 @@ public class WordSegmenter
 	 * 该分词的核心：对于前缀词的划分 
 	 */
 
-	public String segment(String sentence)
-	{
+	public String segment(String sentence) {
 		StringBuffer segBuffer = new StringBuffer();
 
 		TrieNode p = dict.getRoot();
@@ -51,56 +48,39 @@ public class WordSegmenter
 		int length = sentence.length();
 		int segBoundIndex = -1; //保存上次分词结束字符在sentence中的位置     
 
-		for (int i = 0; i < length; ++i)
-		{
+		for (int i = 0; i < length; ++i) {
 			char c = sentence.charAt(i);
-			if (CharacterTypeUtil.isCharSeperator(c))
-			{// 分隔符  
+			if (CharacterTypeUtil.isCharSeperator(c)) {// 分隔符  
 				segBuffer.append(c);
-			}
-			else if (CharacterTypeUtil.isCharOther(c))
-			{// 其他语言字符               
-				do
-				{
+			} else if (CharacterTypeUtil.isCharOther(c)) {// 其他语言字符               
+				do {
 					segBuffer.append(c);
-					if (++i == length)
-					{
+					if (++i == length) {
 						break;
 					}
 					c = sentence.charAt(i);
-				}
-				while (CharacterTypeUtil.isCharOther(c));
+				} while (CharacterTypeUtil.isCharOther(c));
 				if (i != length)
 					--i; //还原现场              
-			}
-			else if (CharacterTypeUtil.isCharChinese(c))
-			{
+			} else if (CharacterTypeUtil.isCharChinese(c)) {
 				pChild = p.getChilds().get(Character.valueOf(c));
-				if (pChild == null)
-				{// 不在词典中的中文字符  
+				if (pChild == null) {// 不在词典中的中文字符  
 					segBuffer.append(c);
-				}
-				else
-				{
-					do
-					{// 在词典中的词  
+				} else {
+					do {// 在词典中的词  
 						segBuffer.append(c);
-						if (p == dict.getRoot() || pChild.isBound())
-						{ // 算法的关键，能够保证前缀词，被划分。  
+						if (p == dict.getRoot() || pChild.isBound()) { // 算法的关键，能够保证前缀词，被划分。  
 							segBoundIndex = i;
 						}
-						if (++i >= length)
-						{
+						if (++i >= length) {
 							break;
 						}
 						c = sentence.charAt(i);
 						p = pChild;
 						pChild = p.getChilds().get(Character.valueOf(c));
-					}
-					while (pChild != null);
+					} while (pChild != null);
 					//切除非词典中词的前缀词  
-					if (--i >= segBoundIndex)
-					{
+					if (--i >= segBoundIndex) {
 						segBuffer.delete(segBuffer.length() - (i - segBoundIndex), segBuffer.length());
 					}
 					//还原现场  
@@ -114,8 +94,7 @@ public class WordSegmenter
 		return new String(segBuffer);
 	}
 
-	public String segment(String sentence, String verison)
-	{
+	public String segment(String sentence, String verison) {
 		StringBuffer segBuffer = new StringBuffer();
 
 		int segBoundIdx = 0;
@@ -123,51 +102,37 @@ public class WordSegmenter
 		TrieNode p = null;
 		TrieNode pChild = null;
 
-		for (int i = 0; i < length; i++)
-		{
+		for (int i = 0; i < length; i++) {
 			char c = sentence.charAt(i);
 
 			p = dict.getRoot();
 			pChild = p.getChilds().get(Character.valueOf(c));
 
 			// 不在词典中的字符  
-			if (pChild == null)
-			{
-				if (CharacterTypeUtil.isCharSeperator(c))
-				{
+			if (pChild == null) {
+				if (CharacterTypeUtil.isCharSeperator(c)) {
 					segBuffer.append(c);// do something;  
 				}
-				if (CharacterTypeUtil.isCharChinese(c))
-				{
+				if (CharacterTypeUtil.isCharChinese(c)) {
 					segBuffer.append(c);
-				}
-				else
-				{
-					do
-					{ // 非中文字符  
+				} else {
+					do { // 非中文字符  
 						segBuffer.append(c);
-						if (++i == length)
-						{
+						if (++i == length) {
 							break;
 						}
 						c = sentence.charAt(i);
-					}
-					while (CharacterTypeUtil.isCharOther(c));
+					} while (CharacterTypeUtil.isCharOther(c));
 					if (i != length)
 						--i; //还原现场  
 				}
-			}
-			else
-			{ // 中文字词  
-				while (pChild != null)
-				{
-					if (p == dict.getRoot() || pChild.isBound())
-					{ //词典中的词或者词典中词的前缀词；前缀词将被单字划分  
+			} else { // 中文字词  
+				while (pChild != null) {
+					if (p == dict.getRoot() || pChild.isBound()) { //词典中的词或者词典中词的前缀词；前缀词将被单字划分  
 						segBoundIdx = i;
 					}
 					segBuffer.append(c);
-					if (++i == length)
-					{
+					if (++i == length) {
 						break;
 					}
 					c = sentence.charAt(i);
@@ -175,8 +140,7 @@ public class WordSegmenter
 					pChild = p.getChilds().get(Character.valueOf(c));
 				}
 				//切除分词表中不在词典中的前缀字词  
-				if (--i > segBoundIdx)
-				{
+				if (--i > segBoundIdx) {
 					segBuffer.delete(segBuffer.length() - (i - segBoundIdx), segBuffer.length());
 				}
 				//还原现场  
@@ -188,8 +152,7 @@ public class WordSegmenter
 		return new String(segBuffer);
 	}
 
-	public static void main(String args[]) throws IOException
-	{
+	public static void main(String args[]) throws IOException {
 		WordSegmenter mmsegger = new WordSegmenter();
 		System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world"));
 		System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));

@@ -18,8 +18,7 @@ import com.xb.constant.Constant;
 * 为在条件A下发生的条件事件B发生的条件概率。
 */
 
-public class ConditionalProbability
-{
+public class ConditionalProbability {
 	private static final double M = 0F;
 
 	/**
@@ -28,11 +27,12 @@ public class ConditionalProbability
 	* @param c 给定的分类
 	* @return 给定条件下的类条件概率
 	*/
-	public static double calculatePxc(String x, String c)
-	{
+	public static double calculatePxc(String x, String c) {
 		double ret = 0F;
-		double containKeyCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA).getCountContainKeyOfClassification(c, x);
-		double fileCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA).getTrainingFileCountOfClassification(c);
+		double containKeyCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA)
+				.getCountContainKeyOfClassification(c, x);
+		double fileCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA)
+				.getTrainingFileCountOfClassification(c);
 		double dirCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA).getTraningClassifications().length;
 		ret = (containKeyCount + 1) / (fileCount + M + dirCount); //为了避免出现0这样极端情况，进行加权处理
 		return ret;

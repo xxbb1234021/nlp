@@ -12,37 +12,29 @@ import java.util.logging.Logger;
 /**
 * 训练集管理器
 */
-public class TrainingDataManager
-{
+public class TrainingDataManager {
 	private static TrainingDataManager tdm = null;
 	private static File traningTextDir;//训练语料存放目录
 	private static String defaultDir = "TrainningSet";
 
 	private String[] traningFileClassifications;//训练语料分类集合
 
-	public TrainingDataManager(String fileName)
-	{
+	public TrainingDataManager(String fileName) {
 		importDict(fileName);
 	}
 
-	private void importDict(String fileName)
-	{
+	private void importDict(String fileName) {
 		traningTextDir = new File(this.getClass().getResource("/").getPath() + fileName);
-		if (!traningTextDir.isDirectory())
-		{
+		if (!traningTextDir.isDirectory()) {
 			throw new IllegalArgumentException("训练语料库搜索失败！ [" + defaultDir + "]");
 		}
 		this.traningFileClassifications = traningTextDir.list();
 	}
 
-	public static TrainingDataManager getInstance(String fileName)
-	{
-		if (tdm == null)
-		{
-			synchronized (TrainingDataManager.class)
-			{
-				if (tdm == null)
-				{
+	public static TrainingDataManager getInstance(String fileName) {
+		if (tdm == null) {
+			synchronized (TrainingDataManager.class) {
+				if (tdm == null) {
 					tdm = new TrainingDataManager(fileName);
 				}
 			}
@@ -54,8 +46,7 @@ public class TrainingDataManager
 	* 返回训练文本类别，这个类别就是目录名
 	* @return 训练文本类别
 	*/
-	public String[] getTraningClassifications()
-	{
+	public String[] getTraningClassifications() {
 		return this.traningFileClassifications;
 	}
 
@@ -64,12 +55,10 @@ public class TrainingDataManager
 	* @param classification 给定的分类
 	* @return 给定分类下所有文件的路径（full path）
 	*/
-	public String[] getFilesPath(String classification)
-	{
+	public String[] getFilesPath(String classification) {
 		File classDir = new File(traningTextDir.getPath() + File.separator + classification);
 		String[] ret = classDir.list();
-		for (int i = 0; i < ret.length; i++)
-		{
+		for (int i = 0; i < ret.length; i++) {
 			ret[i] = traningTextDir.getPath() + File.separator + classification + File.separator + ret[i];
 		}
 		return ret;
@@ -82,14 +71,12 @@ public class TrainingDataManager
 	* @throws java.io.FileNotFoundException
 	* @throws java.io.IOException
 	*/
-	public String getText(String filePath) throws FileNotFoundException, IOException
-	{
+	public String getText(String filePath) throws FileNotFoundException, IOException {
 		InputStreamReader isReader = new InputStreamReader(new FileInputStream(filePath), "GBK");
 		BufferedReader reader = new BufferedReader(isReader);
 		String aline;
 		StringBuilder sb = new StringBuilder();
-		while ((aline = reader.readLine()) != null)
-		{
+		while ((aline = reader.readLine()) != null) {
 			sb.append(aline + " ");
 		}
 		isReader.close();
@@ -101,11 +88,9 @@ public class TrainingDataManager
 	* 返回训练文本集中所有的文本数目
 	* @return 训练文本集中所有的文本数目
 	*/
-	public int getTrainingFileCount()
-	{
+	public int getTrainingFileCount() {
 		int ret = 0;
-		for (int i = 0; i < traningFileClassifications.length; i++)
-		{
+		for (int i = 0; i < traningFileClassifications.length; i++) {
 			ret += getTrainingFileCountOfClassification(traningFileClassifications[i]);
 		}
 		return ret;
@@ -116,8 +101,7 @@ public class TrainingDataManager
 	* @param classification 给定的分类
 	* @return 训练文本集中在给定分类下的训练文本数目
 	*/
-	public int getTrainingFileCountOfClassification(String classification)
-	{
+	public int getTrainingFileCountOfClassification(String classification) {
 		File classDir = new File(traningTextDir.getPath() + File.separator + classification);
 		return classDir.list().length;
 	}
@@ -128,28 +112,20 @@ public class TrainingDataManager
 	* @param key 给定的关键字／词
 	* @return 给定分类中包含关键字／词的训练文本的数目
 	*/
-	public int getCountContainKeyOfClassification(String classification, String key)
-	{
+	public int getCountContainKeyOfClassification(String classification, String key) {
 		int ret = 0;
-		try
-		{
+		try {
 			String[] filePath = getFilesPath(classification);
-			for (int j = 0; j < filePath.length; j++)
-			{
+			for (int j = 0; j < filePath.length; j++) {
 				String text = getText(filePath[j]);
-				if (text.contains(key))
-				{
+				if (text.contains(key)) {
 					ret++;
 				}
 			}
-		}
-		catch (FileNotFoundException ex)
-		{
+		} catch (FileNotFoundException ex) {
 			Logger.getLogger(TrainingDataManager.class.getName()).log(Level.SEVERE, null, ex);
 
-		}
-		catch (IOException ex)
-		{
+		} catch (IOException ex) {
 			Logger.getLogger(TrainingDataManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return ret;

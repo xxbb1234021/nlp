@@ -14,8 +14,7 @@ import java.util.List;
 import com.xb.bean.doubletrie.DoubleTrieNode;
 import com.xb.constant.Constant;
 
-public class DoubleArrayTrie
-{
+public class DoubleArrayTrie {
 	private final static int BUF_SIZE = 16384;
 	private final static int UNIT_SIZE = 8; // size of int + int
 
@@ -36,8 +35,7 @@ public class DoubleArrayTrie
 
 	public static DoubleArrayTrieDictionary dict = null;
 
-	public DoubleArrayTrie()
-	{
+	public DoubleArrayTrie() {
 		check = null;
 		base = null;
 		used = null;
@@ -54,13 +52,11 @@ public class DoubleArrayTrie
 	// int (*progressfunc_) (size_t, size_t);
 
 	// inline _resize expanded
-	private int resize(int newSize)
-	{
+	private int resize(int newSize) {
 		int[] base2 = new int[newSize];
 		int[] check2 = new int[newSize];
 		boolean used2[] = new boolean[newSize];
-		if (allocSize > 0)
-		{
+		if (allocSize > 0) {
 			System.arraycopy(base, 0, base2, 0, allocSize);
 			System.arraycopy(check, 0, check2, 0, allocSize);
 			System.arraycopy(used2, 0, used2, 0, allocSize);
@@ -73,15 +69,13 @@ public class DoubleArrayTrie
 		return allocSize = newSize;
 	}
 
-	private int fetch(DoubleTrieNode parent, List<DoubleTrieNode> siblings)
-	{
+	private int fetch(DoubleTrieNode parent, List<DoubleTrieNode> siblings) {
 		if (error_ < 0)
 			return 0;
 
 		int prev = 0;
 
-		for (int i = parent.getLeft(); i < parent.getRight(); i++)
-		{
+		for (int i = parent.getLeft(); i < parent.getRight(); i++) {
 			//System.out.println((length != null ? length[i] : key.get(i).length()));
 			//System.out.println(parent.getDepth());
 			if ((length != null ? length[i] : key.get(i).length()) < parent.getDepth())
@@ -93,14 +87,12 @@ public class DoubleArrayTrie
 			if ((length != null ? length[i] : tmp.length()) != parent.getDepth())
 				cur = tmp.charAt(parent.getDepth()) + 1;
 
-			if (prev > cur)
-			{
+			if (prev > cur) {
 				error_ = -3;
 				return 0;
 			}
 
-			if (cur != prev || siblings.size() == 0)
-			{
+			if (cur != prev || siblings.size() == 0) {
 				DoubleTrieNode tmpNode = new DoubleTrieNode();
 				tmpNode.setDepth(parent.getDepth() + 1);
 				tmpNode.setCode(cur);
@@ -120,8 +112,7 @@ public class DoubleArrayTrie
 		return siblings.size();
 	}
 
-	private int insert(List<DoubleTrieNode> siblings)
-	{
+	private int insert(List<DoubleTrieNode> siblings) {
 		if (error_ < 0)
 			return 0;
 
@@ -134,28 +125,23 @@ public class DoubleArrayTrie
 			resize(pos + 1);
 
 		// 此循环体的目标是找出满足base[begin + a1...an]  == 0的n个空闲空间,a1...an是siblings中的n个节点
-		outer: while (true)
-		{
+		outer: while (true) {
 			pos++;
 
 			if (allocSize <= pos)
 				resize(pos + 1);
 
-			if (check[pos] != 0)
-			{
+			if (check[pos] != 0) {
 				nonzero_num++;
 				continue;
-			}
-			else if (first == 0)
-			{
+			} else if (first == 0) {
 				nextCheckPos = pos;
 				first = 1;
 			}
 
 			// 当前位置离第一个兄弟节点的距离
 			begin = pos - siblings.get(0).getCode();
-			if (allocSize <= (begin + siblings.get(siblings.size() - 1).getCode()))
-			{
+			if (allocSize <= (begin + siblings.get(siblings.size() - 1).getCode())) {
 				// 防止progress产生除零错误
 				double l = (1.05 > 1.0 * keySize / (progress + 1)) ? 1.05 : 1.0 * keySize / (progress + 1);
 				resize((int) (allocSize * l));
@@ -176,22 +162,20 @@ public class DoubleArrayTrie
 			nextCheckPos = pos;
 
 		used[begin] = true;
-		size = (size > begin + siblings.get(siblings.size() - 1).getCode() + 1) ? size : begin + siblings.get(siblings.size() - 1).getCode() + 1;
+		size = (size > begin + siblings.get(siblings.size() - 1).getCode() + 1) ? size : begin
+				+ siblings.get(siblings.size() - 1).getCode() + 1;
 
 		for (int i = 0; i < siblings.size(); i++)
 			check[begin + siblings.get(i).getCode()] = begin;
 
-		for (int i = 0; i < siblings.size(); i++)
-		{
+		for (int i = 0; i < siblings.size(); i++) {
 			List<DoubleTrieNode> new_siblings = new ArrayList<DoubleTrieNode>();
 
-			if (fetch(siblings.get(i), new_siblings) == 0)
-			{
+			if (fetch(siblings.get(i), new_siblings) == 0) {
 				base[begin + siblings.get(i).getCode()] = (value != null) ? (-value[siblings.get(i).getLeft()] - 1)
 						: (-siblings.get(i).getLeft() - 1);
 
-				if (value != null && (-value[siblings.get(i).getLeft()] - 1) >= 0)
-				{
+				if (value != null && (-value[siblings.get(i).getLeft()] - 1) >= 0) {
 					error_ = -2;
 					return 0;
 				}
@@ -199,9 +183,7 @@ public class DoubleArrayTrie
 				progress++;
 				// if (progress_func_) (*progress_func_) (progress,
 				// keySize);
-			}
-			else
-			{
+			} else {
 				int h = insert(new_siblings);
 				base[begin + siblings.get(i).getCode()] = h;
 			}
@@ -209,8 +191,7 @@ public class DoubleArrayTrie
 		return begin;
 	}
 
-	void clear()
-	{
+	void clear() {
 		// if (! no_delete_)
 		check = null;
 		base = null;
@@ -220,23 +201,19 @@ public class DoubleArrayTrie
 		// no_delete_ = false;
 	}
 
-	public int getUnitSize()
-	{
+	public int getUnitSize() {
 		return UNIT_SIZE;
 	}
 
-	public int getSize()
-	{
+	public int getSize() {
 		return size;
 	}
 
-	public int getTotalSize()
-	{
+	public int getTotalSize() {
 		return size * UNIT_SIZE;
 	}
 
-	public int getNonzeroSize()
-	{
+	public int getNonzeroSize() {
 		int result = 0;
 		for (int i = 0; i < size; i++)
 			if (check[i] != 0)
@@ -244,13 +221,11 @@ public class DoubleArrayTrie
 		return result;
 	}
 
-	public int build(List<String> key)
-	{
+	public int build(List<String> key) {
 		return build(key, null, null, key.size());
 	}
 
-	public int build(List<String> _key, int _length[], int _value[], int _keySize)
-	{
+	public int build(List<String> _key, int _length[], int _value[], int _keySize) {
 		if (_keySize > _key.size() || _key == null)
 			return 0;
 
@@ -284,57 +259,45 @@ public class DoubleArrayTrie
 		return error_;
 	}
 
-	public void open(String fileName) throws IOException
-	{
+	public void open(String fileName) throws IOException {
 		File file = new File(fileName);
 		size = (int) file.length() / UNIT_SIZE;
 		check = new int[size];
 		base = new int[size];
 
 		DataInputStream is = null;
-		try
-		{
+		try {
 			is = new DataInputStream(new BufferedInputStream(new FileInputStream(file), BUF_SIZE));
-			for (int i = 0; i < size; i++)
-			{
+			for (int i = 0; i < size; i++) {
 				base[i] = is.readInt();
 				check[i] = is.readInt();
 			}
-		}
-		finally
-		{
+		} finally {
 			if (is != null)
 				is.close();
 		}
 	}
 
-	public void save(String fileName) throws IOException
-	{
+	public void save(String fileName) throws IOException {
 		DataOutputStream out = null;
-		try
-		{
+		try {
 			out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
-			for (int i = 0; i < size; i++)
-			{
+			for (int i = 0; i < size; i++) {
 				out.writeInt(base[i]);
 				out.writeInt(check[i]);
 			}
 			out.close();
-		}
-		finally
-		{
+		} finally {
 			if (out != null)
 				out.close();
 		}
 	}
 
-	public int exactMatchSearch(String key)
-	{
+	public int exactMatchSearch(String key) {
 		return exactMatchSearch(key, 0, 0, 0);
 	}
 
-	public int exactMatchSearch(String key, int pos, int len, int nodePos)
-	{
+	public int exactMatchSearch(String key, int pos, int len, int nodePos) {
 		if (len <= 0)
 			len = key.length();
 		if (nodePos <= 0)
@@ -347,8 +310,7 @@ public class DoubleArrayTrie
 		int b = base[nodePos];
 		int p;
 
-		for (int i = pos; i < len; i++)
-		{
+		for (int i = pos; i < len; i++) {
 			p = b + (keyChars[i]) + 1;
 			if (b == check[p])
 				b = base[p];
@@ -358,20 +320,17 @@ public class DoubleArrayTrie
 
 		p = b;
 		int n = base[p];
-		if (b == check[p] && n < 0)
-		{
+		if (b == check[p] && n < 0) {
 			result = -n - 1;
 		}
 		return result;
 	}
 
-	public List<Integer> commonPrefixSearch(String key)
-	{
+	public List<Integer> commonPrefixSearch(String key) {
 		return commonPrefixSearch(key, 0, 0, 0);
 	}
 
-	public List<Integer> commonPrefixSearch(String key, int pos, int len, int nodePos)
-	{
+	public List<Integer> commonPrefixSearch(String key, int pos, int len, int nodePos) {
 		if (len <= 0)
 			len = key.length();
 		if (nodePos <= 0)
@@ -385,13 +344,11 @@ public class DoubleArrayTrie
 		int n;
 		int p;
 
-		for (int i = pos; i < len; i++)
-		{
+		for (int i = pos; i < len; i++) {
 			p = b;
 			n = base[p];
 
-			if (b == check[p] && n < 0)
-			{
+			if (b == check[p] && n < 0) {
 				result.add(-n - 1);
 			}
 
@@ -405,8 +362,7 @@ public class DoubleArrayTrie
 		p = b;
 		n = base[p];
 
-		if (b == check[p] && n < 0)
-		{
+		if (b == check[p] && n < 0) {
 			result.add(-n - 1);
 		}
 
@@ -414,23 +370,19 @@ public class DoubleArrayTrie
 	}
 
 	// debug
-	public void dump()
-	{
-		for (int i = 0; i < size; i++)
-		{
+	public void dump() {
+		for (int i = 0; i < size; i++) {
 			System.err.println("i: " + i + " [" + base[i] + ", " + check[i] + "]");
 		}
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		DoubleArrayTrie d = new DoubleArrayTrie();
 		System.out.println("字典词条：" + dict.getWords().size());
 
 		String infoCharsetValue = "";
 		String infoCharsetCode = "";
-		for (Character c : dict.getCharset())
-		{
+		for (Character c : dict.getCharset()) {
 			infoCharsetValue += c.charValue() + "    ";
 			infoCharsetCode += (int) c.charValue() + " ";
 		}
@@ -443,8 +395,7 @@ public class DoubleArrayTrie
 		System.out.println("是否错误: " + dat.build(dict.getWords()));
 		System.out.println(dat);
 		List<Integer> integerList = dat.commonPrefixSearch("一举成名天下知");
-		for (int index : integerList)
-		{
+		for (int index : integerList) {
 			System.out.println(dict.getWords().get(index));
 		}
 	}
