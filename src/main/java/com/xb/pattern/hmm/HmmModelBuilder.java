@@ -1,6 +1,5 @@
 package com.xb.pattern.hmm;
 
-import com.xb.constant.Constant;
 import com.xb.utils.res.AutoDetector;
 import com.xb.utils.res.ResTools;
 import com.xb.utils.res.ResourceLoader;
@@ -8,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by kevin on 2016/1/13.
@@ -21,7 +19,7 @@ public abstract class HmmModelBuilder {
 	protected List<String> lineList = new ArrayList<String>();
 
 	protected void readCorpus(String fileName, String charset) {
-		AutoDetector.loadAndWatch(new ResourceLoader() {
+		AutoDetector.loadRes(new ResourceLoader() {
 			@Override
 			public void clear() {
 			}

@@ -1,5 +1,7 @@
 package com.xb.utils.res;
 
+import static java.lang.System.currentTimeMillis;
+
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,13 +17,12 @@ public class AutoDetector {
 	private static Logger LOGGER = Logger.getLogger(AutoDetector.class);
 
 	/**
-	 * 加载资源并自动检测资源变化
-	 * 当资源发生变化的时候重新自动加载
+	 * 加载资源
 	 * @param resourceLoader 资源加载逻辑
 	 * @param resourcePaths 多个资源路径，用逗号分隔
 	 * @param charset 字符
 	 */
-	public static void loadAndWatch(ResourceLoader resourceLoader, String resourcePaths, String charset) {
+	public static void loadRes(ResourceLoader resourceLoader, String resourcePaths, String charset) {
 		resourcePaths = resourcePaths.trim();
 		if ("".equals(resourcePaths)) {
 			LOGGER.info("没有资源可以加载");
@@ -29,7 +30,7 @@ public class AutoDetector {
 		}
 		LOGGER.debug("开始加载资源");
 		LOGGER.info(resourcePaths);
-		long start = System.currentTimeMillis();
+		long start = currentTimeMillis();
 		List<String> result = new ArrayList<String>();
 		for (String resource : resourcePaths.split("[,，]")) {
 			try {
@@ -46,7 +47,7 @@ public class AutoDetector {
 		//调用自定义加载逻辑
 		resourceLoader.clear();
 		resourceLoader.load(result);
-		long cost = System.currentTimeMillis() - start;
+		long cost = currentTimeMillis() - start;
 		LOGGER.info("完成加载资源，耗时" + cost + " 毫秒");
 	}
 

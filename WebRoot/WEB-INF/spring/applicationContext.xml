@@ -29,7 +29,7 @@
 	</bean>
 
 	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
-	<context:component-scan base-package="com.huoli" />
+	<context:component-scan base-package="com.xb" />
 
 	<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -110,56 +110,6 @@
 		</property>
 		<property name="idleConnectionTestPeriod">
 			<value>180</value>
-		</property>
-	</bean>
-
-
-	<bean id="nativeJdbcExtractor"
-		class="org.springframework.jdbc.support.nativejdbc.C3P0NativeJdbcExtractor" />
-
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dynamicDataSource" />
-		<property name="nativeJdbcExtractor" ref="nativeJdbcExtractor" />
-	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource">
-			<ref bean="dynamicDataSource" />
-		</property>
-	</bean>
-
-	<tx:annotation-driven proxy-target-class="true"
-		transaction-manager="transactionManager" />
-
-	<bean id="transactionTemplate"
-		class="org.springframework.transaction.support.TransactionTemplate">
-		<property name="transactionManager">
-			<ref bean="transactionManager" />
-		</property>
-	</bean>
-
-	<bean id="baseDao" class="com.huoli.loco.dao.BaseOperDao">
-		<property name="dataSource" ref="dynamicDataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-
-	<bean id="dynamicDataSource" class="com.huoli.loco.dao.DynamicDataSource">
-		<!-- 通过key-value的形式来关联数据源 -->
-		<property name="targetDataSources">
-			<map>
-				<entry value-ref="dataSource" key="dataSource"></entry>
-				<entry value-ref="dataSource2" key="dataSource2"></entry>
-			</map>
-		</property>
-		<property name="defaultTargetDataSource" ref="dataSource" />
-	</bean>
-
-    <!-- 待优化删除 -->
-	<bean id="trainService" class="com.huoli.loco.dao.imp.TrainOperImpl"
-		lazy-init="default" autowire="default">
-		<property name="baseDao">
-			<ref bean="baseDao" />
 		</property>
 	</bean>
 

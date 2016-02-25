@@ -1,11 +1,5 @@
 package com.xb.algoritm.trie;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import com.xb.bean.trie.TrieNode;
@@ -37,7 +31,7 @@ public class TrieDictionary {
 	}
 
 	private boolean importDict(String fileName) {
-		AutoDetector.loadAndWatch(new ResourceLoader() {
+		AutoDetector.loadRes(new ResourceLoader() {
 			@Override
 			public void clear() {
 			}
@@ -46,13 +40,24 @@ public class TrieDictionary {
 			public void load(List<String> lines) {
 				LOGGER.info("初始化");
 				for (String line : lines) {
-					addWord(line);
+					add(line);
 				}
 				LOGGER.info("初始化完毕，数据条数：" + lines.size());
 			}
 
 			@Override
 			public void add(String line) {
+				TrieNode node = root;
+				for (int i = 0; i < line.length(); i++) {
+					char c = line.charAt(i);
+					TrieNode pNode = node.getChilds().get(Character.valueOf(c));
+					if (pNode == null) {
+						pNode = new TrieNode(c);
+						node.getChilds().put(Character.valueOf(c), pNode);
+					}
+					node = pNode;
+				}
+				node.setBound(true);
 			}
 
 			@Override
@@ -62,24 +67,6 @@ public class TrieDictionary {
 		}, ResTools.get(fileName, "classpath:" + fileName), Constant.CHARSET_UTF8);
 
 		return true;
-	}
-
-	/**
-	 * 添加新词
-	 * @param word
-	 */
-	public void addWord(String word) {
-		TrieNode node = this.root;
-		for (int i = 0; i < word.length(); i++) {
-			char c = word.charAt(i);
-			TrieNode pNode = node.getChilds().get(Character.valueOf(c));
-			if (pNode == null) {
-				pNode = new TrieNode(c);
-				node.getChilds().put(Character.valueOf(c), pNode);
-			}
-			node = pNode;
-		}
-		node.setBound(true);
 	}
 
 	public boolean contains(String word) {
