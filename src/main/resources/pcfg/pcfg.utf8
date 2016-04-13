@@ -1,0 +1,13 @@
+0.7 S --> NP VP
+0.2 S --> VP
+0.1 S --> NP
+0.3 NP --> noun
+0.2 NP --> adj noun
+0.2 NP --> DJ
+0.3 NP --> DJ NP
+0.4 DJ --> VP de
+0.6 DJ --> NP de
+1.0 VP --> VC NP
+0.3 VC --> vt adj
+0.5 VC --> VC utl
+0.2 VC --> vt

@@ -1,4 +1,4 @@
-package com.xb.pattern.hmm;
+package com.xb.business.hmm;
 
 import com.xb.utils.res.AutoDetector;
 import com.xb.utils.res.ResTools;
@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Created by kevin on 2016/1/13.
  */
-public abstract class HmmModelBuilder {
-	private static Logger LOGGER = Logger.getLogger(HmmModelBuilder.class);
+public abstract class HmmBaseModelBuilder {
+	private static Logger LOGGER = Logger.getLogger(HmmBaseModelBuilder.class);
 
 	protected StringBuffer content = new StringBuffer();
 
@@ -27,7 +27,7 @@ public abstract class HmmModelBuilder {
 			@Override
 			public void load(List<String> lines) {
 				LOGGER.info("初始化");
-				lineList = lines;
+				//syntaxRulesList = lines;
 				for (String line : lines) {
 					content.append(line).append(" ");
 				}

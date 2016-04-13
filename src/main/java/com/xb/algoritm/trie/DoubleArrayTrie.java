@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xb.bean.doubletrie.DoubleTrieNode;
+import com.xb.business.trie.DoubleArrayTrieDictionary;
 import com.xb.constant.Constant;
 
 public class DoubleArrayTrie {
@@ -31,7 +32,7 @@ public class DoubleArrayTrie {
 	private int progress;
 	private int nextCheckPos;
 	// boolean no_delete_;
-	int error_;
+	int error;
 
 	public static DoubleArrayTrieDictionary dict = null;
 
@@ -42,7 +43,7 @@ public class DoubleArrayTrie {
 		size = 0;
 		allocSize = 0;
 		// no_delete_ = false;
-		error_ = 0;
+		error = 0;
 
 		//加载词典  
 		String dictionaryName = Constant.DOUBLE_TRIE_TREE;
@@ -70,7 +71,7 @@ public class DoubleArrayTrie {
 	}
 
 	private int fetch(DoubleTrieNode parent, List<DoubleTrieNode> siblings) {
-		if (error_ < 0)
+		if (error < 0)
 			return 0;
 
 		int prev = 0;
@@ -88,7 +89,7 @@ public class DoubleArrayTrie {
 				cur = tmp.charAt(parent.getDepth()) + 1;
 
 			if (prev > cur) {
-				error_ = -3;
+				error = -3;
 				return 0;
 			}
 
@@ -113,7 +114,7 @@ public class DoubleArrayTrie {
 	}
 
 	private int insert(List<DoubleTrieNode> siblings) {
-		if (error_ < 0)
+		if (error < 0)
 			return 0;
 
 		int begin = 0;
@@ -176,7 +177,7 @@ public class DoubleArrayTrie {
 						: (-siblings.get(i).getLeft() - 1);
 
 				if (value != null && (-value[siblings.get(i).getLeft()] - 1) >= 0) {
-					error_ = -2;
+					error = -2;
 					return 0;
 				}
 
@@ -256,7 +257,7 @@ public class DoubleArrayTrie {
 		used = null;
 		key = null;
 
-		return error_;
+		return error;
 	}
 
 	public void open(String fileName) throws IOException {

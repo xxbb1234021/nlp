@@ -1,16 +1,15 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.impl;
 
-import java.io.*;
 import java.util.*;
 
 import com.xb.constant.Constant;
-import com.xb.pattern.hmm.HmmModelBuilder;
+import com.xb.business.hmm.HmmBaseModelBuilder;
 import org.apache.log4j.Logger;
 
 /**
  * Created by kevin on 2016/1/21.
  */
-public class HmmSegmentWordsBuilder2 extends HmmModelBuilder {
+public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 	private static Logger LOGGER = Logger.getLogger(HmmSegmentWordsBuilder2.class);
 
 	private int wordTagNum = 0;

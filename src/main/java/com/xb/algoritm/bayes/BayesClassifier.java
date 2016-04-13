@@ -55,7 +55,7 @@ public class BayesClassifier {
 	public String[] dropStopWords(String[] oldWords) {
 		Vector<String> v1 = new Vector<String>();
 		for (int i = 0; i < oldWords.length; ++i) {
-			if (StopWordsHandler.IsStopWord(oldWords[i]) == false) {//不是停用词
+			if (StopWordsHandler.isStopWord(oldWords[i]) == false) {//不是停用词
 				v1.add(oldWords[i]);
 			}
 		}

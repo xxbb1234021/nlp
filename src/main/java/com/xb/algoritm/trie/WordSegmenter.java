@@ -2,17 +2,18 @@ package com.xb.algoritm.trie;
 
 import java.io.IOException;
 
-import com.xb.bean.trie.TrieNode;
+import com.xb.bean.trie.ParticipleTrieNode;
+import com.xb.business.trie.SegmentWordTrieDictionary;
 import com.xb.constant.Constant;
 import com.xb.utils.CharacterTypeUtil;
 
 public class WordSegmenter {
-	public static TrieDictionary dict = null;
+	public static SegmentWordTrieDictionary dict = null;
 
 	public WordSegmenter() {
 		//加载词典  
 		String dictionaryName = Constant.TRIE_TREE;
-		dict = TrieDictionary.getInstance(dictionaryName);
+		dict = SegmentWordTrieDictionary.getInstance(dictionaryName, Constant.TRIE_CATEGORY_WORD);
 	}
 
 	/** 
@@ -42,8 +43,8 @@ public class WordSegmenter {
 	public String segment(String sentence) {
 		StringBuffer segBuffer = new StringBuffer();
 
-		TrieNode p = dict.getRoot();
-		TrieNode pChild = null;
+		ParticipleTrieNode p = dict.getRoot();
+		ParticipleTrieNode pChild = null;
 
 		int length = sentence.length();
 		int segBoundIndex = -1; //保存上次分词结束字符在sentence中的位置     
@@ -99,8 +100,8 @@ public class WordSegmenter {
 
 		int segBoundIdx = 0;
 		int length = sentence.length();
-		TrieNode p = null;
-		TrieNode pChild = null;
+		ParticipleTrieNode p = null;
+		ParticipleTrieNode pChild = null;
 
 		for (int i = 0; i < length; i++) {
 			char c = sentence.charAt(i);

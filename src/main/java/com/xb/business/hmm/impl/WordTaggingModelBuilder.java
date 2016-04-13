@@ -1,20 +1,17 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.impl;
 
 import java.util.*;
 
 import com.xb.constant.Constant;
-import com.xb.utils.res.ResTools;
 import org.apache.log4j.Logger;
 
-import com.xb.pattern.hmm.HmmModelBuilder;
-import com.xb.utils.res.AutoDetector;
-import com.xb.utils.res.ResourceLoader;
+import com.xb.business.hmm.HmmBaseModelBuilder;
 
 /**
  * Created by kevin on 2016/1/11.
  * 1.找出所有的词性个数，词性的频率
  */
-public class WordTaggingModelBuilder extends HmmModelBuilder {
+public class WordTaggingModelBuilder extends HmmBaseModelBuilder {
 	private static Logger LOGGER = Logger.getLogger(WordTaggingModelBuilder.class);
 
 	private int wordTagNum = 0;
@@ -73,26 +70,6 @@ public class WordTaggingModelBuilder extends HmmModelBuilder {
 		text = content.toString().split("\\s{1,}");
 		// 去除词性标注，只保存词组
 		word = content.toString().split("(/[a-z]*\\s{0,})");// "/"后面跟着一个或者多个字母然后是多个空格
-
-		/*
-		StringBuilder sb = new StringBuilder();
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < word.length; i++)
-		{
-			String s = word[i];
-			if(s.startsWith("1998")){
-				if(StringUtils.isBlank(sb.toString()))
-					continue;
-				list.add(sb.toString());
-				sb = new StringBuilder();
-				continue;
-			}
-			sb.append(s);
-		}
-		list.add(sb.toString());
-		MakePinyingCorpus m = new MakePinyingCorpus();
-		m.writeCorpusToFile("D:\\workspace\\nlp\\src\\main\\resources\\tag\\199801.utf8", list.toArray(new String[list.size()]));
-		*/
 
 		// 获取语料库中从前往后的所有词组的词性
 		wordTag = content.toString().split("[0-9|-]*/|\\s{1,}[^a-z]*"); // 开头的日期或者空格+非字母作为分隔符

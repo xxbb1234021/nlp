@@ -1,4 +1,4 @@
-package com.xb.algoritm.trie;
+package com.xb.business.trie;
 
 import java.io.BufferedReader;
 import java.io.File;
