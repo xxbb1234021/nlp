@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.xb.business.hmm.*;
 import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.xb.bean.hmm.Hmm;

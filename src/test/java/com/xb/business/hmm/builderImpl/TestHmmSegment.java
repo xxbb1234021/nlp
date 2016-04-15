@@ -3,7 +3,7 @@ package com.xb.business.hmm.builderImpl;
 import com.xb.bean.hmm.Hmm;
 import com.xb.constant.HmmSegmentConstant;
 import com.xb.services.hmm.HmmService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
