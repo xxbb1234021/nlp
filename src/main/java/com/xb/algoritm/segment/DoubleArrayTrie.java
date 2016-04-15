@@ -1,4 +1,4 @@
-package com.xb.algoritm.trie;
+package com.xb.algoritm.segment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xb.bean.doubletrie.DoubleTrieNode;
-import com.xb.business.trie.DoubleArrayTrieDictionary;
+import com.xb.business.trie.impl.DoubleArrayTrieDictionary;
 import com.xb.constant.Constant;
 
 public class DoubleArrayTrie {

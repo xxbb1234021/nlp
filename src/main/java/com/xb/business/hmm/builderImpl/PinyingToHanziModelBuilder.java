@@ -1,15 +1,15 @@
-package com.xb.business.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
 import java.util.*;
 
-import com.xb.constant.Constant;
-import com.xb.business.hmm.HmmBaseModelBuilder;
 import org.apache.log4j.Logger;
+
+import com.xb.constant.Constant;
 
 /**
  * Created by kevin on 2016/1/19.
  */
-public class PinyingToHanziModelBuilder extends HmmBaseModelBuilder {
+public class PinyingToHanziModelBuilder extends AbstractPinyingToHanziModel {
 	private static Logger LOGGER = Logger.getLogger(PinyingToHanziModelBuilder.class);
 
 	private int wordNum = 0;
@@ -25,12 +25,6 @@ public class PinyingToHanziModelBuilder extends HmmBaseModelBuilder {
 	private String[] diffWord;// 存储不同的词
 
 	private String[] diffPinying;// 存储不同的拼音
-
-	private double[] prioriProbability;// 词的先验概率
-
-	private double[][] transformProbability;
-
-	private double[][] emissionProbability;
 
 	private Map<String, Integer> wordMap = new HashMap<String, Integer>(); // 创建wordTagMap，存储单个词的词及其频率
 

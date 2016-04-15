@@ -1,4 +1,4 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
 import com.xb.bean.hmm.Hmm;
 import com.xb.constant.HmmSegmentConstant;
@@ -10,9 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 /**
  * Created by kevin on 2016/1/23.
  */

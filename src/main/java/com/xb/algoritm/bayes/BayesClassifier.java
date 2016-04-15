@@ -8,7 +8,7 @@ import java.util.Vector;
 import com.xb.bean.bayes.ClassifyResult;
 import com.xb.algoritm.bayes.prob.ConditionalProbability;
 import com.xb.algoritm.bayes.prob.PriorProbability;
-import com.xb.algoritm.trie.WordSegmenter;
+import com.xb.algoritm.segment.WordSegmenter;
 import com.xb.constant.Constant;
 
 /**

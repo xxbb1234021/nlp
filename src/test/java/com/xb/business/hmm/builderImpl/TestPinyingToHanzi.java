@@ -1,15 +1,16 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.xb.business.hmm.*;
+import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import com.xb.bean.hmm.Hmm;
-import com.xb.constant.Constant;
-import com.xb.pattern.hmm.Director;
+import com.xb.business.hmm.Director;
 import com.xb.services.hmm.HmmService;
 import com.xb.utils.PinyingUtil;
 
@@ -20,13 +21,14 @@ public class TestPinyingToHanzi {
 
 	@Test
 	public void testPinyingToHanzi() {
-		String source = "woshiyigemanong";
+		String source = "woaini";
 
 		List<String> wordList = new ArrayList<String>();
 
-		PinyingToHanziModelBuilder builder = PinyingToHanziModelBuilder.getInstance(Constant.PINYING_TAG_TRAINDATA);
+		HmmAbstractFactory factory = new PinyingToHanziFactory();
+		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder();
 		Director director = new Director(builder);
-		director.construct();
+		director.constructHmmModel();
 
 		Hmm h = new Hmm();
 

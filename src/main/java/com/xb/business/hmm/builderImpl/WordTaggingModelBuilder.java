@@ -1,16 +1,16 @@
-package com.xb.business.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
 import java.util.*;
 
 import com.xb.constant.Constant;
-import com.xb.business.hmm.HmmBaseModelBuilder;
 import org.apache.log4j.Logger;
 
 /**
- * Created by kevin on 2016/1/21.
+ * Created by kevin on 2016/1/11.
+ * 1.找出所有的词性个数，词性的频率
  */
-public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
-	private static Logger LOGGER = Logger.getLogger(HmmSegmentWordsBuilder2.class);
+public class WordTaggingModelBuilder extends AbstractWordTagginModel {
+	private static Logger LOGGER = Logger.getLogger(WordTaggingModelBuilder.class);
 
 	private int wordTagNum = 0;
 
@@ -26,12 +26,6 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 
 	private String[] diffWord;// 存储不同的词组
 
-	private double[] prioriProbability;// 词性的先验概率
-
-	private double[][] transformProbability;
-
-	private double[][] emissionProbability;
-
 	private Map<String, Integer> wordTagMap = new HashMap<String, Integer>(); // 创建wordTagMap，存储单个词的词性及其频率
 
 	private Map<String, Integer> wordMap = new HashMap<String, Integer>(); // 创建wordMap，存储不同的词组及其频率
@@ -42,19 +36,19 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 
 	private Map<String, Integer> wordPositionMap = new HashMap<String, Integer>();// 为了后面的检索速度，保存语料库中的不同词组的位置，和diffWord对应
 
-	private static HmmSegmentWordsBuilder2 ghm = null;
+	private static WordTaggingModelBuilder ghm = null;
 
-	private HmmSegmentWordsBuilder2(String fn) {
+	private WordTaggingModelBuilder(String fn) {
 		splitCorpus(fn);
 		wordTagSum();
 		wordSum();
 	}
 
-	public static HmmSegmentWordsBuilder2 getInstance(String fileName) {
+	public static WordTaggingModelBuilder getInstance(String fileName) {
 		if (ghm == null) {
-			synchronized (HmmSegmentWordsBuilder2.class) {
+			synchronized (WordTaggingModelBuilder.class) {
 				if (ghm == null) {
-					ghm = new HmmSegmentWordsBuilder2(fileName);
+					ghm = new WordTaggingModelBuilder(fileName);
 				}
 			}
 		}
@@ -62,29 +56,20 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 	}
 
 	private boolean splitCorpus(String fileName) {
-		readCorpus(fileName, Constant.CHARSET_UTF8);
+		readCorpus(fileName, Constant.CHARSET_GBK);
 
 		// 获取预料语料库中的一个个不同的词组(以空格分开)，词组后附有相应的词性
 		text = content.toString().split("\\s{1,}");
-		List<String> pinyingList = new ArrayList<String>();
-		List<String> wordList = new ArrayList<String>();
-		String[] split = null;
-		for (String s : text) {
-			split = s.split("/");
-			pinyingList.add(split[0]);
-			wordList.add(split[1]);
-		}
+		// 去除词性标注，只保存词组
+		word = content.toString().split("(/[a-z]*\\s{0,})");// "/"后面跟着一个或者多个字母然后是多个空格
 
-		// 保存汉字
-		word = pinyingList.toArray(new String[pinyingList.size()]);
-		// 保存词性
-		wordTag = wordList.toArray(new String[wordList.size()]);
-
+		// 获取语料库中从前往后的所有词组的词性
+		wordTag = content.toString().split("[0-9|-]*/|\\s{1,}[^a-z]*"); // 开头的日期或者空格+非字母作为分隔符
 		return true;
 	}
 
 	/**
-	 * 该函数用来统计不同的词性及其频率
+	 * 该函数用来统计不同的词性及其频率 
 	 * wordTagMap：保存不同的词性及其频率
 	 * diffWordTag：只保存不同的词性
 	 */
@@ -107,7 +92,7 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 	}
 
 	/**
-	 * 统计语料库中的不同词组
+	 * 统计语料库中的不同词组 
 	 * wordMap：用来保存词组和频率
 	 * diffWord：只用来保存不同的词组
 	 * wordPositionMap：保存词组在diffWord中的位置
@@ -171,8 +156,7 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 			allCharacterCount += wordTagMap.get(diffWordTag[i]);
 		}
 		for (int i = 0; i < wordTagNum; i++) {
-			if (diffWordTag[i].equals("S") || diffWordTag[i].equals("B"))
-				prioriProbability[i] = wordTagMap.get(diffWordTag[i]) * 1.0 / allCharacterCount;
+			prioriProbability[i] = wordTagMap.get(diffWordTag[i]) * 1.0 / allCharacterCount;
 		}
 	}
 
@@ -225,36 +209,49 @@ public class HmmSegmentWordsBuilder2 extends HmmBaseModelBuilder {
 		}
 	}
 
+	/**
+	 * 分词方法是从左往右，最大匹配模式。但是程序中采用的语料库却倾向于
+	 * 最小匹配模式。所以我们初次分词的结果有可能不在语料库中。在此我们将语料库不能识别的 词组再次进行分词尝试让算法找到更多的词。
+	 *
+	 * @param seg
+	 * @return
+	 */
+	public List<String> smallSeg(List<String> seg) {
+		ArrayList<String> smallArrayList = new ArrayList<String>();
+		String temp = "";
+		boolean canSpilt = false;
+		int index = 0;
+		for (int i = 0; i < seg.size(); i++) {
+			temp = seg.get(i);
+			canSpilt = false;
+			index = 0;
+			if (wordPositionMap.get(temp) == null) {
+				for (int j = 1; j < temp.length(); j++) {
+					if (wordPositionMap.get(temp.substring(0, j)) != null
+							&& wordPositionMap.get(temp.substring(j)) != null) {
+						canSpilt = true;
+						index = j;
+						break;
+					}
+				}
+			}
+
+			if (canSpilt) {
+				smallArrayList.add(temp.substring(0, index));
+				smallArrayList.add(temp.substring(index));
+			} else {
+				smallArrayList.add(temp);
+			}
+		}
+		return smallArrayList;
+	}
+
 	public String[] getWordTag() {
 		return wordTag;
 	}
 
 	public void setWordTag(String[] wordTag) {
 		this.wordTag = wordTag;
-	}
-
-	public double[] getPrioriProbability() {
-		return prioriProbability;
-	}
-
-	public void setPrioriProbability(double[] prioriProbability) {
-		this.prioriProbability = prioriProbability;
-	}
-
-	public double[][] getTransformProbability() {
-		return transformProbability;
-	}
-
-	public void setTransformProbability(double[][] transformProbability) {
-		this.transformProbability = transformProbability;
-	}
-
-	public double[][] getEmissionProbability() {
-		return emissionProbability;
-	}
-
-	public void setEmissionProbability(double[][] emissionProbability) {
-		this.emissionProbability = emissionProbability;
 	}
 
 	public Map<String, Integer> getWordPositionMap() {

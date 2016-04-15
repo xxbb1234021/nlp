@@ -1,14 +1,12 @@
-package com.xb.business;
-
-import com.xb.business.hmm.HmmBaseModelBuilder;
+package com.xb.business.hmm;
 
 /**
  * Created by kevin on 2016/1/13.
  */
 public class Director {
-	private HmmBaseModelBuilder hmmBuilder;
+	private AbstractHmmModel hmmBuilder;
 
-	public Director(HmmBaseModelBuilder builder) {
+	public Director(AbstractHmmModel builder) {
 		this.hmmBuilder = builder;
 	}
 

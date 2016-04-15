@@ -1,4 +1,4 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
 import java.io.BufferedReader;
 import java.io.File;

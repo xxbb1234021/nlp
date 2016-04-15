@@ -1,19 +1,25 @@
-package com.xb.algoritm.trie;
+package com.xb.algoritm.segment;
 
 import java.io.IOException;
 
 import com.xb.bean.trie.ParticipleTrieNode;
-import com.xb.business.trie.SegmentWordTrieDictionary;
+import com.xb.business.trie.TrieDictionaryContext;
+import com.xb.business.trie.impl.SegmentWordTrieDictionary;
 import com.xb.constant.Constant;
 import com.xb.utils.CharacterTypeUtil;
 
 public class WordSegmenter {
-	public static SegmentWordTrieDictionary dict = null;
+	//public static SegmentWordTrieDictionary dict = null;
+
+	TrieDictionaryContext context = null;
 
 	public WordSegmenter() {
 		//加载词典  
-		String dictionaryName = Constant.TRIE_TREE;
-		dict = SegmentWordTrieDictionary.getInstance(dictionaryName, Constant.TRIE_CATEGORY_WORD);
+		//		String dictionaryName = Constant.TRIE_TREE;
+		//		dict = SegmentWordTrieDictionary.getInstance(dictionaryName);
+
+		context = new TrieDictionaryContext(SegmentWordTrieDictionary.getInstance(Constant.TRIE_TREE));
+		//		SyntaxTrieNode r = (SyntaxTrieNode)context.getNodeRoot();
 	}
 
 	/** 
@@ -43,7 +49,7 @@ public class WordSegmenter {
 	public String segment(String sentence) {
 		StringBuffer segBuffer = new StringBuffer();
 
-		ParticipleTrieNode p = dict.getRoot();
+		ParticipleTrieNode p = (ParticipleTrieNode) context.getRoot();//dict.getNodeRoot();
 		ParticipleTrieNode pChild = null;
 
 		int length = sentence.length();
@@ -70,7 +76,7 @@ public class WordSegmenter {
 				} else {
 					do {// 在词典中的词  
 						segBuffer.append(c);
-						if (p == dict.getRoot() || pChild.isBound()) { // 算法的关键，能够保证前缀词，被划分。  
+						if (p == context.getRoot() || pChild.isBound()) { // 算法的关键，能够保证前缀词，被划分。  
 							segBoundIndex = i;
 						}
 						if (++i >= length) {
@@ -86,7 +92,7 @@ public class WordSegmenter {
 					}
 					//还原现场  
 					i = segBoundIndex;
-					p = dict.getRoot();
+					p = (ParticipleTrieNode) context.getRoot();
 				}
 			}
 			segBuffer.append('|'); //添加分词标记  
@@ -95,63 +101,63 @@ public class WordSegmenter {
 		return new String(segBuffer);
 	}
 
-	public String segment(String sentence, String verison) {
-		StringBuffer segBuffer = new StringBuffer();
-
-		int segBoundIdx = 0;
-		int length = sentence.length();
-		ParticipleTrieNode p = null;
-		ParticipleTrieNode pChild = null;
-
-		for (int i = 0; i < length; i++) {
-			char c = sentence.charAt(i);
-
-			p = dict.getRoot();
-			pChild = p.getChilds().get(Character.valueOf(c));
-
-			// 不在词典中的字符  
-			if (pChild == null) {
-				if (CharacterTypeUtil.isCharSeperator(c)) {
-					segBuffer.append(c);// do something;  
-				}
-				if (CharacterTypeUtil.isCharChinese(c)) {
-					segBuffer.append(c);
-				} else {
-					do { // 非中文字符  
-						segBuffer.append(c);
-						if (++i == length) {
-							break;
-						}
-						c = sentence.charAt(i);
-					} while (CharacterTypeUtil.isCharOther(c));
-					if (i != length)
-						--i; //还原现场  
-				}
-			} else { // 中文字词  
-				while (pChild != null) {
-					if (p == dict.getRoot() || pChild.isBound()) { //词典中的词或者词典中词的前缀词；前缀词将被单字划分  
-						segBoundIdx = i;
-					}
-					segBuffer.append(c);
-					if (++i == length) {
-						break;
-					}
-					c = sentence.charAt(i);
-					p = pChild;
-					pChild = p.getChilds().get(Character.valueOf(c));
-				}
-				//切除分词表中不在词典中的前缀字词  
-				if (--i > segBoundIdx) {
-					segBuffer.delete(segBuffer.length() - (i - segBoundIdx), segBuffer.length());
-				}
-				//还原现场  
-				i = segBoundIdx;
-			}
-			segBuffer.append('|');
-		}
-
-		return new String(segBuffer);
-	}
+	//	public String segment(String sentence, String verison) {
+	//		StringBuffer segBuffer = new StringBuffer();
+	//
+	//		int segBoundIdx = 0;
+	//		int length = sentence.length();
+	//		ParticipleTrieNode p = null;
+	//		ParticipleTrieNode pChild = null;
+	//
+	//		for (int i = 0; i < length; i++) {
+	//			char c = sentence.charAt(i);
+	//
+	//			p = dict.getNodeRoot();
+	//			pChild = p.getChilds().get(Character.valueOf(c));
+	//
+	//			// 不在词典中的字符  
+	//			if (pChild == null) {
+	//				if (CharacterTypeUtil.isCharSeperator(c)) {
+	//					segBuffer.append(c);// do something;  
+	//				}
+	//				if (CharacterTypeUtil.isCharChinese(c)) {
+	//					segBuffer.append(c);
+	//				} else {
+	//					do { // 非中文字符  
+	//						segBuffer.append(c);
+	//						if (++i == length) {
+	//							break;
+	//						}
+	//						c = sentence.charAt(i);
+	//					} while (CharacterTypeUtil.isCharOther(c));
+	//					if (i != length)
+	//						--i; //还原现场  
+	//				}
+	//			} else { // 中文字词  
+	//				while (pChild != null) {
+	//					if (p == dict.getNodeRoot() || pChild.isBound()) { //词典中的词或者词典中词的前缀词；前缀词将被单字划分
+	//						segBoundIdx = i;
+	//					}
+	//					segBuffer.append(c);
+	//					if (++i == length) {
+	//						break;
+	//					}
+	//					c = sentence.charAt(i);
+	//					p = pChild;
+	//					pChild = p.getChilds().get(Character.valueOf(c));
+	//				}
+	//				//切除分词表中不在词典中的前缀字词  
+	//				if (--i > segBoundIdx) {
+	//					segBuffer.delete(segBuffer.length() - (i - segBoundIdx), segBuffer.length());
+	//				}
+	//				//还原现场  
+	//				i = segBoundIdx;
+	//			}
+	//			segBuffer.append('|');
+	//		}
+	//
+	//		return new String(segBuffer);
+	//	}
 
 	public static void main(String args[]) throws IOException {
 		WordSegmenter mmsegger = new WordSegmenter();
@@ -166,7 +172,7 @@ public class WordSegmenter {
 		//        System.out.println(mmsegger.segment("京华时报２００８年1月23日报道 昨天，受一股来自中西伯利亚的强冷空气影响，本市出现大风降温天气，白天最高气温只有零下7摄氏度，同时伴有6到7级的偏北风。"));  
 
 		//        System.out.println("another version: ");          
-		System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world", " "));
+		//		System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world", " "));
 		//        System.out.println(mmsegger.segment("小红是个爱学习的好学生!!!!!", " "));  
 		//        System.out.println(mmsegger.segment("中华民de hello world!人民共", " "));  
 		//        System.out.println(mmsegger.segment("中华人民共", " "));  

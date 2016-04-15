@@ -2,7 +2,7 @@ package com.xb.bean.trie;
 
 import java.util.HashMap;
 
-public class ParticipleTrieNode
+public class ParticipleTrieNode extends TrieNode
 {
 	/** 结点关键字，其值为中文词中的一个字 */
 	private char key = '\0';

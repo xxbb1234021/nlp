@@ -1,11 +1,12 @@
-package com.xb.pattern.hmm.impl;
+package com.xb.business.hmm.builderImpl;
 
-import com.xb.pattern.hmm.Director;
+import com.xb.business.hmm.Director;
 import com.xb.bean.hmm.Hmm;
-import com.xb.constant.Constant;
+import com.xb.business.hmm.HmmAbstractFactory;
+import com.xb.business.hmm.factoryImpl.WordTaggingFactory;
 import com.xb.constant.WordTaggingConstant;
 import com.xb.services.hmm.HmmService;
-import com.xb.algoritm.trie.WordSegmenter;
+import com.xb.algoritm.segment.WordSegmenter;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class TestWordTag {
         //        h.setEmitProb(emission_probability);
 
 
-        String source = "签约仪式前，秦光荣、李纪恒、仇和等一同会见了参加签约的企业家。";
+        String source = "咬死了猎人的狗";
         WordSegmenter mmsegger = new WordSegmenter();
         String splitWrod = mmsegger.segment(source);
         //System.out.println(splitWrod);
@@ -74,18 +75,10 @@ public class TestWordTag {
             wordList.add(words[i]);
         }
 
-//		WordTaggingModelBuilder ghm = WordTaggingModelBuilder.getInstance(Constant.WORD_TAG_TRAINDATA);
-//		ghm.wordTagSum();
-//		ghm.wordSum();
-//		ghm.transformFrequencySum();
-//		ghm.emissonFrequencySum();
-//		ghm.calculatePrioriProbability();
-//		ghm.calculateTransformProbability();
-//		ghm.calculateEmissionProbability();
-
-        WordTaggingModelBuilder builder = WordTaggingModelBuilder.getInstance(Constant.WORD_TAG_TRAINDATA);
+        HmmAbstractFactory factory = new WordTaggingFactory();
+        AbstractWordTagginModel builder = factory.createWordTagginModelBuilder();
         Director director = new Director(builder);
-        director.construct();
+        director.constructHmmModel();
 
         //List<String> smallArrayList = builder.smallSeg(wordList);
         List<String> smallArrayList = wordList;
@@ -116,9 +109,11 @@ public class TestWordTag {
             System.out.print(r + " ");
         }
 
+        StringBuilder sentence = new StringBuilder();
         String wd = "";
         for (int i = 0; i < example.length; i++) {
             wd = builder.getDiffWordTag()[result[i]];
+            sentence.append(example[i]).append("|").append(wd).append(" ");
             example[i] = example[i].concat("(" + wd + "--" + WordTaggingConstant.WORD_TAGGING_MAP.get(wd) + ")");
             //example[i] = example[i].concat("(" + wd + ")");
             //index = previous[i][index];
@@ -128,6 +123,7 @@ public class TestWordTag {
             System.out.print(r + " ");
         }
 
-
+        System.out.println();
+        System.out.println(sentence.toString());
     }
 }

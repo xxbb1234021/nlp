@@ -2,11 +2,9 @@ package com.xb.algoritm.cyk;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.xb.bean.syntax.*;
 import com.xb.bean.trie.SyntaxTrieNode;
-import com.xb.business.trie.SyntaxTrieDictionary;
+import com.xb.business.trie.impl.SyntaxTrieDictionary;
 
 /**
  * Created by kevin on 2016/3/24.
@@ -18,7 +16,7 @@ public class Cyk {
 	 * @param sentence
 	 * @param stdict
 	 */
-	public static void cykParsing(String sentence, SyntaxTrieDictionary stdict) {
+	public static void cykParsing(String sentence, SyntaxTrieDictionary stdict, SyntaxTrieNode r) {
 		String[] words = sentence.split(" ");
 		int wordsLen = words.length;
 		String[] word = new String[wordsLen];
@@ -48,8 +46,7 @@ public class Cyk {
 			indexLinkArrayTemp.add(new SyntaxIndexesLink(attr[i], 0, word[i], word[i], ""));
 			for (int j = 0; j < probLinkArrayTemp.size(); j++) {
 				syntaxProbLinkTemp = probLinkArrayTemp.get(j);
-				SyntaxTrieNode sytaxTrieNode = stdict.search(stdict.getRoot(),
-						new String[] { syntaxProbLinkTemp.getPhrase() });
+				SyntaxTrieNode sytaxTrieNode = stdict.search(r, new String[] { syntaxProbLinkTemp.getPhrase() });
 				if (sytaxTrieNode != null) {
 					prob = sytaxTrieNode.getProb() * syntaxProbLinkTemp.getProb();
 					syntaxProbLink = new SyntaxProbLink(sytaxTrieNode.getParent().getKey(), prob);
@@ -74,8 +71,8 @@ public class Cyk {
 					elem2 = cykModel.getProbLinkArray()[i + k - 1][j - k - 1];
 					for (int l = 0; l < elem1.size(); l++) {
 						for (int m = 0; m < elem2.size(); m++) {
-							SyntaxTrieNode sytaxTrieNode = stdict.search(stdict.getRoot(), new String[] {
-									elem1.get(l).getPhrase(), elem2.get(m).getPhrase() });
+							SyntaxTrieNode sytaxTrieNode = stdict.search(r, new String[] { elem1.get(l).getPhrase(),
+									elem2.get(m).getPhrase() });
 							if (sytaxTrieNode != null) {
 								boolean flag = true;
 								prob = sytaxTrieNode.getProb() * elem1.get(l).getProb() * elem2.get(m).getProb();
@@ -112,8 +109,7 @@ public class Cyk {
 				elem3 = cykModel.getProbLinkArray()[i - 1][j - 1];
 				elem4 = cykModel.getIndexLinkArray()[i - 1][j - 1];
 				for (int k = 0; k < elem3.size(); k++) {
-					SyntaxTrieNode sytaxTrieNode = stdict.search(stdict.getRoot(), new String[] { elem3.get(k)
-							.getPhrase() });
+					SyntaxTrieNode sytaxTrieNode = stdict.search(r, new String[] { elem3.get(k).getPhrase() });
 					if (sytaxTrieNode != null) {
 						boolean flag = true;
 						prob = sytaxTrieNode.getProb() * elem3.get(0).getProb();

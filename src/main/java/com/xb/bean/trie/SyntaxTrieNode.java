@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Created by kevin on 2016/3/25.
  */
-public class SyntaxTrieNode {
+public class SyntaxTrieNode extends TrieNode{
 	private String key;
 	private boolean bound;
 	private int count;

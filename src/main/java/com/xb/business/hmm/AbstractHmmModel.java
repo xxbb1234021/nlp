@@ -9,14 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kevin on 2016/1/13.
+ * Created by kevin on 2016/4/14.
  */
-public abstract class HmmBaseModelBuilder {
-	private static Logger LOGGER = Logger.getLogger(HmmBaseModelBuilder.class);
+public abstract class AbstractHmmModel {
+	private static Logger LOGGER = Logger.getLogger(AbstractHmmModel.class);
+    protected StringBuffer content = new StringBuffer();
 
-	protected StringBuffer content = new StringBuffer();
+    protected List<String> lineList = new ArrayList<String>();
 
-	protected List<String> lineList = new ArrayList<String>();
+	protected double[] prioriProbability;// 词的先验概率
+
+	protected double[][] transformProbability;
+
+	protected double[][] emissionProbability;
+
+	public double[] getPrioriProbability() {
+		return prioriProbability;
+	}
+
+	public double[][] getTransformProbability() {
+		return transformProbability;
+	}
+
+	public double[][] getEmissionProbability() {
+		return emissionProbability;
+	}
 
 	protected void readCorpus(String fileName, String charset) {
 		AutoDetector.loadRes(new ResourceLoader() {
