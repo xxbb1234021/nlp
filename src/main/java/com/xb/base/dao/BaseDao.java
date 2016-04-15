@@ -2,7 +2,6 @@ package com.xb.base.dao;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.RowMapper;
 
 
 public interface BaseDao<E> {
@@ -36,7 +35,7 @@ public interface BaseDao<E> {
      * 获取当前POJO的映射
      * 
      */
-    RowMapper<E> getRowMapper();
+    //RowMapper<E> getRowMapper();
     
     /**
      * 根据模板对象分页查询
