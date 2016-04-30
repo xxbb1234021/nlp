@@ -1,15 +1,10 @@
 package com.xb.business.trie.impl;
 
-import java.util.List;
-
+import com.xb.bean.trie.WordTrieNode;
 import org.apache.log4j.Logger;
 
-import com.xb.bean.trie.ParticipleTrieNode;
 import com.xb.business.trie.TrieDictionary;
 import com.xb.constant.Constant;
-import com.xb.utils.res.AutoDetector;
-import com.xb.utils.res.ResTools;
-import com.xb.utils.res.ResourceLoader;
 
 public class SegmentWordTrieDictionary extends TrieDictionary {
 	private static Logger LOGGER = Logger.getLogger(SegmentWordTrieDictionary.class);
@@ -38,12 +33,12 @@ public class SegmentWordTrieDictionary extends TrieDictionary {
 	}
 
 	public boolean search(String words) {
-		ParticipleTrieNode node = participleRoot;
+		WordTrieNode node = wordRoot;
 
 		int i = 0;
 		for (i = 0; i < words.length(); i++) {
 			char c = words.charAt(i);
-			ParticipleTrieNode pNode = node.getChilds().get(Character.valueOf(c));
+			WordTrieNode pNode = node.getChilds().get(Character.valueOf(c));
 			if (pNode == null)
 				break;
 			node = pNode;
@@ -52,7 +47,7 @@ public class SegmentWordTrieDictionary extends TrieDictionary {
 		return (i == words.length()) && (node.isBound());
 	}
 
-	public ParticipleTrieNode getNodeRoot() {
-		return participleRoot;
+	public WordTrieNode getNodeRoot() {
+		return wordRoot;
 	}
 }

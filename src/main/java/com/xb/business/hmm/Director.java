@@ -13,7 +13,7 @@ public class Director {
 	public void constructHmmModel() {
         hmmBuilder.transformFrequencySum();
         hmmBuilder.emissonFrequencySum();
-        hmmBuilder.calculatePrioriProbability();
+        hmmBuilder.calculateInitProbability();
         hmmBuilder.calculateTransformProbability();
         hmmBuilder.calculateEmissionProbability();
 	}

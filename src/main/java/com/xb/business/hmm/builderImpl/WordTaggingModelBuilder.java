@@ -148,7 +148,7 @@ public class WordTaggingModelBuilder extends AbstractWordTagginModel {
 	/**
 	 * 计算初始概率 也即不同词性在预料中出现的次数
 	 */
-	public void calculatePrioriProbability() {
+	public void calculateInitProbability() {
 		prioriProbability = new double[wordTagNum];
 
 		int allCharacterCount = 0;

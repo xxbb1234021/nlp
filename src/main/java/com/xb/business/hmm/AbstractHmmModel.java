@@ -66,7 +66,7 @@ public abstract class AbstractHmmModel {
 
 	public abstract void emissonFrequencySum();
 
-	public abstract void calculatePrioriProbability();
+	public abstract void calculateInitProbability();
 
 	public abstract void calculateTransformProbability();
 

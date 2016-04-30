@@ -158,7 +158,7 @@ public class PinyingToHanziModelBuilder extends AbstractPinyingToHanziModel {
 	/**
 	 * 计算初始概率 也即不同词在预料中出现的次数
 	 */
-	public void calculatePrioriProbability() {
+	public void calculateInitProbability() {
 		prioriProbability = new double[wordNum];
 
 		int allCharacterCount = 0;

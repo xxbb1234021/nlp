@@ -2,9 +2,9 @@ package com.xb.business.trie;
 
 import java.util.List;
 
+import com.xb.bean.trie.WordTrieNode;
 import org.apache.log4j.Logger;
 
-import com.xb.bean.trie.ParticipleTrieNode;
 import com.xb.bean.trie.SyntaxTrieNode;
 import com.xb.bean.trie.TrieNode;
 import com.xb.constant.Constant;
@@ -18,7 +18,7 @@ import com.xb.utils.res.ResourceLoader;
 public abstract class TrieDictionary {
 	private static Logger LOGGER = Logger.getLogger(TrieDictionary.class);
 
-	protected ParticipleTrieNode participleRoot = new ParticipleTrieNode();
+	protected WordTrieNode wordRoot = new WordTrieNode();
 
     protected SyntaxTrieNode syntaxRoot = new SyntaxTrieNode();
 
@@ -54,12 +54,12 @@ public abstract class TrieDictionary {
 	}
 
     private void readWordCorpus(String line) {
-		ParticipleTrieNode node = participleRoot;
+		WordTrieNode node = wordRoot;
 		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
-			ParticipleTrieNode pNode = node.getChilds().get(Character.valueOf(c));
+			WordTrieNode pNode = node.getChilds().get(Character.valueOf(c));
 			if (pNode == null) {
-				pNode = new ParticipleTrieNode(Character.valueOf(c));
+				pNode = new WordTrieNode(Character.valueOf(c));
 				node.getChilds().put(Character.valueOf(c), pNode);
 			}
 			node = pNode;
