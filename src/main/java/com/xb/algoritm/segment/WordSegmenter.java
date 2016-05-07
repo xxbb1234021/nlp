@@ -2,23 +2,20 @@ package com.xb.algoritm.segment;
 
 import java.io.IOException;
 
-import com.xb.bean.trie.ParticipleTrieNode;
+import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SegmentWordTrieDictionary;
 import com.xb.constant.Constant;
 import com.xb.utils.CharacterTypeUtil;
 
 public class WordSegmenter {
-	//public static SegmentWordTrieDictionary dict = null;
+	private TrieDictionaryContext context = null;
 
-	TrieDictionaryContext context = null;
-
-	public WordSegmenter() {
-		//加载词典  
-		//		String dictionaryName = Constant.TRIE_TREE;
+	public WordSegmenter(String path) {
+		//加载词典
+		context = new TrieDictionaryContext(SegmentWordTrieDictionary.getInstance(path));
+		//		String dictionaryName = Constant.WORD_TRIE_TREE;
 		//		dict = SegmentWordTrieDictionary.getInstance(dictionaryName);
-
-		context = new TrieDictionaryContext(SegmentWordTrieDictionary.getInstance(Constant.TRIE_TREE));
 		//		SyntaxTrieNode r = (SyntaxTrieNode)context.getNodeRoot();
 	}
 
@@ -49,8 +46,8 @@ public class WordSegmenter {
 	public String segment(String sentence) {
 		StringBuffer segBuffer = new StringBuffer();
 
-		ParticipleTrieNode p = (ParticipleTrieNode) context.getRoot();//dict.getNodeRoot();
-		ParticipleTrieNode pChild = null;
+		WordTrieNode p = (WordTrieNode) context.getRoot();//dict.getNodeRoot();
+		WordTrieNode pChild = null;
 
 		int length = sentence.length();
 		int segBoundIndex = -1; //保存上次分词结束字符在sentence中的位置     
@@ -92,7 +89,7 @@ public class WordSegmenter {
 					}
 					//还原现场  
 					i = segBoundIndex;
-					p = (ParticipleTrieNode) context.getRoot();
+					p = (WordTrieNode) context.getRoot();
 				}
 			}
 			segBuffer.append('|'); //添加分词标记  
@@ -106,8 +103,8 @@ public class WordSegmenter {
 	//
 	//		int segBoundIdx = 0;
 	//		int length = sentence.length();
-	//		ParticipleTrieNode p = null;
-	//		ParticipleTrieNode pChild = null;
+	//		WordTrieNode p = null;
+	//		WordTrieNode pChild = null;
 	//
 	//		for (int i = 0; i < length; i++) {
 	//			char c = sentence.charAt(i);
@@ -160,7 +157,7 @@ public class WordSegmenter {
 	//	}
 
 	public static void main(String args[]) throws IOException {
-		WordSegmenter mmsegger = new WordSegmenter();
+		WordSegmenter mmsegger = new WordSegmenter(Constant.WORD_TRIE_TREE);
 		System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world"));
 		System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));
 		System.out.println(mmsegger.segment("小红是个爱学习的好学生!!!!!"));

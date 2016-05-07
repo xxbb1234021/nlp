@@ -21,7 +21,7 @@ public class MakePinyingCorpus {
 
 	public void readHanziToPinyingFile() {
 		try {
-			File file = new File("D:\\workspace\\nlp\\src\\main\\resources\\pinying\\pinying.utf8");
+			File file = new File("D:\\workspace\\nlp\\src\\main\\resources\\pinying\\pinyin.utf8");
 			InputStream is = new FileInputStream(file);
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));

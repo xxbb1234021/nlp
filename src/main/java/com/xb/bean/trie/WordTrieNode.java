@@ -2,7 +2,7 @@ package com.xb.bean.trie;
 
 import java.util.HashMap;
 
-public class ParticipleTrieNode extends TrieNode
+public class WordTrieNode extends TrieNode
 {
 	/** 结点关键字，其值为中文词中的一个字 */
 	private char key = '\0';
@@ -11,16 +11,16 @@ public class ParticipleTrieNode extends TrieNode
 	private boolean bound = false;
 
 	/** 指向下一个结点的指针结构，用来存放当前字在词中的下一个字的位置 */
-	private HashMap<Character, ParticipleTrieNode> childs = new HashMap<Character, ParticipleTrieNode>();
+	private HashMap<Character, WordTrieNode> childs = new HashMap<Character, WordTrieNode>();
 	
 	/**  单词出现频数 */
 	private int count;
 
-	public ParticipleTrieNode()
+	public WordTrieNode()
 	{
 	}
 
-	public ParticipleTrieNode(char key)
+	public WordTrieNode(char key)
 	{
 		this.key = key;
 	}
@@ -45,12 +45,12 @@ public class ParticipleTrieNode extends TrieNode
 		this.bound = bound;
 	}
 
-	public HashMap<Character, ParticipleTrieNode> getChilds()
+	public HashMap<Character, WordTrieNode> getChilds()
 	{
 		return childs;
 	}
 
-	public void setChilds(HashMap<Character, ParticipleTrieNode> childs)
+	public void setChilds(HashMap<Character, WordTrieNode> childs)
 	{
 		this.childs = childs;
 	}

@@ -4,6 +4,7 @@ import com.xb.business.hmm.Director;
 import com.xb.bean.hmm.Hmm;
 import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.factoryImpl.WordTaggingFactory;
+import com.xb.constant.Constant;
 import com.xb.constant.WordTaggingConstant;
 import com.xb.services.hmm.HmmService;
 import com.xb.algoritm.segment.WordSegmenter;
@@ -66,7 +67,7 @@ public class TestWordTag {
 
 
         String source = "咬死了猎人的狗";
-        WordSegmenter mmsegger = new WordSegmenter();
+        WordSegmenter mmsegger = new WordSegmenter(Constant.WORD_TRIE_TREE);
         String splitWrod = mmsegger.segment(source);
         //System.out.println(splitWrod);
         String[] words = splitWrod.split("\\|");

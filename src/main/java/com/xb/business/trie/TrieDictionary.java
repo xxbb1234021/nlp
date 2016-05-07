@@ -20,7 +20,7 @@ public abstract class TrieDictionary {
 
 	protected WordTrieNode wordRoot = new WordTrieNode();
 
-    protected SyntaxTrieNode syntaxRoot = new SyntaxTrieNode();
+	protected SyntaxTrieNode syntaxRoot = new SyntaxTrieNode();
 
 	protected void readCorpus(String fileName, final String type) {
 		AutoDetector.loadRes(new ResourceLoader() {
@@ -43,6 +43,8 @@ public abstract class TrieDictionary {
 					readWordCorpus(line);
 				} else if (Constant.TRIE_CATEGORY_SYNTAX.equals(type)) {
 					readSyntaxCorpus(line);
+				} else if (Constant.TRIE_CATEGORY_PINYIN.equals(type)) {
+					readPinYinCorpus(line);
 				}
 			}
 
@@ -53,7 +55,7 @@ public abstract class TrieDictionary {
 		}, ResTools.get(fileName, "classpath:" + fileName), Constant.CHARSET_UTF8);
 	}
 
-    private void readWordCorpus(String line) {
+	private void readWordCorpus(String line) {
 		WordTrieNode node = wordRoot;
 		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
@@ -61,6 +63,20 @@ public abstract class TrieDictionary {
 			if (pNode == null) {
 				pNode = new WordTrieNode(Character.valueOf(c));
 				node.getChilds().put(Character.valueOf(c), pNode);
+			}
+			node = pNode;
+		}
+		node.setBound(true);
+	}
+
+	private void readPinYinCorpus(String line) {
+		WordTrieNode node = wordRoot;
+		for (int i = 0; i < line.length(); i++) {
+			char c = line.charAt(i);
+			WordTrieNode pNode = node.getChilds().get(c);
+			if (pNode == null) {
+				pNode = new WordTrieNode(c);
+				node.getChilds().put(c, pNode);
 			}
 			node = pNode;
 		}

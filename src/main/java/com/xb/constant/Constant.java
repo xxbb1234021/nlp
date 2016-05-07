@@ -6,7 +6,10 @@ public class Constant
 	public static final String BAYESTRAINDATA = "TrainningSet";
 	
 	//trie 树 文件夹
-	public static final String TRIE_TREE = "dict/ChiCoreDict.utf8";
+	public static final String WORD_TRIE_TREE = "dict/ChiCoreDict.utf8";
+
+	//trie 树 文件夹
+	public static final String PINYIN_TRIE_TREE = "pinyin/pinyin2.utf8";
 	
 	//double trie 树 数据文件夹
 	public static final String DOUBLE_TRIE_TREE = "dict/DoubleArrayChiCoreDict.utf8";
@@ -15,7 +18,7 @@ public class Constant
 	public static final String WORD_TAG_TRAINDATA = "tag/199801train.utf8";
 
 	//拼音标注语料库
-	public static final String PINYING_TAG_TRAINDATA = "pinying/outfile.utf8";
+	public static final String PINYING_TAG_TRAINDATA = "pinyin/outfile.utf8";
 
 	//中文编码
 	public static final String HMM_SEGMENT_CHINESECODE = "hmmseg/chinesecode.utf8";
@@ -34,6 +37,8 @@ public class Constant
 	public static final String CHARSET_GBK= "GBK";
 
 	public static final String TRIE_CATEGORY_WORD = "word";
+
+	public static final String TRIE_CATEGORY_PINYIN = "pinyin";
 
 	public static final String TRIE_CATEGORY_SYNTAX = "syntax";
 }
