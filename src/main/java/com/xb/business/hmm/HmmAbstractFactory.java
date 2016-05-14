@@ -10,4 +10,6 @@ public abstract class HmmAbstractFactory {
     public abstract AbstractWordTagginModel createWordTagginModelBuilder();
 
     public abstract AbstractPinyingToHanziModel createPinyingToHanziModelBuilder();
+
+    public abstract AbstractPinyingToHanziModel createPinyingToHanziModelBuilder2();
 }

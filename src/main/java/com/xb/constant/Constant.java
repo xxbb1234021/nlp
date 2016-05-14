@@ -1,5 +1,8 @@
 package com.xb.constant;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xb.utils.ReadAndWriteJson;
+
 public class Constant
 {
 	//贝叶斯训练数据文件夹
@@ -18,7 +21,17 @@ public class Constant
 	public static final String WORD_TAG_TRAINDATA = "tag/199801train.utf8";
 
 	//拼音标注语料库
-	public static final String PINYING_TAG_TRAINDATA = "pinyin/outfile.utf8";
+	public static final String PINYIN_TAG_TRAINDATA = "pinyin/outfile.utf8";
+	//拼音标注语料库
+	public static final String PINYIN_TAG_TRAINDATA2 = "pinyin/outfile2.utf8";
+
+	public static final String PINYIN_TAG_START = "pinyin_data/hmm_start.json";
+
+	public static final String PINYIN_TAG_PY2HZ = "pinyin_data/hmm_py2hz.json";
+
+	public static final String PINYIN_TAG_TRANSITION = "pinyin_data/hmm_transition.json";
+
+	public static final String PINYIN_TAG_EMISSION = "pinyin_data/hmm_emission.json";
 
 	//中文编码
 	public static final String HMM_SEGMENT_CHINESECODE = "hmmseg/chinesecode.utf8";

@@ -57,6 +57,7 @@ public class PinyingToHanziModelBuilder extends AbstractPinyingToHanziModel {
 
 	private boolean splitCorpus(String fileName) {
 		readCorpus(fileName, Constant.CHARSET_UTF8);
+		//readCorpus(Constant.PINYIN_TAG_TRAINDATA2, Constant.CHARSET_UTF8);
 
 		// 获取预料语料库中的一个个不同的词组(以空格分开)，词组后附有相应的词
 		text = content.toString().split("\\s{1,}");

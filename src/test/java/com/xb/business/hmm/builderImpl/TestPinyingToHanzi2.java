@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.xb.business.hmm.*;
-import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.xb.bean.hmm.Hmm;
 import com.xb.business.hmm.Director;
+import com.xb.business.hmm.HmmAbstractFactory;
+import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
 import com.xb.services.hmm.HmmService;
 import com.xb.utils.PinyingUtil;
 
 /**
- * Created by kevin on 2016/1/19.
+ * Created by kevin on 2016/5/15.
  */
-public class TestPinyingToHanzi {
+public class TestPinyingToHanzi2 {
 
 	@Test
 	public void testPinyingToHanzi() {
@@ -26,7 +26,7 @@ public class TestPinyingToHanzi {
 		List<String> wordList = new ArrayList<String>();
 
 		HmmAbstractFactory factory = new PinyingToHanziFactory();
-		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder();
+		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder2();
 		Director director = new Director(builder);
 		director.constructHmmModel();
 
@@ -35,7 +35,7 @@ public class TestPinyingToHanzi {
 		Map<String, Integer> pinyingPositionMap = builder.getPinyingPositionMap();
 
 		System.out.println("输入：" + source);
-		String splitSpell = "wo da si ni";PinyingUtil.splitSpell(source);
+		String splitSpell = "wo ai ni ma";
 		System.out.println("切分后：" + splitSpell);
 
 		String[] pinying = splitSpell.split(" ");

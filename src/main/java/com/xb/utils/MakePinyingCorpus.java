@@ -21,7 +21,7 @@ public class MakePinyingCorpus {
 
 	public void readHanziToPinyingFile() {
 		try {
-			File file = new File("D:\\workspace\\nlp\\src\\main\\resources\\pinying\\pinyin.utf8");
+			File file = new File("D:\\workspace\\nlp\\src\\main\\resources\\pinyin\\pinyin.utf8");
 			InputStream is = new FileInputStream(file);
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
@@ -137,8 +137,8 @@ public class MakePinyingCorpus {
 		m.readHanziToPinyingFile();
 		//String filepath = "D:\\workspace\\nlp\\src\\main\\resources\\pinying\\C000020";
 		//m.readCatalogFile(filepath);
-		String filename = "D:\\workspace\\nlp\\src\\main\\resources\\pinying\\199801.utf8";
+		String filename = "D:\\workspace\\nlp\\src\\main\\resources\\dict\\ChiCoreDict.utf8";
 		m.readHanziToPinyingFile(filename, "utf-8");
-		m.writeCorpusToFile("D:\\workspace\\nlp\\src\\main\\resources\\pinying\\outfile.utf8", list.toArray(new String[list.size()]));
+		m.writeCorpusToFile("D:\\workspace\\nlp\\src\\main\\resources\\pinyin\\outfile2.utf8", list.toArray(new String[list.size()]));
 	}
 }

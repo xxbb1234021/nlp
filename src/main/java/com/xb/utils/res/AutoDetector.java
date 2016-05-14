@@ -4,17 +4,24 @@ import static java.lang.System.currentTimeMillis;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by kevin on 2016/2/24.
  */
 public class AutoDetector {
-	private static Logger LOGGER = Logger.getLogger(AutoDetector.class);
+	//private static Logger LOGGER = Logger.getLogger(AutoDetector.class);
+	private static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AutoDetector.class);
 
 	/**
 	 * 加载资源
@@ -28,7 +35,7 @@ public class AutoDetector {
 			LOGGER.info("没有资源可以加载");
 			return;
 		}
-		LOGGER.debug("开始加载资源");
+		LOGGER.info("开始加载资源");
 		LOGGER.info(resourcePaths);
 		long start = currentTimeMillis();
 		List<String> result = new ArrayList<String>();
@@ -79,37 +86,12 @@ public class AutoDetector {
 	 * @return 文件内容
 	 */
 	private static List<String> load(String path, String charset) {
-		BufferedReader br = null;
-
-		List<String> result = new ArrayList<String>();
 		try {
-			InputStream in = null;
-			LOGGER.info("加载资源：" + path);
-			if (path.startsWith("classpath:")) {
-				in = AutoDetector.class.getClassLoader().getResourceAsStream(path.replace("classpath:", ""));
-			} else {
-				in = new FileInputStream(path);
-			}
-			br = new BufferedReader(new InputStreamReader(in, charset));
-			String line;
-			while ((line = br.readLine()) != null) {
-				line = line.trim();
-				if ("".equals(line) || line.startsWith("#")) {
-					continue;
-				}
-				result.add(line);
-			}
-
+			List<String> lines = Files.readAllLines(Paths.get(path), Charset.forName(charset));
+			return lines;
 		} catch (Exception e) {
 			LOGGER.error("加载资源失败：" + path, e);
 		}
-		finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-		return result;
+		return null;
 	}
 }

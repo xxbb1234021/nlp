@@ -19,4 +19,9 @@ public class WordTaggingFactory extends HmmAbstractFactory {
     public AbstractPinyingToHanziModel createPinyingToHanziModelBuilder() {
         return null;
     }
+
+    @Override
+    public AbstractPinyingToHanziModel createPinyingToHanziModelBuilder2() {
+        return null;
+    }
 }
