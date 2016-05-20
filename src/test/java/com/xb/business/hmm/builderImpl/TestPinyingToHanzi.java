@@ -32,10 +32,10 @@ public class TestPinyingToHanzi {
 
 		Hmm h = new Hmm();
 
-		Map<String, Integer> pinyingPositionMap = builder.getPinyingPositionMap();
+		Map<String, Integer> pinyingPositionMap = builder.getPinyinPositionMap();
 
 		System.out.println("输入：" + source);
-		String splitSpell = "wo da si ni";PinyingUtil.splitSpell(source);
+		String splitSpell = "wo ai ni ma";PinyingUtil.splitSpell(source);
 		System.out.println("切分后：" + splitSpell);
 
 		String[] pinying = splitSpell.split(" ");

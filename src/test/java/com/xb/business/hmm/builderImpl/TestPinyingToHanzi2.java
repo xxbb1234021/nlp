@@ -12,7 +12,6 @@ import com.xb.business.hmm.Director;
 import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
 import com.xb.services.hmm.HmmService;
-import com.xb.utils.PinyingUtil;
 
 /**
  * Created by kevin on 2016/5/15.
@@ -32,10 +31,10 @@ public class TestPinyingToHanzi2 {
 
 		Hmm h = new Hmm();
 
-		Map<String, Integer> pinyingPositionMap = builder.getPinyingPositionMap();
+		Map<String, Integer> pinyingPositionMap = builder.getPinyinPositionMap();
 
 		System.out.println("输入：" + source);
-		String splitSpell = "wo ai ni ma";
+		String splitSpell = "wo zai zhe li";
 		System.out.println("切分后：" + splitSpell);
 
 		String[] pinying = splitSpell.split(" ");

@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class AbstractPinyingToHanziModel extends AbstractHmmModel {
 
-	public abstract Map<String, Integer> getPinyingPositionMap();
+	public abstract Map<String, Integer> getPinyinPositionMap();
 
 	public abstract int getWordNum();
 

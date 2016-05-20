@@ -13,6 +13,7 @@ import java.util.List;
  */
 public abstract class AbstractHmmModel {
 	private static Logger LOGGER = Logger.getLogger(AbstractHmmModel.class);
+
     protected StringBuffer content = new StringBuffer();
 
     protected List<String> lineList = new ArrayList<String>();

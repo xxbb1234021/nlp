@@ -45,7 +45,7 @@ public class HmmService {
 		director.constructHmmModel();
 
 		Hmm h = new Hmm();
-		Map<String, Integer> pinyingPositionMap = builder.getPinyingPositionMap();
+		Map<String, Integer> pinyingPositionMap = builder.getPinyinPositionMap();
 		String[] pinyin = splitPinYin.split("\\|");
 		int[] obs = new int[pinyin.length];
 		for (int i = 0; i < pinyin.length; i++) {
