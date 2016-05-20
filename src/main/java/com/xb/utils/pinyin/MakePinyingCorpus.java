@@ -31,20 +31,20 @@ public class MakePinyingCorpus {
 	private static Map<String, Integer> emissionsFrequencyMap = new HashMap<String, Integer>(); // emissionsFrequencyMap，存储每两个词的词及其频率
 
 	public static void readCorpus(String path, String charCode) {
-//		List<String> lines = FileNIOUtil.readFileLine(path, charCode);
-//
-//		for (String str : lines) {
-//			wordSum(str);
-//			pinyingSum(str);
-//			transformFrequencySum(str);
-//			emissonFrequencySum(str);
-//		}
-//
-//		writeInitJson();
-//		writeTransformJson();
-//		writeEmissionJson();
+		List<String> lines = FileNIOUtil.readFileLine(path, charCode);
 
-		writePy2hzJson();
+		for (String str : lines) {
+			wordSum(str);
+			pinyingSum(str);
+			transformFrequencySum(str);
+			emissonFrequencySum(str);
+		}
+
+		writeInitJson();
+		writeTransformJson();
+		writeEmissionJson();
+
+		//writePy2hzJson();
 	}
 
 	public static void wordSum(String line) {
@@ -96,27 +96,6 @@ public class MakePinyingCorpus {
 	 * 计算转移频数
 	 */
 	public static void transformFrequencySum(String line) {
-		//        JSONObject transformInnMap = new JSONObject();
-		//        String[] words = line.split(" ");
-		//        for (int i = 0; i < words.length - 1; i++) {
-		//            transformInnMap = new JSONObject();
-		//            //temp = words.charAt(i) + "," + words.charAt(i + 1);
-		//            String[] first = words[i].split("\\/");
-		//            String[] second = words[i + 1].split("\\/");
-		//            if (transformFrequencyMap.getString(first[1]) != null) {
-		//                if (transformFrequencyMap.getJSONObject(first[1]).getString(second[1]) != null) {
-		//                    //transformInnMap.put(second[1], transformInnMap.getIntValue(second[1]) + 1);
-		//                    transformFrequencyMap.getJSONObject(first[1]).put(second[1], transformFrequencyMap.getJSONObject(first[1]).getIntValue(second[1]) + 1);
-		//                } else {
-		//                    //transformInnMap.put(second[1], 1);
-		//                    transformFrequencyMap.getJSONObject(first[1]).put(second[1], 1);
-		//                }
-		//            } else {
-		//                transformInnMap.put(second[1], 1);
-		//                transformFrequencyMap.put(first[1], transformInnMap);
-		//            }
-		//        }
-
 		String temp = "";
 		String[] words = line.split(" ");
 		for (int i = 0; i < words.length - 1; i++) {

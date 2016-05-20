@@ -32,11 +32,7 @@ public class BaseController {
 
     @RequestMapping(value = "/hmm")
     public void hmm(){
-        hmmService.test();
-
         String source = "wodasini";
-        PinYinSegmenter mmsegger = new PinYinSegmenter(Constant.PINYIN_TRIE_TREE);
-        String splitPinYin = mmsegger.segment(source);
         hmmService.getHanzi(source);
     }
 }

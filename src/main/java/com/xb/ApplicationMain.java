@@ -1,5 +1,11 @@
 package com.xb;
 
+import com.xb.algoritm.segment.PinYinSegmenter;
+import com.xb.business.hmm.Director;
+import com.xb.business.hmm.HmmAbstractFactory;
+import com.xb.business.hmm.builderImpl.AbstractPinyingToHanziModel;
+import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
+import com.xb.constant.Constant;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +26,14 @@ public class ApplicationMain {
 	public static void main(String[] args) throws Exception {
 		//启动Spring Boot项目的唯一入口  
 		SpringApplication.run(ApplicationMain.class, args);
+
+		//加载拼音语料库
+		PinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE);
+
+		HmmAbstractFactory factory = new PinyingToHanziFactory();
+		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder2();
+		Director director = new Director(builder);
+		director.constructHmmModel();
 
 		log.info("启动完成");
 	}

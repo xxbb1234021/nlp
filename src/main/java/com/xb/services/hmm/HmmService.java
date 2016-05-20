@@ -36,13 +36,10 @@ public class HmmService {
 	}
 
 	public void getHanzi(String splitSpell){
-		PinYinSegmenter mmsegger = new PinYinSegmenter(Constant.PINYIN_TRIE_TREE);
-		String splitPinYin = mmsegger.segment(splitSpell);
+		String splitPinYin = PinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE).segment(splitSpell);
 
 		HmmAbstractFactory factory = new PinyingToHanziFactory();
 		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder2();
-		Director director = new Director(builder);
-		director.constructHmmModel();
 
 		Hmm h = new Hmm();
 		Map<String, Integer> pinyingPositionMap = builder.getPinyinPositionMap();

@@ -10,13 +10,30 @@ import com.xb.constant.Constant;
 import com.xb.utils.CharacterTypeUtil;
 
 public class PinYinSegmenter {
+	private static PinYinSegmenter ghm = null;
+
 	private TrieDictionaryContext context = null;
 
 	public PinYinSegmenter(String path) {
 		context = new TrieDictionaryContext(SegmentPinYinTrieDictionary.getInstance(path));
 	}
 
-	/** 
+	public TrieDictionaryContext getContext() {
+		return context;
+	}
+
+	public static PinYinSegmenter getInstance(String path) {
+		if (ghm == null) {
+			synchronized (PinYinSegmenter.class) {
+				if (ghm == null) {
+					ghm = new PinYinSegmenter(path);
+				}
+			}
+		}
+		return ghm;
+	}
+
+	/**
 	 * 词典：用Trie树表示，每个节点都是一个TrieNode节点 
 	 * 每个TrieNode节点中有: 
 	 *   1.表示一个字 
