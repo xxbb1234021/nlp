@@ -1,19 +1,18 @@
 package com.xb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
 import com.xb.algoritm.segment.PinYinSegmenter;
 import com.xb.business.hmm.Director;
 import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.builderImpl.AbstractPinyingToHanziModel;
 import com.xb.business.hmm.factoryImpl.PinyingToHanziFactory;
 import com.xb.constant.Constant;
-import org.apache.log4j.PropertyConfigurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 //配置控制
 @Configuration
 //启用自动配置

@@ -259,10 +259,10 @@ public class Cyk {
 	public static void printResult(CykModel cykModel) {
 		boolean flag = true;
 		int size = cykModel.getIndexLinkArray().length;
-		for (int i = 0; i < size; i++) {
-			List<SyntaxProbLink> probLinkList = cykModel.getProbLinkArray()[0][i];
-			List<SyntaxIndexesLink> indexLinkList = cykModel.getIndexLinkArray()[0][i];
-			StringBuilder sb = new StringBuilder();
+		//for (int i = 0; i < size; i++) {
+			List<SyntaxProbLink> probLinkList = cykModel.getProbLinkArray()[0][size-1];
+			List<SyntaxIndexesLink> indexLinkList = cykModel.getIndexLinkArray()[0][size-1];
+			StringBuilder sb = null;
 			for (int j = 0; j < indexLinkList.size(); j++) {
 				sb = new StringBuilder();
 				if (indexLinkList.get(j).getPhrase().equals("S")) {
@@ -276,7 +276,7 @@ public class Cyk {
 				}
 			}
 			//System.out.println(sb.toString());
-		}
+		//}
 		if (flag) {
 			System.out.println("该语句不能剖析");
 		}
