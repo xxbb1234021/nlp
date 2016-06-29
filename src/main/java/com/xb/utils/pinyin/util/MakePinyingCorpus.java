@@ -1,4 +1,4 @@
-package com.xb.utils.pinyin;
+package com.xb.utils.pinyin.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

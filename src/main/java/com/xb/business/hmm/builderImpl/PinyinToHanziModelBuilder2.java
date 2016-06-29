@@ -1,17 +1,21 @@
 package com.xb.business.hmm.builderImpl;
 
+
 import java.util.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xb.constant.Constant;
 import com.xb.utils.FileNIOUtil;
-import org.apache.log4j.Logger;
+
 
 /**
  * Created by kevin on 2016/5/15.
  */
 public class PinyinToHanziModelBuilder2 extends AbstractPinyingToHanziModel {
-	private static Logger LOGGER = Logger.getLogger(PinyinToHanziModelBuilder2.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(PinyinToHanziModelBuilder2.class);
 
 	private int wordNum = 0;
 
@@ -193,55 +197,24 @@ public class PinyinToHanziModelBuilder2 extends AbstractPinyingToHanziModel {
 		return prioriProbability;
 	}
 
-	public void setPrioriProbability(double[] prioriProbability) {
-		this.prioriProbability = prioriProbability;
-	}
-
 	public double[][] getTransformProbability() {
 		return transformProbability;
-	}
-
-	public void setTransformProbability(double[][] transformProbability) {
-		this.transformProbability = transformProbability;
 	}
 
 	public double[][] getEmissionProbability() {
 		return emissionProbability;
 	}
 
-	public void setEmissionProbability(double[][] emissionProbability) {
-		this.emissionProbability = emissionProbability;
-	}
-
 	public Map<String, Integer> getPinyinPositionMap() {
 		return pinyinPositionMap;
-	}
-
-	public void setPinyinPositionMap(Hashtable<String, Integer> pinyinPositionMap) {
-		this.pinyinPositionMap = pinyinPositionMap;
 	}
 
 	public int getWordNum() {
 		return wordNum;
 	}
 
-	public void setWordNum(int wordNum) {
-		this.wordNum = wordNum;
-	}
-
 	public String[] getDiffWord() {
 		return diffWord;
 	}
 
-	public void setDiffWord(String[] diffWord) {
-		this.diffWord = diffWord;
-	}
-
-	public String[] getDiffPinyin() {
-		return diffPinyin;
-	}
-
-	public void setDiffPinyin(String[] diffPinyin) {
-		this.diffPinyin = diffPinyin;
-	}
 }

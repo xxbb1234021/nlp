@@ -4,20 +4,18 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.xb.bean.trie.SyntaxTrieNode;
 import com.xb.business.trie.TrieDictionary;
 import com.xb.constant.Constant;
-import com.xb.utils.res.AutoDetector;
-import com.xb.utils.res.ResTools;
-import com.xb.utils.res.ResourceLoader;
 
 /**
  * Created by kevin on 2016/3/25.
  */
 public class SyntaxTrieDictionary extends TrieDictionary {
-	private static Logger LOGGER = Logger.getLogger(SyntaxTrieDictionary.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(SyntaxTrieDictionary.class);
 
 	private static SyntaxTrieDictionary dict = null;
 

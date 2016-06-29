@@ -6,7 +6,7 @@ import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SegmentWordTrieDictionary;
 import com.xb.constant.Constant;
-import com.xb.utils.CharacterTypeUtil;
+import com.xb.utils.TextUtils;
 
 public class WordSegmenter {
 	private TrieDictionaryContext context = null;
@@ -54,19 +54,19 @@ public class WordSegmenter {
 
 		for (int i = 0; i < length; ++i) {
 			char c = sentence.charAt(i);
-			if (CharacterTypeUtil.isCharSeperator(c)) {// 分隔符  
+			if (TextUtils.isCharSeperator(c)) {// 分隔符
 				segBuffer.append(c);
-			} else if (CharacterTypeUtil.isCharOther(c)) {// 其他语言字符               
+			} else if (TextUtils.isOtherChar(c)) {// 其他语言字符
 				do {
 					segBuffer.append(c);
 					if (++i == length) {
 						break;
 					}
 					c = sentence.charAt(i);
-				} while (CharacterTypeUtil.isCharOther(c));
+				} while (TextUtils.isOtherChar(c));
 				if (i != length)
 					--i; //还原现场              
-			} else if (CharacterTypeUtil.isCharChinese(c)) {
+			} else if (TextUtils.isChineseChar(c)) {
 				pChild = p.getChilds().get(Character.valueOf(c));
 				if (pChild == null) {// 不在词典中的中文字符  
 					segBuffer.append(c);
@@ -114,10 +114,10 @@ public class WordSegmenter {
 	//
 	//			// 不在词典中的字符  
 	//			if (pChild == null) {
-	//				if (CharacterTypeUtil.isCharSeperator(c)) {
+	//				if (TextUtils.isCharSeperator(c)) {
 	//					segBuffer.append(c);// do something;  
 	//				}
-	//				if (CharacterTypeUtil.isCharChinese(c)) {
+	//				if (TextUtils.isChineseChar(c)) {
 	//					segBuffer.append(c);
 	//				} else {
 	//					do { // 非中文字符  
@@ -126,7 +126,7 @@ public class WordSegmenter {
 	//							break;
 	//						}
 	//						c = sentence.charAt(i);
-	//					} while (CharacterTypeUtil.isCharOther(c));
+	//					} while (TextUtils.isOtherChar(c));
 	//					if (i != length)
 	//						--i; //还原现场  
 	//				}
@@ -160,7 +160,7 @@ public class WordSegmenter {
 		WordSegmenter mmsegger = new WordSegmenter(Constant.WORD_TRIE_TREE);
 		System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world"));
 		System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));
-		System.out.println(mmsegger.segment("小红是个爱学习的好学生!!!!!"));
+		System.out.println(mmsegger.segment("新中国马明哲的戏"));
 		//        System.out.println(mmsegger.segment("中华民de hello world!人民共"));  
 		//        System.out.println(mmsegger.segment("中华人民共"));  
 		//        System.out.println(mmsegger.segment("中华人民共和国家"));  
@@ -178,9 +178,9 @@ public class WordSegmenter {
 		//        System.out.println(mmsegger.segment("爱我Love你", " "));  
 		//        System.out.println(mmsegger.segment("京华时报2008年1月23日报道 昨天，受一股来自中西伯利亚的强冷空气影响，本市出现大风降温天气，白天最高气温只有零下7摄氏度，同时伴有6到7级的偏北风。", ""));  
 
-		//System.out.println(CharacterTypeUtil.isCharSeperator(' '));
+		//System.out.println(TextUtils.isCharSeperator(' '));
 
-		//		System.out.println("1:" + Thread.currentThread().getContextClassLoader().getResource("ChiCoreDict.utf8"));
+		//		System.out.println("1:" + Thread.currentThread().getContextClassLoader().getResource("chiCoreDict.utf8"));
 		//		System.out.println("2:" + WordSegmenter.class.getClassLoader().getResource(""));
 		//		System.out.println("3:" + ClassLoader.getSystemResource(""));
 		//		System.out.println("4:" + WordSegmenter.class.getResource(""));//IdcardClient.class文件所在路径  

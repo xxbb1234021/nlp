@@ -1,4 +1,4 @@
-package com.xb.utils.pinyin;
+package com.xb.utils.pinyin.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.xb.constant.Constant;
-import com.xb.utils.CharacterTypeUtil;
+import com.xb.utils.TextUtils;
 import com.xb.utils.FileNIOUtil;
 
 /**
@@ -40,7 +40,7 @@ public class ArticleProcess {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < content.length(); i++) {
             Character c = Character.valueOf(content.charAt(i));
-            if (CharacterTypeUtil.isCharChinese(c)) {
+            if (TextUtils.isChineseChar(c)) {
                 sb.append(c);
             } else {
                 list.add(sb.toString() + "\n");

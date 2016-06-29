@@ -1,4 +1,4 @@
-package com.xb.utils.pinyin;
+package com.xb.utils.pinyin.util;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,13 +1,14 @@
 package com.xb.business.trie.impl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionary;
 import com.xb.constant.Constant;
 
 public class SegmentPinYinTrieDictionary extends TrieDictionary {
-	private static Logger LOGGER = Logger.getLogger(SegmentPinYinTrieDictionary.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(SegmentPinYinTrieDictionary.class);
 
 	private static SegmentPinYinTrieDictionary dict = null;
 

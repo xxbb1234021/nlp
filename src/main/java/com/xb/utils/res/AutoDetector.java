@@ -2,10 +2,9 @@ package com.xb.utils.res;
 
 import static java.lang.System.currentTimeMillis;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -21,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AutoDetector {
 	//private static Logger LOGGER = Logger.getLogger(AutoDetector.class);
-	private static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AutoDetector.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(AutoDetector.class);
 
 	/**
 	 * 加载资源

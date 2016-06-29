@@ -180,9 +180,9 @@ public class SoundTest {
 //              try {
 //                  AudioInputStream in = new AudioInputStream(recordLine);
 //                  byte[] buf = new byte[recordLine.getBufferSize()];
-//                  int len;
-//                  while((len=in.read(buf)) != -1) {
-//                      playLine.write(buf, 0, len);
+//                  int getLen;
+//                  while((getLen=in.read(buf)) != -1) {
+//                      playLine.write(buf, 0, getLen);
 //                  }
 //              } catch (IOException e) {
 //                  e.printStackTrace();

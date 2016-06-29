@@ -5,9 +5,8 @@ import java.io.IOException;
 import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SegmentPinYinTrieDictionary;
-import com.xb.business.trie.impl.SegmentWordTrieDictionary;
 import com.xb.constant.Constant;
-import com.xb.utils.CharacterTypeUtil;
+import com.xb.utils.TextUtils;
 
 public class PinYinSegmenter {
 	private static PinYinSegmenter ghm = null;
@@ -68,9 +67,9 @@ public class PinYinSegmenter {
 
 		for (int i = 0; i < length; ++i) {
 			char c = sentence.charAt(i);
-			if (CharacterTypeUtil.isCharSeperator(c)) {// 分隔符  
+			if (TextUtils.isCharSeperator(c)) {// 分隔符
 				segBuffer.append(c);
-			} else if (!CharacterTypeUtil.isCharChinese(c)) {
+			} else if (!TextUtils.isChineseChar(c)) {
 				pChild = p.getChilds().get(c);
 				if (pChild == null) {// 不在词典中的中文字符  
 					segBuffer.append(c);

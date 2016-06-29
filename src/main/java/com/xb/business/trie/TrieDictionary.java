@@ -2,11 +2,12 @@ package com.xb.business.trie;
 
 import java.util.List;
 
-import com.xb.bean.trie.WordTrieNode;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.xb.bean.trie.SyntaxTrieNode;
 import com.xb.bean.trie.TrieNode;
+import com.xb.bean.trie.WordTrieNode;
 import com.xb.constant.Constant;
 import com.xb.utils.res.AutoDetector;
 import com.xb.utils.res.ResTools;
@@ -16,7 +17,7 @@ import com.xb.utils.res.ResourceLoader;
  * Created by kevin on 2016/4/14.
  */
 public abstract class TrieDictionary {
-	private static Logger LOGGER = Logger.getLogger(TrieDictionary.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(TrieDictionary.class);
 
 	protected WordTrieNode wordRoot = new WordTrieNode();
 

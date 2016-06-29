@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class TrainingDataManager {
 	private static TrainingDataManager tdm = null;
 	private static File traningTextDir;//训练语料存放目录
-	private static String defaultDir = "TrainningSet";
+	private static String defaultDir = "trainningSet";
 
 	private String[] traningFileClassifications;//训练语料分类集合
 

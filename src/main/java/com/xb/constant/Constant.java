@@ -3,16 +3,19 @@ package com.xb.constant;
 public class Constant
 {
 	//贝叶斯训练数据文件夹
-	public static final String BAYESTRAINDATA = "TrainningSet";
+	public static final String BAYESTRAINDATA = "trainningSet";
 	
 	//trie 树 文件夹
-	public static final String WORD_TRIE_TREE = "dict/ChiCoreDict.utf8";
+	public static final String WORD_TRIE_TREE = "dict/chiCoreDict.utf8";
+
+	//trie 树 文件夹
+	public static final String WORD_NEW_TEXT = "dict/newtext.utf8";
 
 	//trie 树 文件夹
 	public static final String PINYIN_TRIE_TREE = "pinyin/pinyin2.utf8";
 	
 	//double trie 树 数据文件夹
-	public static final String DOUBLE_TRIE_TREE = "dict/DoubleArrayChiCoreDict.utf8";
+	public static final String DOUBLE_TRIE_TREE = "dict/doubleArrayChiCoreDict.utf8";
 
 	//词性标注语料库
 	public static final String WORD_TAG_TRAINDATA = "tag/199801train.utf8";

@@ -1,16 +1,21 @@
 package com.xb.business.hmm.builderImpl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.xb.constant.Constant;
-import org.apache.log4j.Logger;
 
 /**
  * Created by kevin on 2016/1/11.
  * 1.找出所有的词性个数，词性的频率
  */
 public class WordTaggingModelBuilder extends AbstractWordTagginModel {
-	private static Logger LOGGER = Logger.getLogger(WordTaggingModelBuilder.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(WordTaggingModelBuilder.class);
 
 	private int wordTagNum = 0;
 
@@ -246,43 +251,15 @@ public class WordTaggingModelBuilder extends AbstractWordTagginModel {
 		return smallArrayList;
 	}
 
-	public String[] getWordTag() {
-		return wordTag;
-	}
-
-	public void setWordTag(String[] wordTag) {
-		this.wordTag = wordTag;
-	}
-
 	public Map<String, Integer> getWordPositionMap() {
 		return wordPositionMap;
-	}
-
-	public void setWordPositionMap(Hashtable<String, Integer> wordPositionMap) {
-		this.wordPositionMap = wordPositionMap;
 	}
 
 	public int getWordTagNum() {
 		return wordTagNum;
 	}
 
-	public void setWordTagNum(int wordTagNum) {
-		this.wordTagNum = wordTagNum;
-	}
-
 	public String[] getDiffWordTag() {
 		return diffWordTag;
-	}
-
-	public void setDiffWordTag(String[] diffWordTag) {
-		this.diffWordTag = diffWordTag;
-	}
-
-	public String[] getDiffWord() {
-		return diffWord;
-	}
-
-	public void setDiffWord(String[] diffWord) {
-		this.diffWord = diffWord;
 	}
 }

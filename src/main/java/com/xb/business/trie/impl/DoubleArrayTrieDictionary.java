@@ -1,5 +1,8 @@
 package com.xb.business.trie.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 public class DoubleArrayTrieDictionary {
+	private static Logger LOGGER = LoggerFactory.getLogger(DoubleArrayTrieDictionary.class);
+
 	private static DoubleArrayTrieDictionary dict = null;
 	private List<String> words = new ArrayList<String>();
 	private Set<Character> charset = new HashSet<Character>();
