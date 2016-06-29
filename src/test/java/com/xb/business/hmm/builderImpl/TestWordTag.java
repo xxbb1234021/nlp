@@ -20,7 +20,6 @@ public class TestWordTag {
 
     @Test
     public void testViterbi() {
-        // TODO Auto-generated method stub
         HmmService hs = new HmmService();
         int observeLenght = 3;
         int[] observeSequence = {0, 1, 0};

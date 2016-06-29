@@ -1,5 +1,6 @@
 package com.xb.business.hmm.builderImpl;
 
+import com.xb.bean.syntax.CykModel;
 import com.xb.business.trie.TrieDictionaryContext;
 import org.junit.Test;
 
@@ -29,7 +30,8 @@ public class TestCYK {
 
 		//String s = "咬|v 死|v 猎人|m 的|u 狗|n";
 		String s = "咬|vt 死|adj 了|utl 猎人|noun 的|de 狗|noun";
-		Cyk.cykParsing(s, dict, r);
+		CykModel cykModel = Cyk.cykParsing(s, dict, r);
+		Cyk.getResultTree(cykModel);
 
 
 //		CykBaseModelBuilder c = CykModelBuilder.getInstance(Constant.PCFG_DATA);
