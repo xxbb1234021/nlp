@@ -22,7 +22,7 @@ public class MakePinyingCorpus {
 
 	private static String[] diffPinyin;// 存储不同的拼音
 
-	private static Map<String, Integer> wordMap = new HashMap<String, Integer>(); // 创建wordTagMap，存储单个词的词及其频率
+	private static Map<String, Integer> wordMap = new HashMap<String, Integer>(); // 创建wordMap，存储单个词的词及其频率
 
 	private static Map<String, Integer> pinyinMap = new HashMap<String, Integer>(); // pinyinMap，存储不同的拼音及其频率
 

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Created by kevin on 2016/2/24.
  */
 public class AutoDetector {
-	//private static Logger LOGGER = Logger.getLogger(AutoDetector.class);
 	private static Logger LOGGER = LoggerFactory.getLogger(AutoDetector.class);
 
 	/**

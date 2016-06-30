@@ -2,6 +2,7 @@ package com.xb.services.hmm;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xb.algoritm.hmm.ForwardAlgorithm;
 import com.xb.algoritm.hmm.Viterbi;
 import com.xb.bean.hmm.Hmm;
 import com.xb.business.hmm.HmmAbstractFactory;
@@ -20,7 +21,7 @@ public class HmmService {
     private static Logger LOGGER = LoggerFactory.getLogger(HmmService.class);
 
     public double forward(Hmm h) {
-        return Viterbi.forward(h);
+        return ForwardAlgorithm.forward(h);
     }
 
     /**
@@ -66,14 +67,7 @@ public class HmmService {
         h.setEmitProb(builder.getEmissionProbability());
 
         StringBuilder sb = new StringBuilder();
-//        Integer[] result = caculateHmmResult(h);
-//        for (int i = 0; i < result.length; i++) {
-//            LOGGER.info(builder.getDiffWord()[result[i]] + " ");
-//            sb.append(builder.getDiffWord()[result[i]] + " ");
-//        }
-
         List<List<Integer>> allGroup = Viterbi.getAllProbGroup(h);
-
         List<Integer> seqList = null;
         Object[] obj = new Object[allGroup.size()];
         for (int i = 0, size = allGroup.size(); i < size; i++) {

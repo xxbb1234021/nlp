@@ -1,5 +1,6 @@
 package com.xb.controller;
 
+import com.xb.utils.SyntaxTreeUtils;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,6 @@ public class SytanxTreeController {
 
 		String s = "咬|vt 死|adj 了|utl 猎人|noun 的|de 狗|noun";
 		CykModel cykModel = Cyk.cykParsing(s, dict, r);
-		return Cyk.getResultTree(cykModel);
+		return SyntaxTreeUtils.getResultTree(cykModel);
 	}
 }
