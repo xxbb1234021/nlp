@@ -14,6 +14,10 @@ public class TrieDictionaryContext {
 		return this.trieDictionary.getNodeRoot();
 	}
 
+	public TrieNode getReverseRoot() {
+		return this.trieDictionary.getReverseNodeRoot();
+	}
+
     public TrieDictionary getTrieDictionary(){
         return this.trieDictionary;
     }

@@ -51,4 +51,8 @@ public class SegmentPinYinTrieDictionary extends TrieDictionary {
 	public WordTrieNode getNodeRoot() {
 		return wordRoot;
 	}
+
+	public WordTrieNode getReverseNodeRoot() {
+		return reverseWordRoot;
+	}
 }

@@ -93,4 +93,8 @@ public class SyntaxTrieDictionary extends TrieDictionary {
 	public SyntaxTrieNode getNodeRoot() {
 		return syntaxRoot;
 	}
+
+	public SyntaxTrieNode getReverseNodeRoot() {
+		return null;
+	}
 }

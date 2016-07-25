@@ -21,6 +21,8 @@ public abstract class TrieDictionary {
 
 	protected WordTrieNode wordRoot = new WordTrieNode();
 
+	protected WordTrieNode reverseWordRoot = new WordTrieNode();
+
 	protected SyntaxTrieNode syntaxRoot = new SyntaxTrieNode();
 
 	protected void readCorpus(String fileName, final String type) {
@@ -68,6 +70,18 @@ public abstract class TrieDictionary {
 			node = pNode;
 		}
 		node.setBound(true);
+
+		WordTrieNode reverseNode = reverseWordRoot;
+		for (int i = line.length() - 1; i >= 0; i--) {
+			char c = line.charAt(i);
+			WordTrieNode pNode = reverseNode.getChilds().get(Character.valueOf(c));
+			if (pNode == null) {
+				pNode = new WordTrieNode(Character.valueOf(c));
+				reverseNode.getChilds().put(Character.valueOf(c), pNode);
+			}
+			reverseNode = pNode;
+		}
+		reverseNode.setBound(true);
 	}
 
 	private void readPinYinCorpus(String line) {
@@ -119,4 +133,6 @@ public abstract class TrieDictionary {
 	}
 
 	public abstract TrieNode getNodeRoot();
+
+	public abstract TrieNode getReverseNodeRoot();
 }

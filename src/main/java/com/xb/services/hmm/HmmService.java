@@ -35,7 +35,7 @@ public class HmmService {
     }
 
     public String getHanzi(String splitSpell) {
-        //String splitPinYin = PinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE).segment(splitSpell);
+        //String splitPinYin = MaxMatchingPinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE).segment(splitSpell);
         //LOGGER.info("###################"+splitPinYin);
 
         //		PinyinTokenizer p = new PinyinTokenizer("D:\\workspace\\nlp\\src\\main\\resources\\pinyin\\pinyin2.utf8");

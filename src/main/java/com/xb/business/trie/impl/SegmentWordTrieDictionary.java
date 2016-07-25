@@ -1,5 +1,6 @@
 package com.xb.business.trie.impl;
 
+import com.xb.bean.trie.TrieNode;
 import com.xb.bean.trie.WordTrieNode;
 
 
@@ -51,5 +52,9 @@ public class SegmentWordTrieDictionary extends TrieDictionary {
 
 	public WordTrieNode getNodeRoot() {
 		return wordRoot;
+	}
+
+	public WordTrieNode getReverseNodeRoot() {
+		return reverseWordRoot;
 	}
 }

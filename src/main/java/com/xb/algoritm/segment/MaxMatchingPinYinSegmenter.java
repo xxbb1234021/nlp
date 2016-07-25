@@ -8,12 +8,12 @@ import com.xb.business.trie.impl.SegmentPinYinTrieDictionary;
 import com.xb.constant.Constant;
 import com.xb.utils.TextUtils;
 
-public class PinYinSegmenter {
-	private static PinYinSegmenter ghm = null;
+public class MaxMatchingPinYinSegmenter {
+	private static MaxMatchingPinYinSegmenter ghm = null;
 
 	private TrieDictionaryContext context = null;
 
-	public PinYinSegmenter(String path) {
+	public MaxMatchingPinYinSegmenter(String path) {
 		context = new TrieDictionaryContext(SegmentPinYinTrieDictionary.getInstance(path));
 	}
 
@@ -21,11 +21,11 @@ public class PinYinSegmenter {
 		return context;
 	}
 
-	public static PinYinSegmenter getInstance(String path) {
+	public static MaxMatchingPinYinSegmenter getInstance(String path) {
 		if (ghm == null) {
-			synchronized (PinYinSegmenter.class) {
+			synchronized (MaxMatchingPinYinSegmenter.class) {
 				if (ghm == null) {
-					ghm = new PinYinSegmenter(path);
+					ghm = new MaxMatchingPinYinSegmenter(path);
 				}
 			}
 		}
@@ -102,7 +102,8 @@ public class PinYinSegmenter {
 	}
 
 	public static void main(String args[]) throws IOException {
-		PinYinSegmenter mmsegger = new PinYinSegmenter(Constant.PINYIN_TRIE_TREE);
+		MaxMatchingPinYinSegmenter mmsegger =
+				new MaxMatchingPinYinSegmenter(Constant.PINYIN_TRIE_TREE);
 		System.out.println(mmsegger.segment("wodasini"));
 		System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));
 		System.out.println(mmsegger.segment("小红是个爱学习的好学生!!!!!"));

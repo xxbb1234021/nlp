@@ -5,11 +5,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
+import com.xb.algoritm.segment.MaxMatchingWordSegmenter;
 import com.xb.bean.bayes.ClassifyResult;
 import com.xb.algoritm.bayes.prob.ConditionalProbability;
 import com.xb.algoritm.bayes.prob.PriorProbability;
-import com.xb.algoritm.segment.WordSegmenter;
 import com.xb.constant.Constant;
+import com.xb.utils.StopWordsUtil;
 
 /**
  * 朴素贝叶斯分类器
@@ -55,7 +56,7 @@ public class BayesClassifier {
 	public String[] dropStopWords(String[] oldWords) {
 		Vector<String> v1 = new Vector<String>();
 		for (int i = 0; i < oldWords.length; ++i) {
-			if (StopWordsHandler.isStopWord(oldWords[i]) == false) {//不是停用词
+			if (StopWordsUtil.isStopWord(oldWords[i]) == false) {//不是停用词
 				v1.add(oldWords[i]);
 			}
 		}
@@ -73,7 +74,7 @@ public class BayesClassifier {
 	@SuppressWarnings("unchecked")
 	public String classify(String text) {
 		String[] terms = null;
-		WordSegmenter mmsegger = new WordSegmenter(Constant.WORD_TRIE_TREE);
+		MaxMatchingWordSegmenter mmsegger = new MaxMatchingWordSegmenter(Constant.WORD_TRIE_TREE);
 		terms = mmsegger.segment(text).split("\\|");
 		//terms= ChineseSpliter.split(text, " ").split(" ");//中文分词处理(分词后结果可能还包含有停用词）
 		terms = dropStopWords(terms);//去掉停用词，以免影响分类

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.xb.algoritm.segment.PinYinSegmenter;
+import com.xb.algoritm.segment.MaxMatchingPinYinSegmenter;
 import com.xb.business.hmm.Director;
 import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.builderImpl.AbstractPinyingToHanziModel;
@@ -21,7 +21,7 @@ public class ApplicationMain {
 		SpringApplication.run(ApplicationMain.class, args);
 
 		//加载拼音语料库
-		PinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE);
+		MaxMatchingPinYinSegmenter.getInstance(Constant.PINYIN_TRIE_TREE);
 
 		HmmAbstractFactory factory = new PinyingToHanziFactory();
 		AbstractPinyingToHanziModel builder = factory.createPinyingToHanziModelBuilder2();
