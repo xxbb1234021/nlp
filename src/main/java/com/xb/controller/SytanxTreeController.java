@@ -1,16 +1,15 @@
 package com.xb.controller;
 
-import com.xb.utils.SyntaxTreeUtils;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.xb.algoritm.cyk.Cyk;
 import com.xb.bean.syntax.CykModel;
 import com.xb.bean.trie.SyntaxTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SyntaxTrieDictionary;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
+import com.xb.utils.SyntaxTreeUtils;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by kevin on 2016/6/15.
@@ -21,8 +20,8 @@ public class SytanxTreeController {
 
 	@RequestMapping("/genSytanxTree")
 	public String genSytanxTree() {
-		String dictionaryName = Constant.PCFG_DATA;
-		SyntaxTrieDictionary dict = SyntaxTrieDictionary.getInstance(dictionaryName);
+        String dictionaryName = FileConstant.PCFG_DATA;
+        SyntaxTrieDictionary dict = SyntaxTrieDictionary.getInstance(dictionaryName);
 
 		TrieDictionaryContext context = new TrieDictionaryContext(dict);
 		SyntaxTrieNode r = (SyntaxTrieNode)context.getRoot();

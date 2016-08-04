@@ -1,9 +1,8 @@
 package com.xb.business.hmm.builderImpl;
 
-import com.xb.algoritm.segment.PinYinSegmenter;
+import com.xb.algoritm.segment.MaxMatchingPinYinSegmenter;
+import com.xb.constant.FileConstant;
 import org.junit.Test;
-
-import com.xb.constant.Constant;
 
 /**
  * Created by kevin on 2016/5/7.
@@ -13,7 +12,8 @@ public class TestPinYin {
     @Test
     public void testViterbi() {
         String source = "wodasini";
-        PinYinSegmenter mmsegger = new PinYinSegmenter(Constant.PINYIN_TRIE_TREE);
+        MaxMatchingPinYinSegmenter mmsegger =
+                new MaxMatchingPinYinSegmenter(FileConstant.PINYIN_TRIE_TREE);
         String splitPinYin = mmsegger.segment(source);
 
         System.out.println(splitPinYin);

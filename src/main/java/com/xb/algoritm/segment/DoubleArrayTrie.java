@@ -1,19 +1,12 @@
 package com.xb.algoritm.segment;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xb.bean.doubletrie.DoubleTrieNode;
 import com.xb.business.trie.impl.DoubleArrayTrieDictionary;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoubleArrayTrie {
 	private final static int BUF_SIZE = 16384;
@@ -46,8 +39,8 @@ public class DoubleArrayTrie {
 		error = 0;
 
 		//加载词典  
-		String dictionaryName = Constant.DOUBLE_TRIE_TREE;
-		dict = DoubleArrayTrieDictionary.getInstance(dictionaryName);
+        String dictionaryName = FileConstant.DOUBLE_TRIE_TREE;
+        dict = DoubleArrayTrieDictionary.getInstance(dictionaryName);
 	}
 
 	// int (*progressfunc_) (size_t, size_t);

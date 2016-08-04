@@ -1,8 +1,8 @@
 package com.xb.utils.pinyin.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.utils.FileNIOUtil;
 
 import java.util.ArrayList;
@@ -208,7 +208,7 @@ public class MakePinyingCorpus {
 	public static void writePy2hzJson(){
 		JSONObject j = new JSONObject();
 
-		String s = FileNIOUtil.readFile(Constant.PINYIN_TAG_PY2HZ, Constant.CHARSET_UTF8);
+		String s = FileNIOUtil.readFile(FileConstant.PINYIN_TAG_PY2HZ, Constant.CHARSET_UTF8);
 		JSONObject pinyinJsonObject = JSONObject.parseObject(s);
 		for (java.util.Map.Entry<String, Object> entry : pinyinJsonObject.entrySet()) {
 			j.put(entry.getKey(), entry.getValue());
@@ -218,6 +218,6 @@ public class MakePinyingCorpus {
 	}
 
 	public static void main(String[] args) {
-		readCorpus(Constant.PINYIN_TAG_TRAINDATA, Constant.CHARSET_UTF8);
+		readCorpus(FileConstant.PINYIN_TAG_TRAINDATA, Constant.CHARSET_UTF8);
 	}
 }

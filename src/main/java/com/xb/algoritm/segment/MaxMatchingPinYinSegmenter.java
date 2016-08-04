@@ -1,12 +1,12 @@
 package com.xb.algoritm.segment;
 
-import java.io.IOException;
-
 import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SegmentPinYinTrieDictionary;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.utils.TextUtils;
+
+import java.io.IOException;
 
 public class MaxMatchingPinYinSegmenter {
 	private static MaxMatchingPinYinSegmenter ghm = null;
@@ -103,8 +103,8 @@ public class MaxMatchingPinYinSegmenter {
 
 	public static void main(String args[]) throws IOException {
 		MaxMatchingPinYinSegmenter mmsegger =
-				new MaxMatchingPinYinSegmenter(Constant.PINYIN_TRIE_TREE);
-		System.out.println(mmsegger.segment("wodasini"));
+                new MaxMatchingPinYinSegmenter(FileConstant.PINYIN_TRIE_TREE);
+        System.out.println(mmsegger.segment("wodasini"));
 		System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));
 		System.out.println(mmsegger.segment("小红是个爱学习的好学生!!!!!"));
 

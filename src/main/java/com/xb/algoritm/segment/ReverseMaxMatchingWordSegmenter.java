@@ -1,12 +1,12 @@
 package com.xb.algoritm.segment;
 
-import java.io.IOException;
-
 import com.xb.bean.trie.WordTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SegmentWordTrieDictionary;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.utils.TextUtils;
+
+import java.io.IOException;
 
 public class ReverseMaxMatchingWordSegmenter {
     private TrieDictionaryContext context = null;
@@ -75,7 +75,7 @@ public class ReverseMaxMatchingWordSegmenter {
 
     public static void main(String args[]) throws IOException {
         ReverseMaxMatchingWordSegmenter mmsegger =
-                new ReverseMaxMatchingWordSegmenter(Constant.WORD_TRIE_TREE);
+                new ReverseMaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
         System.out.println(mmsegger.segment("中华人民共和国是一个伟大的国家hello world"));
         System.out.println(mmsegger.segment("欢迎光临上海浦东发展银行的主页"));
         System.out.println(mmsegger.segment("三角形和平行四边形"));

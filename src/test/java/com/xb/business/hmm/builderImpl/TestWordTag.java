@@ -1,13 +1,13 @@
 package com.xb.business.hmm.builderImpl;
 
-import com.xb.business.hmm.Director;
+import com.xb.algoritm.segment.MaxMatchingWordSegmenter;
 import com.xb.bean.hmm.Hmm;
+import com.xb.business.hmm.Director;
 import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.factoryImpl.WordTaggingFactory;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.constant.WordTaggingConstant;
 import com.xb.services.hmm.HmmService;
-import com.xb.algoritm.segment.WordSegmenter;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -66,7 +66,8 @@ public class TestWordTag {
 
 
         String source = "咬死了猎人的狗";
-        WordSegmenter mmsegger = new WordSegmenter(Constant.WORD_TRIE_TREE);
+        MaxMatchingWordSegmenter mmsegger =
+                new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
         String splitWrod = mmsegger.segment(source);
         //System.out.println(splitWrod);
         String[] words = splitWrod.split("\\|");

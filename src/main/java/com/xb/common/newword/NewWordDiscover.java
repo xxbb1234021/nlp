@@ -3,6 +3,7 @@ package com.xb.common.newword;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.xb.utils.StopWordsUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import com.xb.business.newword.WordDictionary;
@@ -21,16 +22,7 @@ public class NewWordDiscover {
 	//词的最大长度
 	private final static int MAX_CANDIDATE_LEN = 6;
 
-	private static Set<Character> specialWordSet = new HashSet<Character>();
-
-	private static char[] specialWord = { '我', '你', '您', '他', '她', '谁', '哪', '那', '这', '的', '了', '着', '也', '是', '有',
-			'不', '在', '与', '呢', '啊', '呀', '吧', '嗯', '哦', '哈', '呐' };
-
-	static {
-		for (char c : specialWord) {
-			specialWordSet.add(c);
-		}
-	}
+	private static Set<String> specialWordSet = StopWordsUtil.getWordSet();
 
 	public NewWordDiscover() {
 		dictionary = WordDictionary.getInstance();

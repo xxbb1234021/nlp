@@ -2,6 +2,7 @@ package com.xb.newword;
 
 import com.xb.common.newword.NewWordDiscover;
 import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.utils.FileNIOUtil;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class TestNewWord {
 
 	@Test
 	public void testNewWord() {
-		String document = FileNIOUtil.readFile(Constant.WORD_NEW_TEXT, Constant.CHARSET_UTF8);
+        String document = FileNIOUtil.readFile(FileConstant.WORD_NEW_TEXT, Constant.CHARSET_UTF8);
 
 		NewWordDiscover discover = new NewWordDiscover();
 		Set<String> words = discover.discover(document);

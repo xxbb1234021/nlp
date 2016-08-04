@@ -1,13 +1,12 @@
 package com.xb.algoritm.text;
 
-import java.math.BigInteger;
-
 import com.xb.algoritm.segment.MaxMatchingWordSegmenter;
+import com.xb.constant.FileConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xb.constant.Constant;
+import java.math.BigInteger;
 
 /**
  * Created by kevin on 2016/7/18.
@@ -110,7 +109,8 @@ public class SimHashTextSimilarity {
     }
 
     public static void main(String[] args) {
-        MaxMatchingWordSegmenter mmsegger = new MaxMatchingWordSegmenter(Constant.WORD_TRIE_TREE);
+        MaxMatchingWordSegmenter mmsegger =
+                new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
         String text1 = mmsegger.segment("我爱买书");
         String text2 = mmsegger.segment("我爱购物");
 

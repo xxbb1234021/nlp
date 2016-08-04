@@ -1,14 +1,13 @@
 package com.xb.business.hmm.builderImpl;
 
-import org.junit.Test;
-
 import com.xb.algoritm.cyk.Cyk;
 import com.xb.bean.syntax.CykModel;
 import com.xb.bean.trie.SyntaxTrieNode;
 import com.xb.business.trie.TrieDictionaryContext;
 import com.xb.business.trie.impl.SyntaxTrieDictionary;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 import com.xb.utils.SyntaxTreeUtils;
+import org.junit.Test;
 
 /**
  * Created by kevin on 2016/3/24.
@@ -18,7 +17,7 @@ public class TestCYK {
 	@Test
 	public void testCYK() {
 		//加载词典
-		String dictionaryName = Constant.PCFG_DATA;
+		String dictionaryName = FileConstant.PCFG_DATA;
 		SyntaxTrieDictionary dict = SyntaxTrieDictionary.getInstance(dictionaryName);
 		//
 		//		SyntaxTrieNode root = dict.getNodeRoot();

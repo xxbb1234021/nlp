@@ -1,7 +1,7 @@
 package com.xb.algoritm.bayes.prob;
 
 import com.xb.algoritm.bayes.TrainingDataManager;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 
 /**
 * 类条件概率计算
@@ -29,12 +29,12 @@ public class ConditionalProbability {
 	*/
 	public static double calculatePxc(String x, String c) {
 		double ret = 0F;
-		double containKeyCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA)
-				.getCountContainKeyOfClassification(c, x);
-		double fileCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA)
-				.getTrainingFileCountOfClassification(c);
-		double dirCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA).getTraningClassifications().length;
-		ret = (containKeyCount + 1) / (fileCount + M + dirCount); //为了避免出现0这样极端情况，进行加权处理
+        double containKeyCount = TrainingDataManager.getInstance(FileConstant.BAYESTRAINDATA)
+                .getCountContainKeyOfClassification(c, x);
+        double fileCount = TrainingDataManager.getInstance(FileConstant.BAYESTRAINDATA).getTrainingFileCountOfClassification(c);
+        double dirCount = TrainingDataManager.getInstance(FileConstant.BAYESTRAINDATA)
+                .getTraningClassifications().length;
+        ret = (containKeyCount + 1) / (fileCount + M + dirCount); //为了避免出现0这样极端情况，进行加权处理
 		return ret;
 	}
 }

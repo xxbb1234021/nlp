@@ -1,10 +1,10 @@
 package com.xb.business.hmm.factoryImpl;
 
+import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.builderImpl.AbstractPinyingToHanziModel;
 import com.xb.business.hmm.builderImpl.AbstractWordTagginModel;
-import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.builderImpl.WordTaggingModelBuilder;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 
 /**
  * Created by kevin on 2016/4/14.
@@ -12,7 +12,7 @@ import com.xb.constant.Constant;
 public class WordTaggingFactory extends HmmAbstractFactory {
     @Override
     public AbstractWordTagginModel createWordTagginModelBuilder() {
-        return WordTaggingModelBuilder.getInstance(Constant.WORD_TAG_TRAINDATA);
+        return WordTaggingModelBuilder.getInstance(FileConstant.WORD_TAG_TRAINDATA);
     }
 
     @Override

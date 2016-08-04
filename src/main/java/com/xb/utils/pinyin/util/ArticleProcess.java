@@ -1,13 +1,13 @@
 package com.xb.utils.pinyin.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
+import com.xb.utils.FileNIOUtil;
+import com.xb.utils.TextUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.xb.constant.Constant;
-import com.xb.utils.TextUtils;
-import com.xb.utils.FileNIOUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kevin on 2016/5/19.
@@ -16,7 +16,7 @@ import com.xb.utils.FileNIOUtil;
 public class ArticleProcess {
 
     public static void genSentence() {
-        List<String> fileList = FileNIOUtil.dirList(Constant.ARTICLE_DIR);
+        List<String> fileList = FileNIOUtil.dirList(FileConstant.ARTICLE_DIR);
         for (String file : fileList) {
             String content = FileNIOUtil.readFile(file, Constant.CHARSET_UTF8);
 
@@ -24,7 +24,8 @@ public class ArticleProcess {
 
             for (String str : list) {
                 if (StringUtils.isNotBlank(str) && str.length() > 2) {
-                    FileNIOUtil.writeFile(Constant.ARTICLE_DIR_SENTENCE, str, Constant.CHARSET_UTF8);
+                    FileNIOUtil.writeFile(FileConstant.ARTICLE_DIR_SENTENCE, str,
+                            Constant.CHARSET_UTF8);
                 }
             }
         }

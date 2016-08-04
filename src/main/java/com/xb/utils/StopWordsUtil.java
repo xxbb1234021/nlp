@@ -1,18 +1,38 @@
 package com.xb.utils;
 
-/**
-* 停用词处理器
-* 
-*/
-public class StopWordsUtil {
-	private static String stopWordsList[] = { "的", "我们", "要", "自己", "之", "将", "“", "”", "，", "（", "）", "后", "应", "到",
-			"某", "后", "个", "是", "位", "新", "一", "两", "在", "中", "或", "有", "更", "好", "" };//常用停用词
+import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 
-	public static boolean isStopWord(String word) {
-		for (int i = 0; i < stopWordsList.length; ++i) {
-			if (word.equalsIgnoreCase(stopWordsList[i]))
-				return true;
-		}
-		return false;
-	}
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * 停用词处理器
+ */
+public class StopWordsUtil {
+    private static Set<String> wordSet = new HashSet<String>();
+
+    static {
+        List<String> lines =
+                FileNIOUtil.readFileLine(FileConstant.STOPWORD_DATA, Constant.CHARSET_UTF8);
+        for (String line : lines) {
+            wordSet.add(line);
+        }
+    }
+
+    public static boolean isStopWord(String word) {
+        if (wordSet.contains(word)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Set<String> getWordSet() {
+        return wordSet;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isStopWord("xxxxxxxx"));
+    }
 }

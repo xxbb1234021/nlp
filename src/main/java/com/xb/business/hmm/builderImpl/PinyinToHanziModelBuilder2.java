@@ -1,14 +1,17 @@
 package com.xb.business.hmm.builderImpl;
 
 
-import java.util.*;
-
+import com.alibaba.fastjson.JSONObject;
+import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
+import com.xb.utils.FileNIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
-import com.xb.constant.Constant;
-import com.xb.utils.FileNIOUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -57,19 +60,19 @@ public class PinyinToHanziModelBuilder2 extends AbstractPinyingToHanziModel {
 	}
 
 	private boolean readCorpus(String fileName) {
-		String s = FileNIOUtil.readFile(Constant.PINYIN_TAG_START, Constant.CHARSET_UTF8);
-		JSONObject initJsonObject = JSONObject.parseObject(s);
+        String s = FileNIOUtil.readFile(FileConstant.PINYIN_TAG_START, Constant.CHARSET_UTF8);
+        JSONObject initJsonObject = JSONObject.parseObject(s);
 		initJsonObjectData = initJsonObject.getJSONObject("data");
 
-		s = FileNIOUtil.readFile(Constant.PINYIN_TAG_PY2HZ, Constant.CHARSET_UTF8);
-		pinyinJsonObject = JSONObject.parseObject(s);
+        s = FileNIOUtil.readFile(FileConstant.PINYIN_TAG_PY2HZ, Constant.CHARSET_UTF8);
+        pinyinJsonObject = JSONObject.parseObject(s);
 
-		s = FileNIOUtil.readFile(Constant.PINYIN_TAG_TRANSITION, Constant.CHARSET_UTF8);
-		JSONObject transitionJsonObject = JSONObject.parseObject(s);
+        s = FileNIOUtil.readFile(FileConstant.PINYIN_TAG_TRANSITION, Constant.CHARSET_UTF8);
+        JSONObject transitionJsonObject = JSONObject.parseObject(s);
 		transitionJsonObjectData = transitionJsonObject.getJSONObject("data");
 
-		s = FileNIOUtil.readFile(Constant.PINYIN_TAG_EMISSION, Constant.CHARSET_UTF8);
-		JSONObject emissionJsonObject = JSONObject.parseObject(s);
+        s = FileNIOUtil.readFile(FileConstant.PINYIN_TAG_EMISSION, Constant.CHARSET_UTF8);
+        JSONObject emissionJsonObject = JSONObject.parseObject(s);
 		emissionJsonObjectData = emissionJsonObject.getJSONObject("data");
 
 		return true;

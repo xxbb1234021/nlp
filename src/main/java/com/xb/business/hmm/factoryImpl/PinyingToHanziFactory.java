@@ -1,11 +1,11 @@
 package com.xb.business.hmm.factoryImpl;
 
+import com.xb.business.hmm.HmmAbstractFactory;
 import com.xb.business.hmm.builderImpl.AbstractPinyingToHanziModel;
 import com.xb.business.hmm.builderImpl.AbstractWordTagginModel;
-import com.xb.business.hmm.HmmAbstractFactory;
-import com.xb.business.hmm.builderImpl.PinyinToHanziModelBuilder2;
 import com.xb.business.hmm.builderImpl.PinyinToHanziModelBuilder;
-import com.xb.constant.Constant;
+import com.xb.business.hmm.builderImpl.PinyinToHanziModelBuilder2;
+import com.xb.constant.FileConstant;
 
 /**
  * Created by kevin on 2016/4/14.
@@ -18,8 +18,8 @@ public class PinyingToHanziFactory extends HmmAbstractFactory {
 
     @Override
 	public AbstractPinyingToHanziModel createPinyingToHanziModelBuilder() {
-		return PinyinToHanziModelBuilder.getInstance(Constant.PINYIN_TAG_TRAINDATA);
-	}
+        return PinyinToHanziModelBuilder.getInstance(FileConstant.PINYIN_TAG_TRAINDATA);
+    }
 
     @Override
     public AbstractPinyingToHanziModel createPinyingToHanziModelBuilder2() {

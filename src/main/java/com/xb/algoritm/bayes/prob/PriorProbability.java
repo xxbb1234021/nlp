@@ -1,7 +1,7 @@
 package com.xb.algoritm.bayes.prob;
 
 import com.xb.algoritm.bayes.TrainingDataManager;
-import com.xb.constant.Constant;
+import com.xb.constant.FileConstant;
 
 /**
   * 先验概率计算
@@ -17,10 +17,10 @@ public class PriorProbability {
 	*/
 	public static double calculatePc(String c) {
 		double ret = 0F;
-		double fileCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA)
-				.getTrainingFileCountOfClassification(c);
-		double trainFileCount = TrainingDataManager.getInstance(Constant.BAYESTRAINDATA).getTrainingFileCount();
-		ret = fileCount / trainFileCount;
+        double fileCount = TrainingDataManager.getInstance(FileConstant.BAYESTRAINDATA).getTrainingFileCountOfClassification(c);
+        double trainFileCount =
+                TrainingDataManager.getInstance(FileConstant.BAYESTRAINDATA).getTrainingFileCount();
+        ret = fileCount / trainFileCount;
 		return ret;
 	}
 }
