@@ -20,7 +20,7 @@ public class ArticleProcess {
         for (String file : fileList) {
             String content = FileNIOUtil.readFile(file, Constant.CHARSET_UTF8);
 
-            List<String> list = extractChineseSentences(content);
+			List<String> list = TextUtils.extractChineseSentences(content);
 
             for (String str : list) {
                 if (StringUtils.isNotBlank(str) && str.length() > 2) {
@@ -29,27 +29,6 @@ public class ArticleProcess {
                 }
             }
         }
-    }
-
-    public static List<String> extractChineseSentences(String content) {
-        content = content.replaceAll(" ", "");
-        content = content.replaceAll("\\\\r", "");
-        content = content.replaceAll("\\\\n", "");
-        content = content.replaceAll("\\\\t", "");
-
-        StringBuilder sb = new StringBuilder();
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < content.length(); i++) {
-            Character c = Character.valueOf(content.charAt(i));
-            if (TextUtils.isChineseChar(c)) {
-                sb.append(c);
-            } else {
-                list.add(sb.toString() + "\n");
-                sb.delete(0, sb.length());
-            }
-        }
-
-        return list;
     }
 
     public static void main(String[] args) {

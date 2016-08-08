@@ -18,107 +18,93 @@ import java.math.BigInteger;
  * 5、降维，把4步算出来的 “9 -9 1 -1 1 9” 变成 0 1 串，形成我们最终的simhash签名。 如果每一位大于0 记为 1，小于0 记为 0。最后算出结果为：“1 0 1 0 1 1”。
  */
 public class SimHashTextSimilarity {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimHashTextSimilarity.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SimHashTextSimilarity.class);
 
-    private int hashBitCount = 64;
+	private int hashBitCount = 64;
 
-    private int weight = 1;
+	private int weight = 1;
 
-    /**
-     * 计算词列表的SimHash值
-     *
-     * @param segWord 词列表
-     * @return SimHash值
-     */
-    public String simHash(String segWord) {
-        int[] hashBit = new int[hashBitCount];
-        String[] wordArray = segWord.split("\\|");
-        String word = null;
-        for (int i = 0, len = wordArray.length; i < len; i++) {
-            word = wordArray[i];
-            if (StringUtils.isNotBlank(word)) {
-                BigInteger hash = hash(word);
-                for (int j = 0; j < hashBitCount; j++) {
-                    BigInteger bitMask = new BigInteger("1").shiftLeft(j);
-                    if (hash.and(bitMask).signum() != 0) {
-                        hashBit[j] += weight;
-                    } else {
-                        hashBit[j] -= weight;
-                    }
-                }
-            }
-        }
+	/**
+	 * 计算词列表的SimHash值
+	 *
+	 * @param segWord 词列表
+	 * @return SimHash值
+	 */
+	public String simHash(String segWord) {
+		int[] hashBit = new int[hashBitCount];
+		String[] wordArray = segWord.split("\\|");
+		String word = null;
+		for(int i = 0, len = wordArray.length; i < len; i++) {
+			word = wordArray[i];
+			if (StringUtils.isNotBlank(word)) {
+				BigInteger hash = hash(word);
+				for(int j = 0; j < hashBitCount; j++) {
+					BigInteger bitMask = new BigInteger("1").shiftLeft(j);
+					if (hash.and(bitMask).signum() != 0) {
+						hashBit[j] += weight;
+					} else {
+						hashBit[j] -= weight;
+					}
+				}
+			}
+		}
 
-        StringBuffer simHashBuffer = new StringBuffer();
-        for (int i = 0; i < hashBitCount; i++) {
-            if (hashBit[i] >= 0) {
-                simHashBuffer.append("1");
-            } else {
-                simHashBuffer.append("0");
-            }
-        }
-        return simHashBuffer.toString();
-    }
+		StringBuffer simHashBuffer = new StringBuffer();
+		for(int i = 0; i < hashBitCount; i++) {
+			if (hashBit[i] >= 0) {
+				simHashBuffer.append("1");
+			} else {
+				simHashBuffer.append("0");
+			}
+		}
+		return simHashBuffer.toString();
+	}
 
-    /**
-     * 计算等长的SimHash值的汉明距离
-     * 如不能比较距离（比较的两段文本长度不相等），则返回-1
-     *
-     * @param simHash1 SimHash值1
-     * @param simHash2 SimHash值2
-     * @return 汉明距离
-     */
-    private int hammingDistance(String simHash1, String simHash2) {
-        if (simHash1.length() != simHash2.length()) {
-            return -1;
-        }
-        int distance = 0;
-        int len = simHash1.length();
-        for (int i = 0; i < len; i++) {
-            if (simHash1.charAt(i) != simHash2.charAt(i)) {
-                distance++;
-            }
-        }
-        return distance;
-    }
+	/**
+	 * 计算等长的SimHash值的汉明距离
+	 * 如不能比较距离（比较的两段文本长度不相等），则返回-1
+	 *
+	 * @param simHash1 SimHash值1
+	 * @param simHash2 SimHash值2
+	 * @return 汉明距离
+	 */
+	public int hammingDistance(String simHash1, String simHash2) {
+		if (simHash1.length() != simHash2.length()) {
+			return -1;
+		}
+		int distance = 0;
+		int len = simHash1.length();
+		for(int i = 0; i < len; i++) {
+			if (simHash1.charAt(i) != simHash2.charAt(i)) {
+				distance++;
+			}
+		}
+		return distance;
+	}
 
-    /**
-     * 计算词的哈希值
-     *
-     * @param word 词
-     * @return 哈希值
-     */
-    private BigInteger hash(String word) {
-        if (word == null || word.length() == 0) {
-            return new BigInteger("0");
-        }
-        char[] charArray = word.toCharArray();
-        BigInteger x = BigInteger.valueOf(((long) charArray[0]) << 7);
-        BigInteger m = new BigInteger("1000003");
-        BigInteger mask = new BigInteger("2").pow(hashBitCount).subtract(new BigInteger("1"));
-        long sum = 0;
-        for (char c : charArray) {
-            sum += c;
-        }
-        x = x.multiply(m).xor(BigInteger.valueOf(sum)).and(mask);
-        x = x.xor(new BigInteger(String.valueOf(word.length())));
-        if (x.equals(new BigInteger("-1"))) {
-            x = new BigInteger("-2");
-        }
-        return x;
-    }
-
-    public static void main(String[] args) {
-        MaxMatchingWordSegmenter mmsegger =
-                new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
-        String text1 = mmsegger.segment("我爱买书");
-        String text2 = mmsegger.segment("我爱购物");
-
-        SimHashTextSimilarity shs = new SimHashTextSimilarity();
-        String simHash1 = shs.simHash(text1);
-        String simHash2 = shs.simHash(text2);
-
-        int hammingDistance = shs.hammingDistance(simHash1, simHash2);
-        System.out.println(hammingDistance);
-    }
+	/**
+	 * 计算词的哈希值
+	 *
+	 * @param word 词
+	 * @return 哈希值
+	 */
+	private BigInteger hash(String word) {
+		if (word == null || word.length() == 0) {
+			return new BigInteger("0");
+		}
+		char[] charArray = word.toCharArray();
+		BigInteger x = BigInteger.valueOf(((long) charArray[0]) << 7);
+		BigInteger m = new BigInteger("1000003");
+		BigInteger mask = new BigInteger("2").pow(hashBitCount).subtract(new BigInteger("1"));
+		long sum = 0;
+		for(char c : charArray) {
+			sum += c;
+		}
+		x = x.multiply(m).xor(BigInteger.valueOf(sum)).and(mask);
+		x = x.xor(new BigInteger(String.valueOf(word.length())));
+		if (x.equals(new BigInteger("-1"))) {
+			x = new BigInteger("-2");
+		}
+		return x;
+	}
 }

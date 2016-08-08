@@ -77,7 +77,7 @@ public class BayesClassifier {
 		MaxMatchingWordSegmenter mmsegger =
 				new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
 		terms = mmsegger.segment(text).split("\\|");
-		//terms= ChineseSpliter.split(text, " ").split(" ");//中文分词处理(分词后结果可能还包含有停用词）
+		//terms= ChineseSpliter.split(summary, " ").split(" ");//中文分词处理(分词后结果可能还包含有停用词）
 		terms = dropStopWords(terms);//去掉停用词，以免影响分类
 
 		String[] classes = tdm.getTraningClassifications();//分类

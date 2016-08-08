@@ -1,6 +1,7 @@
 package com.xb.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextUtils {
 	public static boolean isCharSeperator(char c) {
@@ -32,5 +33,31 @@ public class TextUtils {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 截取所有的中文
+	 * @param content
+	 * @return
+	 */
+	public static List<String> extractChineseSentences(String content) {
+		content = content.replaceAll(" ", "");
+		content = content.replaceAll("\\\\r", "");
+		content = content.replaceAll("\\\\n", "");
+		content = content.replaceAll("\\\\t", "");
+
+		StringBuilder sb = new StringBuilder();
+		List<String> list = new ArrayList<String>();
+		for(int i = 0; i < content.length(); i++) {
+			Character c = Character.valueOf(content.charAt(i));
+			if (isChineseChar(c)) {
+				sb.append(c);
+			} else {
+				list.add(sb.toString() + "\n");
+				sb.delete(0, sb.length());
+			}
+		}
+
+		return list;
 	}
 }

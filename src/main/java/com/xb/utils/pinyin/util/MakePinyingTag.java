@@ -97,7 +97,6 @@ public class MakePinyingTag {
 				System.out.println("path=" + file.getPath());
 				System.out.println("absolutepath=" + file.getAbsolutePath());
 				System.out.println("name=" + file.getName());
-
 			} else if (file.isDirectory()) {
 				System.out.println("文件夹");
 				String[] filelist = file.list();

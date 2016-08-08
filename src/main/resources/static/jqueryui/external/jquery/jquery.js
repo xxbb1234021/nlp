@@ -583,7 +583,7 @@ jQuery.extend({
 		try {
 			if ( window.DOMParser ) { // Standard
 				tmp = new DOMParser();
-				xml = tmp.parseFromString( data , "text/xml" );
+                xml = tmp.parseFromString(data, "summary/xml");
 			} else { // IE
 				xml = new ActiveXObject( "Microsoft.XMLDOM" );
 				xml.async = "false";
@@ -1880,7 +1880,7 @@ Sizzle.uniqueSort = function( results ) {
 };
 
 /**
- * Utility function for retrieving the text value of an array of DOM nodes
+ * Utility function for retrieving the summary value of an array of DOM nodes
  * @param {Array|Element} elem
  */
 getText = Sizzle.getText = function( elem ) {
@@ -2294,7 +2294,7 @@ Expr = Sizzle.selectors = {
 		// Contents
 		"empty": function( elem ) {
 			// http://www.w3.org/TR/selectors/#empty-pseudo
-			// :empty is only affected by element nodes and content nodes(including text(3), cdata(4)),
+            // :empty is only affected by element nodes and content nodes(including summary(3), cdata(4)),
 			//   not comment, processing instructions, or others
 			// Thanks to Diego Perini for the nodeName shortcut
 			//   Greater than "@" means alpha characters (specifically not starting with "#" or "?")
@@ -2326,7 +2326,7 @@ Expr = Sizzle.selectors = {
 
 		"text": function( elem ) {
 			var attr;
-			// IE6 and 7 will map elem.type to 'text' for new HTML5 types (search, etc)
+            // IE6 and 7 will map elem.type to 'summary' for new HTML5 types (search, etc)
 			// use getAttribute instead to test this case
 			return elem.nodeName.toLowerCase() === "input" &&
 				elem.type === "text" &&
@@ -4350,7 +4350,7 @@ jQuery.extend({
 		var hooks, ret,
 			nType = elem.nodeType;
 
-		// don't get/set attributes on text, comment and attribute nodes
+        // don't get/set attributes on summary, comment and attribute nodes
 		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -4451,7 +4451,7 @@ jQuery.extend({
 		var ret, hooks, notxml,
 			nType = elem.nodeType;
 
-		// don't get/set properties on text, comment and attribute nodes
+        // don't get/set properties on summary, comment and attribute nodes
 		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -4737,7 +4737,7 @@ jQuery.event = {
 			handlers, type, namespaces, origType,
 			elemData = jQuery._data( elem );
 
-		// Don't attach events to noData or text/comment nodes (but allow plain objects)
+        // Don't attach events to noData or summary/comment nodes (but allow plain objects)
 		if ( !elemData ) {
 			return;
 		}
@@ -4927,7 +4927,7 @@ jQuery.event = {
 
 		cur = tmp = elem = elem || document;
 
-		// Don't do events on text and comment nodes
+        // Don't do events on summary and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
 			return;
 		}
@@ -5195,7 +5195,7 @@ jQuery.event = {
 		}
 
 		// Support: Chrome 23+, Safari?
-		// Target should not be a text node (#504, #13143)
+        // Target should not be a summary node (#504, #13143)
 		if ( event.target.nodeType === 3 ) {
 			event.target = event.target.parentNode;
 		}
@@ -6378,7 +6378,7 @@ function fixCloneNodeIssues( src, dest ) {
 		dest.removeAttribute( jQuery.expando );
 	}
 
-	// IE blanks contents when cloning scripts, and tries to evaluate newly-set text
+    // IE blanks contents when cloning scripts, and tries to evaluate newly-set summary
 	if ( nodeName === "script" && dest.text !== src.text ) {
 		disableScript( dest ).text = src.text;
 		restoreScript( dest );
@@ -6554,7 +6554,7 @@ jQuery.extend({
 				if ( jQuery.type( elem ) === "object" ) {
 					jQuery.merge( nodes, elem.nodeType ? [ elem ] : elem );
 
-				// Convert non-html into a text node
+                    // Convert non-html into a summary node
 				} else if ( !rhtml.test( elem ) ) {
 					nodes.push( context.createTextNode( elem ) );
 
@@ -6979,7 +6979,7 @@ jQuery.extend({
 
 	// Get and set the style property on a DOM Node
 	style: function( elem, name, value, extra ) {
-		// Don't set styles on text and comment nodes
+        // Don't set styles on summary and comment nodes
 		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style ) {
 			return;
 		}
@@ -7809,10 +7809,10 @@ jQuery.extend({
 
 		accepts: {
 			"*": allTypes,
-			text: "text/plain",
-			html: "text/html",
-			xml: "application/xml, text/xml",
-			json: "application/json, text/javascript"
+            text: "summary/plain",
+            html: "summary/html",
+            xml: "application/xml, summary/xml",
+            json: "application/json, summary/javascript"
 		},
 
 		contents: {
@@ -7831,16 +7831,16 @@ jQuery.extend({
 		// Keys separate source (or catchall "*") and destination types with a single space
 		converters: {
 
-			// Convert anything to text
+            // Convert anything to summary
 			"* text": String,
 
 			// Text to html (true = no transformation)
 			"text html": true,
 
-			// Evaluate text as a json expression
+            // Evaluate summary as a json expression
 			"text json": jQuery.parseJSON,
 
-			// Parse text as xml
+            // Parse summary as xml
 			"text xml": jQuery.parseXML
 		},
 
@@ -8441,7 +8441,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 // Install script dataType
 jQuery.ajaxSetup({
 	accepts: {
-		script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
+        script: "summary/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
 	},
 	contents: {
 		script: /(?:java|ecma)script/

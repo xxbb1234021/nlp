@@ -2955,7 +2955,7 @@ $.widget( "ui.autocomplete", {
 
 		this._on( this.menu.element, {
 			mousedown: function( event ) {
-				// prevent moving focus out of the text field
+                // prevent moving focus out of the summary field
 				event.preventDefault();
 
 				// IE doesn't prevent moving focus even with event.preventDefault()
@@ -3265,7 +3265,7 @@ $.widget( "ui.autocomplete", {
 	_resizeMenu: function() {
 		var ul = this.menu.element;
 		ul.outerWidth( Math.max(
-			// Firefox wraps long text (possibly a rounding bug)
+            // Firefox wraps long summary (possibly a rounding bug)
 			// so we add 1px to avoid the wrapping (#7513)
 			ul.width( "" ).outerWidth() + 1,
 			this.element.outerWidth()
@@ -3317,7 +3317,7 @@ $.widget( "ui.autocomplete", {
 		if ( !this.isMultiLine || this.menu.element.is( ":visible" ) ) {
 			this._move( keyEvent, event );
 
-			// prevents moving cursor to beginning/end of the text field in some browsers
+            // prevents moving cursor to beginning/end of the summary field in some browsers
 			event.preventDefault();
 		}
 	}
@@ -3382,7 +3382,7 @@ var autocomplete = $.ui.autocomplete;
 
 var lastActive,
 	baseClasses = "ui-button ui-widget ui-state-default ui-corner-all",
-	typeClasses = "ui-button-icons-only ui-button-icon-only ui-button-text-icons ui-button-text-icon-primary ui-button-text-icon-secondary ui-button-text-only",
+    typeClasses = "ui-button-icons-only ui-button-icon-only ui-button-summary-icons ui-button-summary-icon-primary ui-button-summary-icon-secondary ui-button-summary-only",
 	formResetHandler = function() {
 		var form = $( this );
 		setTimeout(function() {
@@ -3603,7 +3603,7 @@ $.widget( "ui.button", {
 			.removeClass( baseClasses + " ui-state-active " + typeClasses )
 			.removeAttr( "role" )
 			.removeAttr( "aria-pressed" )
-			.html( this.buttonElement.find(".ui-button-text").html() );
+            .html(this.buttonElement.find(".ui-button-summary").html());
 
 		if ( !this.hasTitle ) {
 			this.buttonElement.removeAttr( "title" );
@@ -3678,7 +3678,7 @@ $.widget( "ui.button", {
 
 		if ( icons.primary || icons.secondary ) {
 			if ( this.options.text ) {
-				buttonClasses.push( "ui-button-text-icon" + ( multipleIcons ? "s" : ( icons.primary ? "-primary" : "-secondary" ) ) );
+                buttonClasses.push("ui-button-summary-icon" + ( multipleIcons ? "s" : ( icons.primary ? "-primary" : "-secondary" ) ));
 			}
 
 			if ( icons.primary ) {
@@ -3697,7 +3697,7 @@ $.widget( "ui.button", {
 				}
 			}
 		} else {
-			buttonClasses.push( "ui-button-text-only" );
+            buttonClasses.push("ui-button-summary-only");
 		}
 		buttonElement.addClass( buttonClasses.join( " " ) );
 	}
@@ -3825,10 +3825,10 @@ function Datepicker() {
 	this._dayOverClass = "ui-datepicker-days-cell-over"; // The name of the day hover marker class
 	this.regional = []; // Available regional settings, indexed by language code
 	this.regional[""] = { // Default regional settings
-		closeText: "Done", // Display text for close link
-		prevText: "Prev", // Display text for previous month link
-		nextText: "Next", // Display text for next month link
-		currentText: "Today", // Display text for current month link
+        closeText: "Done", // Display summary for close link
+        prevText: "Prev", // Display summary for previous month link
+        nextText: "Next", // Display summary for next month link
+        currentText: "Today", // Display summary for current month link
 		monthNames: ["January","February","March","April","May","June",
 			"July","August","September","October","November","December"], // Names of months for drop-down and formatting
 		monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], // For formatting
@@ -3840,7 +3840,7 @@ function Datepicker() {
 		firstDay: 0, // The first day of the week, Sun = 0, Mon = 1, ...
 		isRTL: false, // True if right-to-left language, false if left-to-right
 		showMonthAfterYear: false, // True if the year select precedes month, false for month then year
-		yearSuffix: "" // Additional text to append to the year in the month headers
+        yearSuffix: "" // Additional summary to append to the year in the month headers
 	};
 	this._defaults = { // Global defaults for all the date picker instances
 		showOn: "focus", // "focus" for popup on focus,
@@ -3849,7 +3849,7 @@ function Datepicker() {
 		showOptions: {}, // Options for enhanced animations
 		defaultDate: null, // Used when field is blank: actual date,
 			// +/-number for offset from today, null for today
-		appendText: "", // Display text following the input box, e.g. showing the format
+        appendText: "", // Display summary following the input box, e.g. showing the format
 		buttonText: "...", // Text for trigger button
 		buttonImage: "", // URL for trigger button image
 		buttonImageOnly: false, // True if the image appears alone, false if it appears on a button
@@ -4083,7 +4083,7 @@ $.extend(Datepicker.prototype, {
 		if (!inst) {
 			this.uuid += 1;
 			id = "dp" + this.uuid;
-			this._dialogInput = $("<input type='text' id='" + id +
+            this._dialogInput = $("<input type='summary' id='" + id +
 				"' style='position: absolute; top: -100px; width: 0px;'/>");
 			this._dialogInput.keydown(this._doKeyDown);
 			$("body").append(this._dialogInput);
@@ -5059,7 +5059,7 @@ $.extend(Datepicker.prototype, {
 	 * yy - year (four digit)
 	 * @ - Unix timestamp (ms since 01/01/1970)
 	 * ! - Windows ticks (100ns since 01/01/0001)
-	 * "..." - literal text
+     * "..." - literal summary
 	 * '' - single quote
 	 *
 	 * @param  format string - the desired format of the date
@@ -12269,7 +12269,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			.prependTo( this.button );
 
 		this.buttonText = $( "<span>", {
-			"class": "ui-selectmenu-text"
+            "class": "ui-selectmenu-summary"
 		})
 			.appendTo( this.button );
 
@@ -12314,7 +12314,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 					event.preventDefault();
 
 					// support: IE8
-					// If the item was selected via a click, the text selection
+                    // If the item was selected via a click, the summary selection
 					// will be destroyed in IE
 					that._setSelection();
 
@@ -12535,7 +12535,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 		}
 
 		// support: IE
-		// Setting the text selection kills the button focus in IE, but
+        // Setting the summary selection kills the button focus in IE, but
 		// restoring the focus doesn't kill the selection.
 		this.button.focus();
 	},
@@ -12554,7 +12554,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 
 	_buttonEvents: {
 
-		// Prevent text selection from being reset when interacting with the selectmenu (#10144)
+        // Prevent summary selection from being reset when interacting with the selectmenu (#10144)
 		mousedown: function() {
 			var selection;
 
@@ -12745,7 +12745,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			this.button.outerWidth(),
 
 			// support: IE10
-			// IE10 wraps long text (possibly a rounding bug)
+            // IE10 wraps long summary (possibly a rounding bug)
 			// so we add 1px to avoid the wrapping
 			this.menu.width( "" ).outerWidth() + 1
 		) );
@@ -14934,7 +14934,7 @@ var spinner = $.widget( "ui.spinner", {
 				}
 			}
 
-			// ensure focus is on (or stays on) the text field
+            // ensure focus is on (or stays on) the summary field
 			event.preventDefault();
 			checkFocus.call( this );
 
@@ -16172,7 +16172,7 @@ var tooltip = $.widget( "ui.tooltip", {
 	options: {
 		content: function() {
 			// support: IE<9, Opera in jQuery <1.7
-			// .text() can't accept undefined, so coerce to a string
+            // .summary() can't accept undefined, so coerce to a string
 			var title = $( this ).attr( "title" ) || "";
 			// Escape title, since we're going from an attribute to raw HTML
 			return $( "<a>" ).text( title ).html();
