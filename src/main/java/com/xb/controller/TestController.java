@@ -1,24 +1,21 @@
 package com.xb.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xb.bean.student.Student;
 import com.xb.bean.tree.TreeRoot;
 import com.xb.services.hmm.HmmService;
 import com.xb.services.student.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@EnableAutoConfiguration
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
 public class TestController {
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
 
@@ -28,7 +25,7 @@ public class TestController {
 	@Autowired
 	private StudentService studentService;
 
-	@RequestMapping(value = "/test")
+	@RequestMapping (value = "/test")
 	public String test() {
 		JSONObject obj = new JSONObject();
 		obj.put("num", 12534);
@@ -36,24 +33,24 @@ public class TestController {
 		return obj.toJSONString();
 	}
 
-	@RequestMapping(value = "/hmm")
+	@RequestMapping (value = "/hmm")
 	public void hmm() {
 		String source = "wodasini";
 		hmmService.getHanzi(source);
 	}
 
-	@RequestMapping("/list")
+	@RequestMapping ("/list")
 	public List<Student> getStus() {
 		logger.info("从数据库读取Student集合");
 		return studentService.getList();
 	}
 
-	@RequestMapping("/testD3")
+	@RequestMapping ("/testD3")
 	public String testD3() {
 		TreeRoot inn = new TreeRoot("浙江");
-		for (int i = 0; i < 10; i++) {
+		for(int i = 0; i < 10; i++) {
 			List<TreeRoot> stus = new ArrayList<TreeRoot>();
-			for (int j = 0; j < 4; j++) {
+			for(int j = 0; j < 4; j++) {
 				TreeRoot s = new TreeRoot("children" + j);
 				stus.add(s);
 			}
