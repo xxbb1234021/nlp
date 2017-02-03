@@ -1,8 +1,12 @@
 package com.xb.utils.pinyin;
 
-import java.io.PrintStream;
+import com.xb.utils.ConsoleReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandardTree {
+	private static Logger LOGGER = LoggerFactory.getLogger(ConsoleReader.class);
+
 	private TrieNode root = new BranchNode(' ');
 
 	public void insert(String word) {
@@ -22,8 +26,8 @@ public class StandardTree {
 					} else {
 						curNode = curNode.points[pSize];
 					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println("the error is :" + String.valueOf(chars[i]) + "  " + pSize + "  " + word);
+				} catch (Exception e) {
+					LOGGER.error("the error is :" + String.valueOf(chars[i]) + "  " + pSize + "  " + word);
 				}
 			}
 		}

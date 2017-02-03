@@ -5,7 +5,10 @@ import com.xb.algoritm.bayes.prob.PriorProbability;
 import com.xb.algoritm.segment.MaxMatchingWordSegmenter;
 import com.xb.bean.bayes.ClassifyResult;
 import com.xb.constant.FileConstant;
+import com.xb.utils.FileNIOUtil;
 import com.xb.utils.StopWordsUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,6 +19,8 @@ import java.util.Vector;
  * 朴素贝叶斯分类器
  */
 public class BayesClassifier {
+	private static Logger LOGGER = LoggerFactory.getLogger(BayesClassifier.class);
+
 	private final TrainingDataManager tdm;//训练集管理器
 	private static double zoomFactor = 15.0f;
 
@@ -77,7 +82,6 @@ public class BayesClassifier {
 		MaxMatchingWordSegmenter mmsegger =
 				new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
 		terms = mmsegger.segment(text).split("\\|");
-		//terms= ChineseSpliter.split(summary, " ").split(" ");//中文分词处理(分词后结果可能还包含有停用词）
 		terms = dropStopWords(terms);//去掉停用词，以免影响分类
 
 		String[] classes = tdm.getTraningClassifications();//分类
@@ -90,8 +94,8 @@ public class BayesClassifier {
 			ClassifyResult cr = new ClassifyResult();
 			cr.setClassification(ci);//分类
 			cr.setProbility(probility);//关键字在分类的条件概率
-			//System.out.println("In process.");
-			// System.out.println(ci + "：" + probility);
+
+			LOGGER.info(ci + "：" + probility);
 			crs.add(cr);
 		}
 		//对最后概率结果进行排序
@@ -113,6 +117,6 @@ public class BayesClassifier {
 		String text = "微软公司提出以446亿美元的价格收购雅虎中国网2月1日报道 美联社消息，微软公司提出以446亿美元现金加股票的价格收购搜索网站雅虎公司。微软提出以每股31美元的价格收购雅虎。微软的收购报价较雅虎1月31日的收盘价19.18美元溢价62%。微软公司称雅虎公司的股东可以选择以现金或股票进行交易。微软和雅虎公司在2006年底和2007年初已在寻求双方合作。而近两年，雅虎一直处于困境：市场份额下滑、运营业绩不佳、股价大幅下跌。对于力图在互联网市场有所作为的微软来说，收购雅虎无疑是一条捷径，因为双方具有非常强的互补性。(小桥)";
 		BayesClassifier classifier = new BayesClassifier(FileConstant.BAYESTRAINDATA);//构造Bayes分类器
 		String result = classifier.classify(text);//进行分类
-		System.out.println("此项属于[" + result + "]");
+		LOGGER.info("此项属于[" + result + "]");
 	}
 }

@@ -31,7 +31,7 @@ public class MatrixUtil {
         int n1 = a[0].length;
         int m2 = b.length;
         int n2 = b[0].length;
-        if (n1 != m2) throw new RuntimeException("举证无法相乘.");
+        if (n1 != m2) throw new RuntimeException("矩阵无法相乘.");
         double[][] c = new double[m1][n2];
         for (int i = 0; i < m1; i++)
             for (int j = 0; j < n2; j++)

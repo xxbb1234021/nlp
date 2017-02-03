@@ -1,6 +1,9 @@
 package com.xb.algoritm.neuralnet;
 
 import com.xb.bean.mnist.MnistImage;
+import com.xb.utils.ConsoleReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -8,6 +11,8 @@ import java.util.List;
  * Created by kevin on 2017/1/18 0018.
  */
 public class BPNeuralNetList {
+    private static Logger LOGGER = LoggerFactory.getLogger(BPNeuralNetList.class);
+
     private BPNeuralNet[] bpNeuralNet;
 
     public BPNeuralNetList(int nodeNumOfLayer[]) {
@@ -23,10 +28,10 @@ public class BPNeuralNetList {
         for (int i = 0; i < num; i++) {
             mnistImage = images.get(i);
             this.bpNeuralNet[mnistImage.getNum()].trainOne(mnistImage.getImdageDataDouble(), mnistImage.getLabels());
-            System.out.println((i + 1) + " .train percent:" + (((double) i) / ((double) num)) * 100 + " %.");
+            LOGGER.info((i + 1) + " .train percent:" + (((double) i) / ((double) num)) * 100 + " %.");
         }
-        System.out.println("train finish!");
-        System.out.println("Running time: " + (System.currentTimeMillis() - t) + "ms");
+        LOGGER.info("train finish!");
+        LOGGER.info("Running time: " + (System.currentTimeMillis() - t) + "ms");
     }
 
     public void test(List<MnistImage> testImages) {
@@ -37,14 +42,14 @@ public class BPNeuralNetList {
             for (int j = 0; j < getBpNeuralNet().length; j++) {
                 boolean flag = false;
                 if (flag = getBpNeuralNet()[j].testOne(mnistImage.getImdageDataDouble(), mnistImage.getLabels())) {
-                    System.out.print(j + " " + flag + " " + mnistImage.getNum() + " ");
+                    LOGGER.info(j + " " + flag + " " + mnistImage.getNum() + " ");
                     if (j == mnistImage.getNum())
                         right++;
                     break;
                 }
             }
             sum++;
-            System.out.println((i + 1) + ". Correct percent: " + (((double) right) / ((double) sum)) * 100 + " %.");
+            LOGGER.info((i + 1) + ". Correct percent: " + (((double) right) / ((double) sum)) * 100 + " %.");
         }
     }
 

@@ -115,7 +115,6 @@ public class KDTree {
 
 	/**
 	 * 查找节点
-	 * @param <T>
 	 * @param k
 	 * @param value
 	 * @param node

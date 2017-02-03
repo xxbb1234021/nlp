@@ -6,12 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xb.utils.ConsoleReader;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by kevin on 2016/1/19.
  */
 public class MakePinyingTag {
+	private static Logger LOGGER = LoggerFactory.getLogger(ConsoleReader.class);
+
 	static List<String> list = new ArrayList<String>();
 	Map<String, String> hanziToPinyingMap = new HashMap<String, String>();
 
@@ -82,7 +87,7 @@ public class MakePinyingTag {
 			}
 			br.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("", e);
 		}
 
 		return list;
@@ -93,19 +98,19 @@ public class MakePinyingTag {
 		try {
 			File file = new File(filepath);
 			if (!file.isDirectory()) {
-				System.out.println("文件");
-				System.out.println("path=" + file.getPath());
-				System.out.println("absolutepath=" + file.getAbsolutePath());
-				System.out.println("name=" + file.getName());
+				LOGGER.info("文件");
+				LOGGER.info("path=" + file.getPath());
+				LOGGER.info("absolutepath=" + file.getAbsolutePath());
+				LOGGER.info("name=" + file.getName());
 			} else if (file.isDirectory()) {
-				System.out.println("文件夹");
+				LOGGER.info("文件夹");
 				String[] filelist = file.list();
 				for (int i = 0; i < filelist.length; i++) {
 					File readfile = new File(filepath + "\\" + filelist[i]);
 					if (!readfile.isDirectory()) {
-						System.out.println("path=" + readfile.getPath());
-						System.out.println("absolutepath=" + readfile.getAbsolutePath());
-						System.out.println("name=" + readfile.getName());
+						LOGGER.info("path=" + readfile.getPath());
+						LOGGER.info("absolutepath=" + readfile.getAbsolutePath());
+						LOGGER.info("name=" + readfile.getName());
 						readHanziToPinyingFile(readfile.getAbsolutePath(), "GBK");
 					} else if (readfile.isDirectory()) {
 						readCatalogFile(filepath + "\\" + filelist[i]);

@@ -1,11 +1,16 @@
 package com.xb.algoritm.hmm;
 
 import com.xb.bean.hmm.Hmm;
+import com.xb.utils.ConsoleReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by kevin on 2016/6/30.
  */
 public class ForwardAlgorithm {
+	private static Logger LOGGER = LoggerFactory.getLogger(ForwardAlgorithm.class);
+
 	/**
 	 * 向前算法
 	 * 参数(states,transProb,emitProb,startProb)已知的情况下，求解观察值序列

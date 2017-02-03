@@ -1,5 +1,8 @@
 package com.xb.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +16,8 @@ import java.util.List;
 
 public class FileUtil
 {
+	private static Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
+
 	public static List<String> read(String path)
 	{
 		if (path == null)
@@ -21,7 +26,7 @@ public class FileUtil
 
 		if (!file.isFile())
 		{
-			System.out.println("  -ERROR 系统找不到指定的文件路径：" + path);
+			LOGGER.error("  -ERROR 系统找不到指定的文件路径：" + path);
 			return null;
 		}
 
@@ -53,8 +58,9 @@ public class FileUtil
 	public static boolean write(String path, List<String> contents)
 	{
 		File file = new File(path);
-		if (file.isDirectory())
-			System.out.println("  -ERROR 系统找不到指定的文件路径：" + path);
+		if (file.isDirectory()) {
+			LOGGER.error("  -ERROR 系统找不到指定的文件路径：" + path);
+		}
 		else
 		{
 			try
