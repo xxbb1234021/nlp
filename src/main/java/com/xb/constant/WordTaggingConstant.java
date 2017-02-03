@@ -84,8 +84,8 @@ public class WordTaggingConstant {
 		wordTagMap.put("ntu", "大学");
 		wordTagMap.put("nx", "字母专名");//ＡＴＭ/nx  交换机/n
 		wordTagMap.put("nz", "其他专名");//德士古/nz  公司/n
-		wordTagMap.put("o", "拟声词");//汩汩/o  地/u  流/v  出来/v
-		wordTagMap.put("p", "介词");//往/p  基层/n  跑/v  。/w
+        wordTagMap.put("output", "拟声词");//汩汩/output  地/u  流/v  出来/v
+        wordTagMap.put("p", "介词");//往/p  基层/n  跑/v  。/w
 		wordTagMap.put("pba", "介词“把”");
 		wordTagMap.put("pbei", "介词“被”");
 		wordTagMap.put("q", "量词");//不止/v  一/m  次/q  地/u  听到/v  ，/w

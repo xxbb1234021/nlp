@@ -55,4 +55,10 @@ public class FileConstant {
     public static final String ARTICLE_DIR          = "article";
     //把所有文章处理后写入sentence文件
     public static final String ARTICLE_DIR_SENTENCE = "pinyin/sentence.txt";
+
+    //mnist数据
+    public static final String TRAIN_LABELS_IDX1_UBYTE = "mnist/train-labels.idx1-ubyte";
+    public static final String TRAIN_IMAGES_IDX3_UBYTE = "mnist/train-images.idx3-ubyte";
+    public static final String T10K_LABELS_IDX1_UBYTE = "mnist/t10k-labels.idx1-ubyte";
+    public static final String T10K_IMAGES_IDX3_UBYTE = "mnist/t10k-images.idx3-ubyte";
 }

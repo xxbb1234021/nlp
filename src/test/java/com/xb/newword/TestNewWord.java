@@ -1,6 +1,6 @@
 package com.xb.newword;
 
-import com.xb.common.newword.NewWordDiscover;
+import com.xb.algoritm.newword.NewWordDiscover;
 import com.xb.constant.Constant;
 import com.xb.constant.FileConstant;
 import com.xb.utils.FileNIOUtil;

@@ -15,8 +15,9 @@ import java.util.List;
  */
 public class TestSentencesExtraction {
 
-	@Test public void testNewWord() {
-		String s = "无限的算法，是那些由于没有定义终止定义条件，或定义的条件无法由输入的数据满足而不终止运行的算法。通常，无限算法的产生是由于未能确定的定义终止条件。";
+    @Test
+    public void testSentencesExtraction() {
+        String s = "无限的算法，是那些由于没有定义终止定义条件，或定义的条件无法由输入的数据满足而不终止运行的算法。通常，无限算法的产生是由于未能确定的定义终止条件。";
 		System.out.println(SentencesExtraction.summarise(s, 1));
 	}
 }

@@ -10,7 +10,8 @@ import org.junit.Test;
  */
 public class TestSimHashTextSimilarity {
 
-	@Test public void testNewWord() {
+	@Test
+	public void testSimHashTextSimilarity() {
 		MaxMatchingWordSegmenter mmsegger = new MaxMatchingWordSegmenter(FileConstant.WORD_TRIE_TREE);
 		String text1 = mmsegger.segment("有限的确定性算法，");
 		String text2 = mmsegger.segment("有限的非确定算法，");

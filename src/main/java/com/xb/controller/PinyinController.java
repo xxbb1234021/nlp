@@ -19,7 +19,6 @@ public class PinyinController {
 	@Autowired
 	private HmmService hmmService;
 
-	@RequestMapping(value = "hmm/pinyin2hanzi", method = { RequestMethod.POST, RequestMethod.GET })
 	public String pinyin2hanzi(@RequestParam("pinyin") String pinyin) {
 		return hmmService.getHanzi(pinyin);
 	}
