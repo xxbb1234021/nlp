@@ -21,7 +21,6 @@ public class TestPinyingToHanzi {
 
 	@Test
 	public void testPinyingToHanzi() {
-		String source = "wodasini";
 
 		List<String> wordList = new ArrayList<String>();
 
@@ -34,8 +33,7 @@ public class TestPinyingToHanzi {
 
 		Map<String, Integer> pinyingPositionMap = builder.getPinyinPositionMap();
 
-		System.out.println("输入：" + source);
-		String splitSpell = "wo ai ni ma";PinyingUtil.splitSpell(source);
+		String splitSpell = PinyingUtil.splitSpell("woainima");
 		System.out.println("切分后：" + splitSpell);
 
 		String[] pinying = splitSpell.split(" ");
