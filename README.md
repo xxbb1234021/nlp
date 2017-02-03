@@ -22,7 +22,10 @@ com.xb.newword.TestNewWord
 字符串的相似性
 com.xb.text.TestCosineSimilar   
 
- 字符串的相似性
+字符串的相似性
 com.xb.text.TestSimHashTextSimilarity
 
 com.xb.text.TestTfidf
+
+手写数字识别
+com.xb.mnist.TestMnist
