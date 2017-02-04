@@ -107,19 +107,19 @@ public class BPNeuralNet {
             // 前向传播：从i-1层传播到i层
             List<Neuron> currentList = this.neuronList.get(i);
             List<Neuron> lastList = this.neuronList.get(i - 1);
-            Neuron currenNneuron = null;
+            Neuron currentNeuron = null;
             Neuron lastNeuron = null;
 
             for (int j = 0; j < currentList.size(); j++) {
                 double value = 0;
-                currenNneuron = currentList.get(j);
-                currenNneuron.setValue(0);
+                currentNeuron = currentList.get(j);
+                currentNeuron.setValue(0);
                 for (int k = 0; k < lastList.size(); k++) {
                     lastNeuron = lastList.get(k);
                     value += lastNeuron.getOutput() * weight[i - 1][k][j];
                 }
-                currenNneuron.setValue(value);
-                currenNneuron.sigmod();
+                currentNeuron.setValue(value);
+                currentNeuron.sigmod();
             }
         }
         return true;
