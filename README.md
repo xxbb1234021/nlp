@@ -25,6 +25,7 @@ com.xb.text.TestCosineSimilar
 字符串的相似性
 com.xb.text.TestSimHashTextSimilarity
 
+词频统计 
 com.xb.text.TestTfidf
 
 手写数字识别
