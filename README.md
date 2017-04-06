@@ -1,5 +1,4 @@
 # nlp
-自然语言处理 不断完善中......
 
 句法分析。先初始化resources/nlp/nlp.sql，然后启动web服务（com.xb.ApplicationMain），输入http://localhost:8080/views/sytanx_tree.html  用户：admin 密码：admin 查看。<br/>
 com.xb.business.hmm.builderImpl.TestCYK   
